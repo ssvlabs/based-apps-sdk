@@ -1,0 +1,15 @@
+query GetStrategyBAppOptIns($bAppId: Bytes!) {
+  strategyBAppOptIns(where: { bApp_: { id: $bAppId } }) {
+    id
+    strategy {
+      balances {
+        token
+        balance
+      }
+    }
+    obligations {
+      token
+      percentage
+    }
+  }
+}

@@ -3,24 +3,36 @@ import { MainnetV4SetterABI } from '@/abi/mainnet/v4/setter'
 import { TokenABI } from '@/abi/token'
 import { createReader, createWriter } from '@/contract-interactions/create'
 
-import { createBasedAppsAPI, createBeaconChainAPI, createQueries } from '@/libs/api'
+import type { APIs } from '@/api'
+import {
+  createBAMQueries,
+  createBasedAppsAPI,
+  createBeaconChainAPI,
+  createQueries,
+} from '@/libs/api'
 import type { ConfigArgs } from '@/utils/zod/config'
 import { configArgsSchema } from '@/utils/zod/config'
 import { GraphQLClient } from 'graphql-request'
 import type { PublicClient, WalletClient } from 'viem'
 import type { ContractAddresses, SupportedChainsIDs } from './chains'
-import { beaconchain_endpoints, graph_endpoints } from './chains'
+import { bam_graph_endpoints, beaconchain_endpoints, dvt_graph_endpoints } from './chains'
 
 export type ConfigReturnType = {
   publicClient: PublicClient
   chain: SupportedChainsIDs
-  api: {
-    ssv: ReturnType<typeof createQueries>
-    beacon: ReturnType<typeof createBeaconChainAPI>
-    bam: ReturnType<typeof createBasedAppsAPI>
-  }
+  api: APIs & ReturnType<typeof createBasedAppsAPI>
   graphQLClient: GraphQLClient
   graphEndpoint: string
+  graphs: {
+    dvt: {
+      client: GraphQLClient
+      endpoint: string
+    }
+    bam: {
+      client: GraphQLClient
+      endpoint: string
+    }
+  }
 }
 
 export const isConfig = (props: unknown): props is ConfigReturnType => {
@@ -30,8 +42,7 @@ export const isConfig = (props: unknown): props is ConfigReturnType => {
     'publicClient' in props &&
     'chain' in props &&
     'api' in props &&
-    'graphQLClient' in props &&
-    'graphEndpoint' in props
+    'graphs' in props
   )
 }
 
@@ -83,22 +94,37 @@ export const createConfig = (props: ConfigArgs): ConfigReturnType => {
   // if (!publicClient.chain || !chainIds.includes(publicClient.chain?.id as SupportedChainsIDs))
   //   throw new Error(`Chain must be one of ${chainIds.join(', ')}`)
 
-  const graphEndpoint = graph_endpoints[chain]
   const beaconchainEndpoint = beaconchain_endpoints[chain]
-  const graphQLClient = new GraphQLClient(graphEndpoint)
+
+  const dvtGraphEndpoint = dvt_graph_endpoints[chain]
+  const bamGraphEndpoint = bam_graph_endpoints[chain]
+
+  const dvtGraphQLClient = new GraphQLClient(dvtGraphEndpoint)
+  const bamGraphQLClient = new GraphQLClient(bamGraphEndpoint)
 
   const apis = {
-    ssv: createQueries(graphQLClient),
+    ssv: createQueries(dvtGraphQLClient),
     beacon: createBeaconChainAPI(beaconchainEndpoint),
+    bam: createBAMQueries(dvtGraphQLClient),
   }
+
   return {
     chain,
-    graphEndpoint,
     api: {
-      ssv: createQueries(graphQLClient),
+      ssv: createQueries(dvtGraphQLClient),
       beacon: createBeaconChainAPI(beaconchainEndpoint),
-      bam: createBasedAppsAPI(apis),
+      bam: createBAMQueries(bamGraphQLClient),
+      ...createBasedAppsAPI(apis),
     },
-    graphQLClient,
+    graphs: {
+      dvt: {
+        client: dvtGraphQLClient,
+        endpoint: dvtGraphEndpoint,
+      },
+      bam: {
+        client: bamGraphQLClient,
+        endpoint: bamGraphEndpoint,
+      },
+    },
   } as ConfigReturnType
 }

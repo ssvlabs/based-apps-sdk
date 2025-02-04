@@ -1,12 +1,12 @@
 import join from '@/utils/url-join'
 import type { Hex } from 'viem'
 
-type GetValidatorBalancesArgs = {
+export type GetValidatorBalancesArgs = {
   stateId: 'head' | 'genesis' | 'finalized' | 'justified'
   validatorIds: Hex[]
 }
 
-type GetValidatorBalancesResponse = {
+export type GetValidatorBalancesResponse = {
   execution_optimistic: boolean
   finalized: boolean
   data: {

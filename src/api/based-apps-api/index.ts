@@ -1,5 +1,6 @@
 import type { APIs } from '@/api'
 import { chunk } from 'lodash-es'
+import type { Address } from 'viem'
 import { formatGwei } from 'viem'
 
 export const getValidatorsBalance = async (
@@ -32,8 +33,33 @@ export const getValidatorsBalance = async (
   }
 }
 
+export const getBappSlashableBalance = async (apis: APIs, args: { bAppId: Address }) => {
+  const bAppOptIns = await apis.bam.getStrategyBAppOptIns(args)
+
+  const slashableBalances = bAppOptIns.reduce<Map<Address, bigint>>((acc, optIn) => {
+    const balances = new Map(
+      optIn.strategy.balances.map(({ token, balance }) => [token, BigInt(balance)]),
+    )
+
+    optIn.obligations.forEach(({ token, percentage }) => {
+      const balance = balances.get(token) ?? 0n
+      const slashableBalance = (balance * BigInt(percentage)) / 10000n
+      const currentBalance = acc.get(token) ?? 0n
+      acc.set(token, currentBalance + slashableBalance)
+    })
+
+    return acc
+  }, new Map())
+
+  return Array.from(slashableBalances.entries()).map(([token, balance]) => ({
+    token,
+    balance,
+  }))
+}
+
 export const getBasedAppsAPI = (apis: APIs) => {
   return {
     getValidatorsBalance: getValidatorsBalance.bind(null, apis),
+    getBappSlashableBalance: getBappSlashableBalance.bind(null, apis),
   }
 }

@@ -2,11 +2,12 @@ import type { APIs } from '@/api'
 import { getBasedAppsAPI } from '@/api/based-apps-api'
 import { getBeaconChainAPI } from '@/api/beacon-chain-api'
 import { getSSVAPI } from '@/api/ssv-api'
-import { getQueries } from '@/api/subgraph'
+import { getBAMQueries } from '@/api/subgraph/bam'
+import { getSSVQueries } from '@/api/subgraph/ssv'
 import type { GraphQLClient } from 'graphql-request'
 
 export const createQueries = (graphqlClient: GraphQLClient) => {
-  return getQueries(graphqlClient)
+  return getSSVQueries(graphqlClient)
 }
 
 export const createSSVAPI = (endpoint: string) => {
@@ -15,6 +16,10 @@ export const createSSVAPI = (endpoint: string) => {
 
 export const createBeaconChainAPI = (endpoint: string) => {
   return getBeaconChainAPI(endpoint)
+}
+
+export const createBAMQueries = (graphqlClient: GraphQLClient) => {
+  return getBAMQueries(graphqlClient)
 }
 
 export const createBasedAppsAPI = (apis: APIs) => {

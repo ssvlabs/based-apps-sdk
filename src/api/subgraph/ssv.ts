@@ -1,6 +1,3 @@
-import type { RemoveConfigArg } from '@/types/methods'
-import { decodeOperatorPublicKey } from '@/utils/operator'
-import type { GraphQLClient } from 'graphql-request'
 import type {
   GetClusterBalanceQueryVariables,
   GetClusterQueryVariables,
@@ -12,7 +9,7 @@ import type {
   GetValidatorQueryVariables,
   GetValidatorsByAccountQueryVariables,
   GetValidatorsQueryVariables,
-} from '../../graphql/graphql'
+} from '@/graphql/ssv/graphql'
 import {
   GetClusterBalanceDocument,
   GetClusterDocument,
@@ -25,7 +22,10 @@ import {
   GetValidatorDocument,
   GetValidatorsByAccountDocument,
   GetValidatorsDocument,
-} from '../../graphql/graphql'
+} from '@/graphql/ssv/graphql'
+import type { RemoveConfigArg } from '@/types/methods'
+import { decodeOperatorPublicKey } from '@/utils/operator'
+import type { GraphQLClient } from 'graphql-request'
 export const getOwnerNonce = (client: GraphQLClient, args: GetOwnerNonceByBlockQueryVariables) => {
   const document =
     typeof args.block === 'number' ? GetOwnerNonceByBlockDocument : GetOwnerNonceDocument
@@ -77,7 +77,7 @@ export const getValidatorsByAccount = (
     .request(GetValidatorsByAccountDocument, args)
     .then((res) => res.validators.map((v) => v.id))
 
-export const getQueries = (client: GraphQLClient) => ({
+export const getSSVQueries = (client: GraphQLClient) => ({
   getValidatorsByAccount: getValidatorsByAccount.bind(null, client) as RemoveConfigArg<
     typeof getValidatorsByAccount
   >,

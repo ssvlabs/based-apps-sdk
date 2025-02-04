@@ -1,5 +1,5 @@
 import 'dotenv/config'
-export * from '@/api/subgraph'
+export * from '@/api/subgraph/ssv'
 export * from '@/config'
 export * from '@/contract-interactions'
 export * from '@/libs/api'
