@@ -18,11 +18,9 @@ import type { ContractAddresses, SupportedChainsIDs } from './chains'
 import { bam_graph_endpoints, beaconchain_endpoints, dvt_graph_endpoints } from './chains'
 
 export type ConfigReturnType = {
-  publicClient: PublicClient
+  // publicClient: PublicClient
   chain: SupportedChainsIDs
   api: APIs & ReturnType<typeof createBasedAppsAPI>
-  graphQLClient: GraphQLClient
-  graphEndpoint: string
   graphs: {
     dvt: {
       client: GraphQLClient
@@ -58,7 +56,7 @@ export const createContractInteractions = ({
   addresses,
 }: CreateContractInteractionsArgs) => {
   return {
-    ssv: {
+    dvt: {
       write: createWriter<'setter'>({
         abi: MainnetV4SetterABI,
         walletClient,
@@ -102,8 +100,8 @@ export const createConfig = (props: ConfigArgs): ConfigReturnType => {
   const dvtGraphQLClient = new GraphQLClient(dvtGraphEndpoint)
   const bamGraphQLClient = new GraphQLClient(bamGraphEndpoint)
 
-  const apis = {
-    ssv: createQueries(dvtGraphQLClient),
+  const apis: APIs = {
+    dvt: createQueries(dvtGraphQLClient),
     beacon: createBeaconChainAPI(beaconchainEndpoint),
     bam: createBAMQueries(dvtGraphQLClient),
   }
@@ -111,7 +109,7 @@ export const createConfig = (props: ConfigArgs): ConfigReturnType => {
   return {
     chain,
     api: {
-      ssv: createQueries(dvtGraphQLClient),
+      dvt: createQueries(dvtGraphQLClient),
       beacon: createBeaconChainAPI(beaconchainEndpoint),
       bam: createBAMQueries(bamGraphQLClient),
       ...createBasedAppsAPI(apis),
@@ -126,5 +124,5 @@ export const createConfig = (props: ConfigArgs): ConfigReturnType => {
         endpoint: bamGraphEndpoint,
       },
     },
-  } as ConfigReturnType
+  } satisfies ConfigReturnType
 }

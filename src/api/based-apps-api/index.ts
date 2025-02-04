@@ -5,9 +5,9 @@ import { formatGwei } from 'viem'
 
 export const getValidatorsBalance = async (
   apis: APIs,
-  args: Parameters<APIs['ssv']['getValidatorsByAccount']>[0],
+  args: Parameters<APIs['dvt']['getValidatorsByAccount']>[0],
 ) => {
-  const validators = await apis.ssv.getValidatorsByAccount(args)
+  const validators = await apis.dvt.getValidatorsByAccount(args)
   const chunks = chunk(validators, 50)
 
   const promises = chunks.map((chunk) =>

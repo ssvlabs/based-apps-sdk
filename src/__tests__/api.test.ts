@@ -10,7 +10,7 @@ const mockGetValidatorBalances = vi.fn()
 const mockGetStrategyBAppOptIns = vi.fn()
 
 const mockAPIs: APIs = {
-  ssv: {
+  dvt: {
     getValidatorsByAccount: mockGetValidatorsByAccount,
   },
   beacon: {
