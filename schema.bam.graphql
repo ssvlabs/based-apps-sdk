@@ -20,13 +20,13 @@ type Account {
   bApps(first: Int = 100, orderBy: BApp_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: BApp_filter): [BApp!]!
   clusters(first: Int = 100, orderBy: Cluster_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: Cluster_filter): [Cluster!]
   delegators(first: Int = 100, orderBy: Delegation_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: Delegation_filter): [Delegation!]!
+  deposits(first: Int = 100, orderBy: StrategyUserBalance_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: StrategyUserBalance_filter): [StrategyUserBalance!]!
   feeRecipient: Bytes!
   id: Bytes!
   nonce: BigInt!
   operators(first: Int = 100, orderBy: Operator_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: Operator_filter): [Operator!]
   receivers(first: Int = 100, orderBy: Delegation_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: Delegation_filter): [Delegation!]!
   strategies(first: Int = 100, orderBy: Strategy_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: Strategy_filter): [Strategy!]!
-  strategyTokenBalances(first: Int = 100, orderBy: StrategyTokenBalance_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: StrategyTokenBalance_filter): [StrategyTokenBalance!]!
   totalDelegatedPercentage: BigInt!
   validatorCount: BigInt!
   validators(first: Int = 100, orderBy: Validator_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: Validator_filter): [Validator!]
@@ -39,6 +39,7 @@ input Account_filter {
   bApps_: BApp_filter
   clusters_: Cluster_filter
   delegators_: Delegation_filter
+  deposits_: StrategyUserBalance_filter
   feeRecipient: Bytes
   feeRecipient_contains: Bytes
   feeRecipient_gt: Bytes
@@ -71,7 +72,6 @@ input Account_filter {
   or: [Account_filter]
   receivers_: Delegation_filter
   strategies_: Strategy_filter
-  strategyTokenBalances_: StrategyTokenBalance_filter
   totalDelegatedPercentage: BigInt
   totalDelegatedPercentage_gt: BigInt
   totalDelegatedPercentage_gte: BigInt
@@ -95,13 +95,13 @@ enum Account_orderBy {
   bApps
   clusters
   delegators
+  deposits
   feeRecipient
   id
   nonce
   operators
   receivers
   strategies
-  strategyTokenBalances
   totalDelegatedPercentage
   validatorCount
   validators
@@ -113,7 +113,7 @@ enum Aggregation_interval {
 }
 
 type BApp {
-  bAppTokens(first: Int = 100, orderBy: SharedRiskLevel_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: SharedRiskLevel_filter): [SharedRiskLevel!]!
+  bAppTokens(first: Int = 100, orderBy: BAppToken_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: BAppToken_filter): [BAppToken!]!
   id: Bytes!
   metadataURI: String
   owner: Account!
@@ -123,6 +123,9 @@ type BApp {
 type BAppConstants {
   _maxFeeIncrement: BigInt!
   id: Bytes!
+  totalAccounts: BigInt!
+  totalBApps: BigInt!
+  totalStrategies: BigInt!
 }
 
 input BAppConstants_filter {
@@ -148,11 +151,38 @@ input BAppConstants_filter {
   id_not_contains: Bytes
   id_not_in: [Bytes!]
   or: [BAppConstants_filter]
+  totalAccounts: BigInt
+  totalAccounts_gt: BigInt
+  totalAccounts_gte: BigInt
+  totalAccounts_in: [BigInt!]
+  totalAccounts_lt: BigInt
+  totalAccounts_lte: BigInt
+  totalAccounts_not: BigInt
+  totalAccounts_not_in: [BigInt!]
+  totalBApps: BigInt
+  totalBApps_gt: BigInt
+  totalBApps_gte: BigInt
+  totalBApps_in: [BigInt!]
+  totalBApps_lt: BigInt
+  totalBApps_lte: BigInt
+  totalBApps_not: BigInt
+  totalBApps_not_in: [BigInt!]
+  totalStrategies: BigInt
+  totalStrategies_gt: BigInt
+  totalStrategies_gte: BigInt
+  totalStrategies_in: [BigInt!]
+  totalStrategies_lt: BigInt
+  totalStrategies_lte: BigInt
+  totalStrategies_not: BigInt
+  totalStrategies_not_in: [BigInt!]
 }
 
 enum BAppConstants_orderBy {
   _maxFeeIncrement
   id
+  totalAccounts
+  totalBApps
+  totalStrategies
 }
 
 type BAppMetadataURIUpdated {
@@ -472,6 +502,98 @@ enum BAppRegistered_orderBy {
   transactionHash
 }
 
+type BAppToken {
+  bApp: BApp!
+  id: String!
+  sharedRiskLevel: BigInt!
+  token: Bytes!
+  totalObligatedBalance: BigInt!
+}
+
+input BAppToken_filter {
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [BAppToken_filter]
+  bApp: String
+  bApp_: BApp_filter
+  bApp_contains: String
+  bApp_contains_nocase: String
+  bApp_ends_with: String
+  bApp_ends_with_nocase: String
+  bApp_gt: String
+  bApp_gte: String
+  bApp_in: [String!]
+  bApp_lt: String
+  bApp_lte: String
+  bApp_not: String
+  bApp_not_contains: String
+  bApp_not_contains_nocase: String
+  bApp_not_ends_with: String
+  bApp_not_ends_with_nocase: String
+  bApp_not_in: [String!]
+  bApp_not_starts_with: String
+  bApp_not_starts_with_nocase: String
+  bApp_starts_with: String
+  bApp_starts_with_nocase: String
+  id: String
+  id_contains: String
+  id_contains_nocase: String
+  id_ends_with: String
+  id_ends_with_nocase: String
+  id_gt: String
+  id_gte: String
+  id_in: [String!]
+  id_lt: String
+  id_lte: String
+  id_not: String
+  id_not_contains: String
+  id_not_contains_nocase: String
+  id_not_ends_with: String
+  id_not_ends_with_nocase: String
+  id_not_in: [String!]
+  id_not_starts_with: String
+  id_not_starts_with_nocase: String
+  id_starts_with: String
+  id_starts_with_nocase: String
+  or: [BAppToken_filter]
+  sharedRiskLevel: BigInt
+  sharedRiskLevel_gt: BigInt
+  sharedRiskLevel_gte: BigInt
+  sharedRiskLevel_in: [BigInt!]
+  sharedRiskLevel_lt: BigInt
+  sharedRiskLevel_lte: BigInt
+  sharedRiskLevel_not: BigInt
+  sharedRiskLevel_not_in: [BigInt!]
+  token: Bytes
+  token_contains: Bytes
+  token_gt: Bytes
+  token_gte: Bytes
+  token_in: [Bytes!]
+  token_lt: Bytes
+  token_lte: Bytes
+  token_not: Bytes
+  token_not_contains: Bytes
+  token_not_in: [Bytes!]
+  totalObligatedBalance: BigInt
+  totalObligatedBalance_gt: BigInt
+  totalObligatedBalance_gte: BigInt
+  totalObligatedBalance_in: [BigInt!]
+  totalObligatedBalance_lt: BigInt
+  totalObligatedBalance_lte: BigInt
+  totalObligatedBalance_not: BigInt
+  totalObligatedBalance_not_in: [BigInt!]
+}
+
+enum BAppToken_orderBy {
+  bApp
+  bApp__id
+  bApp__metadataURI
+  id
+  sharedRiskLevel
+  token
+  totalObligatedBalance
+}
+
 type BAppTokensCreated {
   bAppAddress: Bytes!
   blockNumber: BigInt!
@@ -646,7 +768,7 @@ input BApp_filter {
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
   and: [BApp_filter]
-  bAppTokens_: SharedRiskLevel_filter
+  bAppTokens_: BAppToken_filter
   id: Bytes
   id_contains: Bytes
   id_gt: Bytes
@@ -2764,9 +2886,11 @@ enum NetworkFeeUpdated_orderBy {
 
 type Obligation {
   id: String!
+  obligatedBalance: BigInt!
   percentage: BigInt!
   percentageProposed: BigInt!
   percentageProposedTimestamp: BigInt!
+  strategyBAppOptIn: StrategyBAppOptIn!
   token: Bytes!
 }
 
@@ -3103,6 +3227,14 @@ input Obligation_filter {
   id_not_starts_with_nocase: String
   id_starts_with: String
   id_starts_with_nocase: String
+  obligatedBalance: BigInt
+  obligatedBalance_gt: BigInt
+  obligatedBalance_gte: BigInt
+  obligatedBalance_in: [BigInt!]
+  obligatedBalance_lt: BigInt
+  obligatedBalance_lte: BigInt
+  obligatedBalance_not: BigInt
+  obligatedBalance_not_in: [BigInt!]
   or: [Obligation_filter]
   percentage: BigInt
   percentageProposed: BigInt
@@ -3128,6 +3260,27 @@ input Obligation_filter {
   percentage_lte: BigInt
   percentage_not: BigInt
   percentage_not_in: [BigInt!]
+  strategyBAppOptIn: String
+  strategyBAppOptIn_: StrategyBAppOptIn_filter
+  strategyBAppOptIn_contains: String
+  strategyBAppOptIn_contains_nocase: String
+  strategyBAppOptIn_ends_with: String
+  strategyBAppOptIn_ends_with_nocase: String
+  strategyBAppOptIn_gt: String
+  strategyBAppOptIn_gte: String
+  strategyBAppOptIn_in: [String!]
+  strategyBAppOptIn_lt: String
+  strategyBAppOptIn_lte: String
+  strategyBAppOptIn_not: String
+  strategyBAppOptIn_not_contains: String
+  strategyBAppOptIn_not_contains_nocase: String
+  strategyBAppOptIn_not_ends_with: String
+  strategyBAppOptIn_not_ends_with_nocase: String
+  strategyBAppOptIn_not_in: [String!]
+  strategyBAppOptIn_not_starts_with: String
+  strategyBAppOptIn_not_starts_with_nocase: String
+  strategyBAppOptIn_starts_with: String
+  strategyBAppOptIn_starts_with_nocase: String
   token: Bytes
   token_contains: Bytes
   token_gt: Bytes
@@ -3142,9 +3295,12 @@ input Obligation_filter {
 
 enum Obligation_orderBy {
   id
+  obligatedBalance
   percentage
   percentageProposed
   percentageProposedTimestamp
+  strategyBAppOptIn
+  strategyBAppOptIn__id
   token
 }
 
@@ -4743,6 +4899,32 @@ type Query {
     subgraphError: _SubgraphErrorPolicy_! = deny
     where: BAppRegistered_filter
   ): [BAppRegistered!]!
+  bappToken(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    id: ID!
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): BAppToken
+  bappTokens(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    first: Int = 100
+    orderBy: BAppToken_orderBy
+    orderDirection: OrderDirection
+    skip: Int = 0
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+    where: BAppToken_filter
+  ): [BAppToken!]!
   bappTokensCreated(
     """
     The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
@@ -5798,32 +5980,6 @@ type Query {
     subgraphError: _SubgraphErrorPolicy_! = deny
     where: OwnershipTransferred_filter
   ): [OwnershipTransferred!]!
-  sharedRiskLevel(
-    """
-    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
-    """
-    block: Block_height
-    id: ID!
-    """
-    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
-    """
-    subgraphError: _SubgraphErrorPolicy_! = deny
-  ): SharedRiskLevel
-  sharedRiskLevels(
-    """
-    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
-    """
-    block: Block_height
-    first: Int = 100
-    orderBy: SharedRiskLevel_orderBy
-    orderDirection: OrderDirection
-    skip: Int = 0
-    """
-    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
-    """
-    subgraphError: _SubgraphErrorPolicy_! = deny
-    where: SharedRiskLevel_filter
-  ): [SharedRiskLevel!]!
   strategies(
     """
     The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
@@ -6006,6 +6162,32 @@ type Query {
     subgraphError: _SubgraphErrorPolicy_! = deny
     where: StrategyTokenBalance_filter
   ): [StrategyTokenBalance!]!
+  strategyUserBalance(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    id: ID!
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): StrategyUserBalance
+  strategyUserBalances(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    first: Int = 100
+    orderBy: StrategyUserBalance_orderBy
+    orderDirection: OrderDirection
+    skip: Int = 0
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+    where: StrategyUserBalance_filter
+  ): [StrategyUserBalance!]!
   strategyWithdrawal(
     """
     The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
@@ -6164,91 +6346,10 @@ type Query {
   ): [Validator!]!
 }
 
-type SharedRiskLevel {
-  bApp: BApp!
-  id: String!
-  sharedRiskLevel: BigInt!
-  token: Bytes!
-}
-
-input SharedRiskLevel_filter {
-  """Filter for the block changed event."""
-  _change_block: BlockChangedFilter
-  and: [SharedRiskLevel_filter]
-  bApp: String
-  bApp_: BApp_filter
-  bApp_contains: String
-  bApp_contains_nocase: String
-  bApp_ends_with: String
-  bApp_ends_with_nocase: String
-  bApp_gt: String
-  bApp_gte: String
-  bApp_in: [String!]
-  bApp_lt: String
-  bApp_lte: String
-  bApp_not: String
-  bApp_not_contains: String
-  bApp_not_contains_nocase: String
-  bApp_not_ends_with: String
-  bApp_not_ends_with_nocase: String
-  bApp_not_in: [String!]
-  bApp_not_starts_with: String
-  bApp_not_starts_with_nocase: String
-  bApp_starts_with: String
-  bApp_starts_with_nocase: String
-  id: String
-  id_contains: String
-  id_contains_nocase: String
-  id_ends_with: String
-  id_ends_with_nocase: String
-  id_gt: String
-  id_gte: String
-  id_in: [String!]
-  id_lt: String
-  id_lte: String
-  id_not: String
-  id_not_contains: String
-  id_not_contains_nocase: String
-  id_not_ends_with: String
-  id_not_ends_with_nocase: String
-  id_not_in: [String!]
-  id_not_starts_with: String
-  id_not_starts_with_nocase: String
-  id_starts_with: String
-  id_starts_with_nocase: String
-  or: [SharedRiskLevel_filter]
-  sharedRiskLevel: BigInt
-  sharedRiskLevel_gt: BigInt
-  sharedRiskLevel_gte: BigInt
-  sharedRiskLevel_in: [BigInt!]
-  sharedRiskLevel_lt: BigInt
-  sharedRiskLevel_lte: BigInt
-  sharedRiskLevel_not: BigInt
-  sharedRiskLevel_not_in: [BigInt!]
-  token: Bytes
-  token_contains: Bytes
-  token_gt: Bytes
-  token_gte: Bytes
-  token_in: [Bytes!]
-  token_lt: Bytes
-  token_lte: Bytes
-  token_not: Bytes
-  token_not_contains: Bytes
-  token_not_in: [Bytes!]
-}
-
-enum SharedRiskLevel_orderBy {
-  bApp
-  bApp__id
-  bApp__metadataURI
-  id
-  sharedRiskLevel
-  token
-}
-
 type Strategy {
   bApps(first: Int = 100, orderBy: StrategyBAppOptIn_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: StrategyBAppOptIn_filter): [StrategyBAppOptIn!]!
   balances(first: Int = 100, orderBy: StrategyTokenBalance_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: StrategyTokenBalance_filter): [StrategyTokenBalance!]!
+  deposits(first: Int = 100, orderBy: StrategyUserBalance_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: StrategyUserBalance_filter): [StrategyUserBalance!]!
   fee: BigInt!
   feeProposed: BigInt!
   feeProposedTimestamp: BigInt!
@@ -6309,13 +6410,7 @@ input StrategyBAppOptIn_filter {
   id_not_starts_with_nocase: String
   id_starts_with: String
   id_starts_with_nocase: String
-  obligations: [String!]
   obligations_: Obligation_filter
-  obligations_contains: [String!]
-  obligations_contains_nocase: [String!]
-  obligations_not: [String!]
-  obligations_not_contains: [String!]
-  obligations_not_contains_nocase: [String!]
   or: [StrategyBAppOptIn_filter]
   strategy: String
   strategy_: Strategy_filter
@@ -6744,10 +6839,8 @@ enum StrategyFeeUpdated_orderBy {
 
 type StrategyTokenBalance {
   balance: BigInt!
-  contributor: Account!
   id: String!
-  proposedWithdrawal: BigInt!
-  proposedWithdrawalTimestamp: BigInt!
+  riskValue: BigInt!
   strategy: Strategy!
   token: Bytes!
 }
@@ -6764,27 +6857,6 @@ input StrategyTokenBalance_filter {
   balance_lte: BigInt
   balance_not: BigInt
   balance_not_in: [BigInt!]
-  contributor: String
-  contributor_: Account_filter
-  contributor_contains: String
-  contributor_contains_nocase: String
-  contributor_ends_with: String
-  contributor_ends_with_nocase: String
-  contributor_gt: String
-  contributor_gte: String
-  contributor_in: [String!]
-  contributor_lt: String
-  contributor_lte: String
-  contributor_not: String
-  contributor_not_contains: String
-  contributor_not_contains_nocase: String
-  contributor_not_ends_with: String
-  contributor_not_ends_with_nocase: String
-  contributor_not_in: [String!]
-  contributor_not_starts_with: String
-  contributor_not_starts_with_nocase: String
-  contributor_starts_with: String
-  contributor_starts_with_nocase: String
   id: String
   id_contains: String
   id_contains_nocase: String
@@ -6806,6 +6878,124 @@ input StrategyTokenBalance_filter {
   id_starts_with: String
   id_starts_with_nocase: String
   or: [StrategyTokenBalance_filter]
+  riskValue: BigInt
+  riskValue_gt: BigInt
+  riskValue_gte: BigInt
+  riskValue_in: [BigInt!]
+  riskValue_lt: BigInt
+  riskValue_lte: BigInt
+  riskValue_not: BigInt
+  riskValue_not_in: [BigInt!]
+  strategy: String
+  strategy_: Strategy_filter
+  strategy_contains: String
+  strategy_contains_nocase: String
+  strategy_ends_with: String
+  strategy_ends_with_nocase: String
+  strategy_gt: String
+  strategy_gte: String
+  strategy_in: [String!]
+  strategy_lt: String
+  strategy_lte: String
+  strategy_not: String
+  strategy_not_contains: String
+  strategy_not_contains_nocase: String
+  strategy_not_ends_with: String
+  strategy_not_ends_with_nocase: String
+  strategy_not_in: [String!]
+  strategy_not_starts_with: String
+  strategy_not_starts_with_nocase: String
+  strategy_starts_with: String
+  strategy_starts_with_nocase: String
+  token: Bytes
+  token_contains: Bytes
+  token_gt: Bytes
+  token_gte: Bytes
+  token_in: [Bytes!]
+  token_lt: Bytes
+  token_lte: Bytes
+  token_not: Bytes
+  token_not_contains: Bytes
+  token_not_in: [Bytes!]
+}
+
+enum StrategyTokenBalance_orderBy {
+  balance
+  id
+  riskValue
+  strategy
+  strategy__fee
+  strategy__feeProposed
+  strategy__feeProposedTimestamp
+  strategy__id
+  strategy__strategyId
+  token
+}
+
+type StrategyUserBalance {
+  contributor: Account!
+  depositAmount: BigInt!
+  id: String!
+  proposedWithdrawal: BigInt!
+  proposedWithdrawalTimestamp: BigInt!
+  strategy: Strategy!
+  token: Bytes!
+}
+
+input StrategyUserBalance_filter {
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [StrategyUserBalance_filter]
+  contributor: String
+  contributor_: Account_filter
+  contributor_contains: String
+  contributor_contains_nocase: String
+  contributor_ends_with: String
+  contributor_ends_with_nocase: String
+  contributor_gt: String
+  contributor_gte: String
+  contributor_in: [String!]
+  contributor_lt: String
+  contributor_lte: String
+  contributor_not: String
+  contributor_not_contains: String
+  contributor_not_contains_nocase: String
+  contributor_not_ends_with: String
+  contributor_not_ends_with_nocase: String
+  contributor_not_in: [String!]
+  contributor_not_starts_with: String
+  contributor_not_starts_with_nocase: String
+  contributor_starts_with: String
+  contributor_starts_with_nocase: String
+  depositAmount: BigInt
+  depositAmount_gt: BigInt
+  depositAmount_gte: BigInt
+  depositAmount_in: [BigInt!]
+  depositAmount_lt: BigInt
+  depositAmount_lte: BigInt
+  depositAmount_not: BigInt
+  depositAmount_not_in: [BigInt!]
+  id: String
+  id_contains: String
+  id_contains_nocase: String
+  id_ends_with: String
+  id_ends_with_nocase: String
+  id_gt: String
+  id_gte: String
+  id_in: [String!]
+  id_lt: String
+  id_lte: String
+  id_not: String
+  id_not_contains: String
+  id_not_contains_nocase: String
+  id_not_ends_with: String
+  id_not_ends_with_nocase: String
+  id_not_in: [String!]
+  id_not_starts_with: String
+  id_not_starts_with_nocase: String
+  id_starts_with: String
+  id_starts_with_nocase: String
+  or: [StrategyUserBalance_filter]
   proposedWithdrawal: BigInt
   proposedWithdrawalTimestamp: BigInt
   proposedWithdrawalTimestamp_gt: BigInt
@@ -6855,14 +7045,14 @@ input StrategyTokenBalance_filter {
   token_not_in: [Bytes!]
 }
 
-enum StrategyTokenBalance_orderBy {
-  balance
+enum StrategyUserBalance_orderBy {
   contributor
   contributor__feeRecipient
   contributor__id
   contributor__nonce
   contributor__totalDelegatedPercentage
   contributor__validatorCount
+  depositAmount
   id
   proposedWithdrawal
   proposedWithdrawalTimestamp
@@ -7089,6 +7279,7 @@ input Strategy_filter {
   and: [Strategy_filter]
   bApps_: StrategyBAppOptIn_filter
   balances_: StrategyTokenBalance_filter
+  deposits_: StrategyUserBalance_filter
   fee: BigInt
   feeProposed: BigInt
   feeProposedTimestamp: BigInt
@@ -7168,6 +7359,7 @@ input Strategy_filter {
 enum Strategy_orderBy {
   bApps
   balances
+  deposits
   fee
   feeProposed
   feeProposedTimestamp
@@ -7325,6 +7517,32 @@ type Subscription {
     subgraphError: _SubgraphErrorPolicy_! = deny
     where: BAppRegistered_filter
   ): [BAppRegistered!]!
+  bappToken(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    id: ID!
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): BAppToken
+  bappTokens(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    first: Int = 100
+    orderBy: BAppToken_orderBy
+    orderDirection: OrderDirection
+    skip: Int = 0
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+    where: BAppToken_filter
+  ): [BAppToken!]!
   bappTokensCreated(
     """
     The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
@@ -8380,32 +8598,6 @@ type Subscription {
     subgraphError: _SubgraphErrorPolicy_! = deny
     where: OwnershipTransferred_filter
   ): [OwnershipTransferred!]!
-  sharedRiskLevel(
-    """
-    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
-    """
-    block: Block_height
-    id: ID!
-    """
-    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
-    """
-    subgraphError: _SubgraphErrorPolicy_! = deny
-  ): SharedRiskLevel
-  sharedRiskLevels(
-    """
-    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
-    """
-    block: Block_height
-    first: Int = 100
-    orderBy: SharedRiskLevel_orderBy
-    orderDirection: OrderDirection
-    skip: Int = 0
-    """
-    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
-    """
-    subgraphError: _SubgraphErrorPolicy_! = deny
-    where: SharedRiskLevel_filter
-  ): [SharedRiskLevel!]!
   strategies(
     """
     The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
@@ -8588,6 +8780,32 @@ type Subscription {
     subgraphError: _SubgraphErrorPolicy_! = deny
     where: StrategyTokenBalance_filter
   ): [StrategyTokenBalance!]!
+  strategyUserBalance(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    id: ID!
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): StrategyUserBalance
+  strategyUserBalances(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    first: Int = 100
+    orderBy: StrategyUserBalance_orderBy
+    orderDirection: OrderDirection
+    skip: Int = 0
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+    where: StrategyUserBalance_filter
+  ): [StrategyUserBalance!]!
   strategyWithdrawal(
     """
     The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.

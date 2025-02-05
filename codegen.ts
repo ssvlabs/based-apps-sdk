@@ -3,9 +3,9 @@ import type { CodegenConfig } from '@graphql-codegen/cli'
 const config: CodegenConfig = {
   generates: {
     // First Graph (existing SSV Network)
-    './src/graphql/ssv/': {
+    './src/graphql/dvt/': {
       schema: 'https://api.studio.thegraph.com/query/71118/ssv-network-ethereum/version/latest',
-      documents: ['src/**/*.ssv.graphql'],
+      documents: ['src/**/*.dvt.graphql'],
       preset: 'client',
       config: {
         scalars: {
@@ -50,7 +50,7 @@ const config: CodegenConfig = {
       ],
       //   plugins: ['typescript', 'typescript-operations', 'typescript-graphql-request'],
     },
-    './schema.ssv.graphql': {
+    './schema.dvt.graphql': {
       schema: 'https://api.studio.thegraph.com/query/71118/ssv-network-ethereum/version/latest',
       plugins: ['schema-ast'],
       config: {

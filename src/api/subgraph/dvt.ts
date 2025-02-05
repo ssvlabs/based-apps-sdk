@@ -77,7 +77,7 @@ export const getValidatorsByAccount = (
     .request(GetValidatorsByAccountDocument, args)
     .then((res) => res.validators.map((v) => v.id))
 
-export const getSSVQueries = (client: GraphQLClient) => ({
+export const getDVTQueries = (client: GraphQLClient) => ({
   getValidatorsByAccount: getValidatorsByAccount.bind(null, client) as RemoveConfigArg<
     typeof getValidatorsByAccount
   >,

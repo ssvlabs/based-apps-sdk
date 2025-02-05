@@ -13,3 +13,31 @@ query GetStrategyBAppOptIns($bAppId: Bytes!) {
     }
   }
 }
+query GetParticipantWeightInput($bAppId: ID!) {
+  bapp(id: $bAppId) {
+    bAppTokens {
+      token
+      sharedRiskLevel
+      totalObligatedBalance
+    }
+    strategies {
+      obligations {
+        obligatedBalance
+        token
+      }
+      strategy {
+        id
+        owner {
+          delegators {
+            percentage
+            id
+          }
+        }
+        balances {
+          token
+          riskValue
+        }
+      }
+    }
+  }
+}

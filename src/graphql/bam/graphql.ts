@@ -37,6 +37,7 @@ export type Account_Filter = {
   bApps_?: InputMaybe<BApp_Filter>;
   clusters_?: InputMaybe<Cluster_Filter>;
   delegators_?: InputMaybe<Delegation_Filter>;
+  deposits_?: InputMaybe<StrategyUserBalance_Filter>;
   feeRecipient?: InputMaybe<Scalars['Bytes']['input']>;
   feeRecipient_contains?: InputMaybe<Scalars['Bytes']['input']>;
   feeRecipient_gt?: InputMaybe<Scalars['Bytes']['input']>;
@@ -69,7 +70,6 @@ export type Account_Filter = {
   or?: InputMaybe<Array<InputMaybe<Account_Filter>>>;
   receivers_?: InputMaybe<Delegation_Filter>;
   strategies_?: InputMaybe<Strategy_Filter>;
-  strategyTokenBalances_?: InputMaybe<StrategyTokenBalance_Filter>;
   totalDelegatedPercentage?: InputMaybe<Scalars['BigInt']['input']>;
   totalDelegatedPercentage_gt?: InputMaybe<Scalars['BigInt']['input']>;
   totalDelegatedPercentage_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -93,13 +93,13 @@ export enum Account_OrderBy {
   BApps = 'bApps',
   Clusters = 'clusters',
   Delegators = 'delegators',
+  Deposits = 'deposits',
   FeeRecipient = 'feeRecipient',
   Id = 'id',
   Nonce = 'nonce',
   Operators = 'operators',
   Receivers = 'receivers',
   Strategies = 'strategies',
-  StrategyTokenBalances = 'strategyTokenBalances',
   TotalDelegatedPercentage = 'totalDelegatedPercentage',
   ValidatorCount = 'validatorCount',
   Validators = 'validators'
@@ -133,11 +133,38 @@ export type BAppConstants_Filter = {
   id_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
   id_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
   or?: InputMaybe<Array<InputMaybe<BAppConstants_Filter>>>;
+  totalAccounts?: InputMaybe<Scalars['BigInt']['input']>;
+  totalAccounts_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalAccounts_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalAccounts_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalAccounts_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalAccounts_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalAccounts_not?: InputMaybe<Scalars['BigInt']['input']>;
+  totalAccounts_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalBApps?: InputMaybe<Scalars['BigInt']['input']>;
+  totalBApps_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalBApps_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalBApps_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalBApps_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalBApps_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalBApps_not?: InputMaybe<Scalars['BigInt']['input']>;
+  totalBApps_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalStrategies?: InputMaybe<Scalars['BigInt']['input']>;
+  totalStrategies_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalStrategies_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalStrategies_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalStrategies_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalStrategies_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalStrategies_not?: InputMaybe<Scalars['BigInt']['input']>;
+  totalStrategies_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
 };
 
 export enum BAppConstants_OrderBy {
   MaxFeeIncrement = '_maxFeeIncrement',
-  Id = 'id'
+  Id = 'id',
+  TotalAccounts = 'totalAccounts',
+  TotalBApps = 'totalBApps',
+  TotalStrategies = 'totalStrategies'
 }
 
 export type BAppMetadataUriUpdated_Filter = {
@@ -424,6 +451,90 @@ export enum BAppRegistered_OrderBy {
   TransactionHash = 'transactionHash'
 }
 
+export type BAppToken_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<BAppToken_Filter>>>;
+  bApp?: InputMaybe<Scalars['String']['input']>;
+  bApp_?: InputMaybe<BApp_Filter>;
+  bApp_contains?: InputMaybe<Scalars['String']['input']>;
+  bApp_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  bApp_ends_with?: InputMaybe<Scalars['String']['input']>;
+  bApp_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  bApp_gt?: InputMaybe<Scalars['String']['input']>;
+  bApp_gte?: InputMaybe<Scalars['String']['input']>;
+  bApp_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  bApp_lt?: InputMaybe<Scalars['String']['input']>;
+  bApp_lte?: InputMaybe<Scalars['String']['input']>;
+  bApp_not?: InputMaybe<Scalars['String']['input']>;
+  bApp_not_contains?: InputMaybe<Scalars['String']['input']>;
+  bApp_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  bApp_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  bApp_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  bApp_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  bApp_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  bApp_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  bApp_starts_with?: InputMaybe<Scalars['String']['input']>;
+  bApp_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  id_contains?: InputMaybe<Scalars['String']['input']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  id_ends_with?: InputMaybe<Scalars['String']['input']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  id_gt?: InputMaybe<Scalars['String']['input']>;
+  id_gte?: InputMaybe<Scalars['String']['input']>;
+  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  id_lt?: InputMaybe<Scalars['String']['input']>;
+  id_lte?: InputMaybe<Scalars['String']['input']>;
+  id_not?: InputMaybe<Scalars['String']['input']>;
+  id_not_contains?: InputMaybe<Scalars['String']['input']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  id_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  id_starts_with?: InputMaybe<Scalars['String']['input']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  or?: InputMaybe<Array<InputMaybe<BAppToken_Filter>>>;
+  sharedRiskLevel?: InputMaybe<Scalars['BigInt']['input']>;
+  sharedRiskLevel_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  sharedRiskLevel_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  sharedRiskLevel_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  sharedRiskLevel_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  sharedRiskLevel_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  sharedRiskLevel_not?: InputMaybe<Scalars['BigInt']['input']>;
+  sharedRiskLevel_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  token?: InputMaybe<Scalars['Bytes']['input']>;
+  token_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  token_gt?: InputMaybe<Scalars['Bytes']['input']>;
+  token_gte?: InputMaybe<Scalars['Bytes']['input']>;
+  token_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  token_lt?: InputMaybe<Scalars['Bytes']['input']>;
+  token_lte?: InputMaybe<Scalars['Bytes']['input']>;
+  token_not?: InputMaybe<Scalars['Bytes']['input']>;
+  token_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  token_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  totalObligatedBalance?: InputMaybe<Scalars['BigInt']['input']>;
+  totalObligatedBalance_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalObligatedBalance_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalObligatedBalance_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalObligatedBalance_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalObligatedBalance_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalObligatedBalance_not?: InputMaybe<Scalars['BigInt']['input']>;
+  totalObligatedBalance_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+};
+
+export enum BAppToken_OrderBy {
+  BApp = 'bApp',
+  BAppId = 'bApp__id',
+  BAppMetadataUri = 'bApp__metadataURI',
+  Id = 'id',
+  SharedRiskLevel = 'sharedRiskLevel',
+  Token = 'token',
+  TotalObligatedBalance = 'totalObligatedBalance'
+}
+
 export type BAppTokensCreated_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
@@ -578,7 +689,7 @@ export type BApp_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<BApp_Filter>>>;
-  bAppTokens_?: InputMaybe<SharedRiskLevel_Filter>;
+  bAppTokens_?: InputMaybe<BAppToken_Filter>;
   id?: InputMaybe<Scalars['Bytes']['input']>;
   id_contains?: InputMaybe<Scalars['Bytes']['input']>;
   id_gt?: InputMaybe<Scalars['Bytes']['input']>;
@@ -2772,6 +2883,14 @@ export type Obligation_Filter = {
   id_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   id_starts_with?: InputMaybe<Scalars['String']['input']>;
   id_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  obligatedBalance?: InputMaybe<Scalars['BigInt']['input']>;
+  obligatedBalance_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  obligatedBalance_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  obligatedBalance_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  obligatedBalance_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  obligatedBalance_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  obligatedBalance_not?: InputMaybe<Scalars['BigInt']['input']>;
+  obligatedBalance_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   or?: InputMaybe<Array<InputMaybe<Obligation_Filter>>>;
   percentage?: InputMaybe<Scalars['BigInt']['input']>;
   percentageProposed?: InputMaybe<Scalars['BigInt']['input']>;
@@ -2797,6 +2916,27 @@ export type Obligation_Filter = {
   percentage_lte?: InputMaybe<Scalars['BigInt']['input']>;
   percentage_not?: InputMaybe<Scalars['BigInt']['input']>;
   percentage_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  strategyBAppOptIn?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_?: InputMaybe<StrategyBAppOptIn_Filter>;
+  strategyBAppOptIn_contains?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_ends_with?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_gt?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_gte?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  strategyBAppOptIn_lt?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_lte?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_not?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_not_contains?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  strategyBAppOptIn_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_starts_with?: InputMaybe<Scalars['String']['input']>;
+  strategyBAppOptIn_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   token?: InputMaybe<Scalars['Bytes']['input']>;
   token_contains?: InputMaybe<Scalars['Bytes']['input']>;
   token_gt?: InputMaybe<Scalars['Bytes']['input']>;
@@ -2811,9 +2951,12 @@ export type Obligation_Filter = {
 
 export enum Obligation_OrderBy {
   Id = 'id',
+  ObligatedBalance = 'obligatedBalance',
   Percentage = 'percentage',
   PercentageProposed = 'percentageProposed',
   PercentageProposedTimestamp = 'percentageProposedTimestamp',
+  StrategyBAppOptIn = 'strategyBAppOptIn',
+  StrategyBAppOptInId = 'strategyBAppOptIn__id',
   Token = 'token'
 }
 
@@ -4119,81 +4262,6 @@ export enum OwnershipTransferred_OrderBy {
   TransactionHash = 'transactionHash'
 }
 
-export type SharedRiskLevel_Filter = {
-  /** Filter for the block changed event. */
-  _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<SharedRiskLevel_Filter>>>;
-  bApp?: InputMaybe<Scalars['String']['input']>;
-  bApp_?: InputMaybe<BApp_Filter>;
-  bApp_contains?: InputMaybe<Scalars['String']['input']>;
-  bApp_contains_nocase?: InputMaybe<Scalars['String']['input']>;
-  bApp_ends_with?: InputMaybe<Scalars['String']['input']>;
-  bApp_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  bApp_gt?: InputMaybe<Scalars['String']['input']>;
-  bApp_gte?: InputMaybe<Scalars['String']['input']>;
-  bApp_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  bApp_lt?: InputMaybe<Scalars['String']['input']>;
-  bApp_lte?: InputMaybe<Scalars['String']['input']>;
-  bApp_not?: InputMaybe<Scalars['String']['input']>;
-  bApp_not_contains?: InputMaybe<Scalars['String']['input']>;
-  bApp_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
-  bApp_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  bApp_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  bApp_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  bApp_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  bApp_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  bApp_starts_with?: InputMaybe<Scalars['String']['input']>;
-  bApp_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['String']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_contains_nocase?: InputMaybe<Scalars['String']['input']>;
-  id_ends_with?: InputMaybe<Scalars['String']['input']>;
-  id_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
-  id_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  id_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  id_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  id_starts_with?: InputMaybe<Scalars['String']['input']>;
-  id_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  or?: InputMaybe<Array<InputMaybe<SharedRiskLevel_Filter>>>;
-  sharedRiskLevel?: InputMaybe<Scalars['BigInt']['input']>;
-  sharedRiskLevel_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  sharedRiskLevel_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  sharedRiskLevel_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  sharedRiskLevel_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  sharedRiskLevel_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  sharedRiskLevel_not?: InputMaybe<Scalars['BigInt']['input']>;
-  sharedRiskLevel_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  token?: InputMaybe<Scalars['Bytes']['input']>;
-  token_contains?: InputMaybe<Scalars['Bytes']['input']>;
-  token_gt?: InputMaybe<Scalars['Bytes']['input']>;
-  token_gte?: InputMaybe<Scalars['Bytes']['input']>;
-  token_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
-  token_lt?: InputMaybe<Scalars['Bytes']['input']>;
-  token_lte?: InputMaybe<Scalars['Bytes']['input']>;
-  token_not?: InputMaybe<Scalars['Bytes']['input']>;
-  token_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
-  token_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
-};
-
-export enum SharedRiskLevel_OrderBy {
-  BApp = 'bApp',
-  BAppId = 'bApp__id',
-  BAppMetadataUri = 'bApp__metadataURI',
-  Id = 'id',
-  SharedRiskLevel = 'sharedRiskLevel',
-  Token = 'token'
-}
-
 export type StrategyBAppOptIn_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
@@ -4239,13 +4307,7 @@ export type StrategyBAppOptIn_Filter = {
   id_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   id_starts_with?: InputMaybe<Scalars['String']['input']>;
   id_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  obligations?: InputMaybe<Array<Scalars['String']['input']>>;
   obligations_?: InputMaybe<Obligation_Filter>;
-  obligations_contains?: InputMaybe<Array<Scalars['String']['input']>>;
-  obligations_contains_nocase?: InputMaybe<Array<Scalars['String']['input']>>;
-  obligations_not?: InputMaybe<Array<Scalars['String']['input']>>;
-  obligations_not_contains?: InputMaybe<Array<Scalars['String']['input']>>;
-  obligations_not_contains_nocase?: InputMaybe<Array<Scalars['String']['input']>>;
   or?: InputMaybe<Array<InputMaybe<StrategyBAppOptIn_Filter>>>;
   strategy?: InputMaybe<Scalars['String']['input']>;
   strategy_?: InputMaybe<Strategy_Filter>;
@@ -4641,27 +4703,6 @@ export type StrategyTokenBalance_Filter = {
   balance_lte?: InputMaybe<Scalars['BigInt']['input']>;
   balance_not?: InputMaybe<Scalars['BigInt']['input']>;
   balance_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  contributor?: InputMaybe<Scalars['String']['input']>;
-  contributor_?: InputMaybe<Account_Filter>;
-  contributor_contains?: InputMaybe<Scalars['String']['input']>;
-  contributor_contains_nocase?: InputMaybe<Scalars['String']['input']>;
-  contributor_ends_with?: InputMaybe<Scalars['String']['input']>;
-  contributor_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  contributor_gt?: InputMaybe<Scalars['String']['input']>;
-  contributor_gte?: InputMaybe<Scalars['String']['input']>;
-  contributor_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  contributor_lt?: InputMaybe<Scalars['String']['input']>;
-  contributor_lte?: InputMaybe<Scalars['String']['input']>;
-  contributor_not?: InputMaybe<Scalars['String']['input']>;
-  contributor_not_contains?: InputMaybe<Scalars['String']['input']>;
-  contributor_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
-  contributor_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  contributor_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  contributor_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  contributor_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  contributor_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  contributor_starts_with?: InputMaybe<Scalars['String']['input']>;
-  contributor_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   id_contains?: InputMaybe<Scalars['String']['input']>;
   id_contains_nocase?: InputMaybe<Scalars['String']['input']>;
@@ -4683,6 +4724,114 @@ export type StrategyTokenBalance_Filter = {
   id_starts_with?: InputMaybe<Scalars['String']['input']>;
   id_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   or?: InputMaybe<Array<InputMaybe<StrategyTokenBalance_Filter>>>;
+  riskValue?: InputMaybe<Scalars['BigInt']['input']>;
+  riskValue_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  riskValue_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  riskValue_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  riskValue_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  riskValue_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  riskValue_not?: InputMaybe<Scalars['BigInt']['input']>;
+  riskValue_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  strategy?: InputMaybe<Scalars['String']['input']>;
+  strategy_?: InputMaybe<Strategy_Filter>;
+  strategy_contains?: InputMaybe<Scalars['String']['input']>;
+  strategy_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  strategy_ends_with?: InputMaybe<Scalars['String']['input']>;
+  strategy_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  strategy_gt?: InputMaybe<Scalars['String']['input']>;
+  strategy_gte?: InputMaybe<Scalars['String']['input']>;
+  strategy_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  strategy_lt?: InputMaybe<Scalars['String']['input']>;
+  strategy_lte?: InputMaybe<Scalars['String']['input']>;
+  strategy_not?: InputMaybe<Scalars['String']['input']>;
+  strategy_not_contains?: InputMaybe<Scalars['String']['input']>;
+  strategy_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  strategy_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  strategy_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  strategy_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  strategy_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  strategy_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  strategy_starts_with?: InputMaybe<Scalars['String']['input']>;
+  strategy_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['Bytes']['input']>;
+  token_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  token_gt?: InputMaybe<Scalars['Bytes']['input']>;
+  token_gte?: InputMaybe<Scalars['Bytes']['input']>;
+  token_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  token_lt?: InputMaybe<Scalars['Bytes']['input']>;
+  token_lte?: InputMaybe<Scalars['Bytes']['input']>;
+  token_not?: InputMaybe<Scalars['Bytes']['input']>;
+  token_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  token_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+};
+
+export enum StrategyTokenBalance_OrderBy {
+  Balance = 'balance',
+  Id = 'id',
+  RiskValue = 'riskValue',
+  Strategy = 'strategy',
+  StrategyFee = 'strategy__fee',
+  StrategyFeeProposed = 'strategy__feeProposed',
+  StrategyFeeProposedTimestamp = 'strategy__feeProposedTimestamp',
+  StrategyId = 'strategy__id',
+  StrategyStrategyId = 'strategy__strategyId',
+  Token = 'token'
+}
+
+export type StrategyUserBalance_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<StrategyUserBalance_Filter>>>;
+  contributor?: InputMaybe<Scalars['String']['input']>;
+  contributor_?: InputMaybe<Account_Filter>;
+  contributor_contains?: InputMaybe<Scalars['String']['input']>;
+  contributor_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  contributor_ends_with?: InputMaybe<Scalars['String']['input']>;
+  contributor_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  contributor_gt?: InputMaybe<Scalars['String']['input']>;
+  contributor_gte?: InputMaybe<Scalars['String']['input']>;
+  contributor_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  contributor_lt?: InputMaybe<Scalars['String']['input']>;
+  contributor_lte?: InputMaybe<Scalars['String']['input']>;
+  contributor_not?: InputMaybe<Scalars['String']['input']>;
+  contributor_not_contains?: InputMaybe<Scalars['String']['input']>;
+  contributor_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  contributor_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  contributor_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  contributor_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  contributor_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  contributor_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  contributor_starts_with?: InputMaybe<Scalars['String']['input']>;
+  contributor_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  depositAmount?: InputMaybe<Scalars['BigInt']['input']>;
+  depositAmount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  depositAmount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  depositAmount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  depositAmount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  depositAmount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  depositAmount_not?: InputMaybe<Scalars['BigInt']['input']>;
+  depositAmount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  id_contains?: InputMaybe<Scalars['String']['input']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  id_ends_with?: InputMaybe<Scalars['String']['input']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  id_gt?: InputMaybe<Scalars['String']['input']>;
+  id_gte?: InputMaybe<Scalars['String']['input']>;
+  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  id_lt?: InputMaybe<Scalars['String']['input']>;
+  id_lte?: InputMaybe<Scalars['String']['input']>;
+  id_not?: InputMaybe<Scalars['String']['input']>;
+  id_not_contains?: InputMaybe<Scalars['String']['input']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  id_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  id_starts_with?: InputMaybe<Scalars['String']['input']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  or?: InputMaybe<Array<InputMaybe<StrategyUserBalance_Filter>>>;
   proposedWithdrawal?: InputMaybe<Scalars['BigInt']['input']>;
   proposedWithdrawalTimestamp?: InputMaybe<Scalars['BigInt']['input']>;
   proposedWithdrawalTimestamp_gt?: InputMaybe<Scalars['BigInt']['input']>;
@@ -4732,14 +4881,14 @@ export type StrategyTokenBalance_Filter = {
   token_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
 };
 
-export enum StrategyTokenBalance_OrderBy {
-  Balance = 'balance',
+export enum StrategyUserBalance_OrderBy {
   Contributor = 'contributor',
   ContributorFeeRecipient = 'contributor__feeRecipient',
   ContributorId = 'contributor__id',
   ContributorNonce = 'contributor__nonce',
   ContributorTotalDelegatedPercentage = 'contributor__totalDelegatedPercentage',
   ContributorValidatorCount = 'contributor__validatorCount',
+  DepositAmount = 'depositAmount',
   Id = 'id',
   ProposedWithdrawal = 'proposedWithdrawal',
   ProposedWithdrawalTimestamp = 'proposedWithdrawalTimestamp',
@@ -4943,6 +5092,7 @@ export type Strategy_Filter = {
   and?: InputMaybe<Array<InputMaybe<Strategy_Filter>>>;
   bApps_?: InputMaybe<StrategyBAppOptIn_Filter>;
   balances_?: InputMaybe<StrategyTokenBalance_Filter>;
+  deposits_?: InputMaybe<StrategyUserBalance_Filter>;
   fee?: InputMaybe<Scalars['BigInt']['input']>;
   feeProposed?: InputMaybe<Scalars['BigInt']['input']>;
   feeProposedTimestamp?: InputMaybe<Scalars['BigInt']['input']>;
@@ -5022,6 +5172,7 @@ export type Strategy_Filter = {
 export enum Strategy_OrderBy {
   BApps = 'bApps',
   Balances = 'balances',
+  Deposits = 'deposits',
   Fee = 'fee',
   FeeProposed = 'feeProposed',
   FeeProposedTimestamp = 'feeProposedTimestamp',
@@ -5513,5 +5664,13 @@ export type GetStrategyBAppOptInsQueryVariables = Exact<{
 
 export type GetStrategyBAppOptInsQuery = { strategyBAppOptIns: Array<{ id: string, strategy: { balances: Array<{ token: Address, balance: string }> }, obligations: Array<{ token: Address, percentage: string }> }> };
 
+export type GetParticipantWeightInputQueryVariables = Exact<{
+  bAppId: Scalars['ID']['input'];
+}>;
+
+
+export type GetParticipantWeightInputQuery = { bapp?: { bAppTokens: Array<{ token: Address, sharedRiskLevel: string, totalObligatedBalance: string }>, strategies: Array<{ obligations: Array<{ obligatedBalance: string, token: Address }>, strategy: { id: string, owner: { delegators: Array<{ percentage: string, id: string }> }, balances: Array<{ token: Address, riskValue: string }> } }> } | null };
+
 
 export const GetStrategyBAppOptInsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetStrategyBAppOptIns"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"bAppId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Bytes"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"strategyBAppOptIns"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"bApp_"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"bAppId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"strategy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"balances"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"balance"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"obligations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"percentage"}}]}}]}}]}}]} as unknown as DocumentNode<GetStrategyBAppOptInsQuery, GetStrategyBAppOptInsQueryVariables>;
+export const GetParticipantWeightInputDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetParticipantWeightInput"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"bAppId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bapp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"bAppId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bAppTokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"sharedRiskLevel"}},{"kind":"Field","name":{"kind":"Name","value":"totalObligatedBalance"}}]}},{"kind":"Field","name":{"kind":"Name","value":"strategies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"obligations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"obligatedBalance"}},{"kind":"Field","name":{"kind":"Name","value":"token"}}]}},{"kind":"Field","name":{"kind":"Name","value":"strategy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delegators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"percentage"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"balances"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"riskValue"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetParticipantWeightInputQuery, GetParticipantWeightInputQueryVariables>;

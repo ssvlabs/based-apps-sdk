@@ -1,5 +1,5 @@
 import type { APIs } from '@/api'
-import { getBappSlashableBalance, getValidatorsBalance } from '@/api/based-apps-api'
+import { calculateParticipantWeights, getBappSlashableBalance, getValidatorsBalance } from '@/api/based-apps-api'
 import type { GetValidatorBalancesResponse } from '@/api/beacon-chain-api'
 import type { Address } from 'viem'
 import { describe, expect, it, vi } from 'vitest'
@@ -8,8 +8,9 @@ import { describe, expect, it, vi } from 'vitest'
 const mockGetValidatorsByAccount = vi.fn()
 const mockGetValidatorBalances = vi.fn()
 const mockGetStrategyBAppOptIns = vi.fn()
+const mockGetParticipantWeightInput = vi.fn()
 
-const mockAPIs: APIs = {
+const mockAPIs = {
   dvt: {
     getValidatorsByAccount: mockGetValidatorsByAccount,
   },
@@ -18,10 +19,12 @@ const mockAPIs: APIs = {
   },
   bam: {
     getStrategyBAppOptIns: mockGetStrategyBAppOptIns,
+    getParticipantWeightInput: mockGetParticipantWeightInput,
   },
-} as APIs
+} satisfies APIs
 
 describe('Based Apps API Tests', () => {
+
   describe('getValidatorsBalance', () => {
     it('should calculate total balance correctly', async () => {
       const mockValidators = ['0x1234', '0x5678'] as `0x${string}`[]
@@ -103,13 +106,11 @@ describe('Based Apps API Tests', () => {
               { token: '0xtoken1' as Address, balance: '1000000' },
               { token: '0xtoken2' as Address, balance: '1000000' },
             ],
-
           },
           obligations: [
             { token: '0xtoken1' as Address, percentage: '7500' },
             { token: '0xtoken2' as Address, percentage: '2500' },
           ],
-
         },
       ]
 
@@ -133,6 +134,257 @@ describe('Based Apps API Tests', () => {
       })
 
       expect(response).toEqual([])
+    })
+  })
+
+  describe('calculateParticipantWeights', () => {
+    it('should calculate weights correctly for single strategy and token', async () => {
+      const mockBAppData = {
+        bAppTokens: [
+          {
+            token: '0xtoken1' as Address,
+            sharedRiskLevel: '5000', // β = 0.5
+            totalObligatedBalance: '1000000',
+          },
+        ],
+        strategies: [
+          {
+            strategy: {
+              id: 'strategy1',
+              balances: [
+                { token: '0xtoken1' as Address, riskValue: '10000' },
+              ],
+              owner: { 
+                id: '0xowner1' as Address,
+                delegators: [] 
+              },
+            },
+            obligations: [
+              { 
+                token: '0xtoken1' as Address, 
+                obligatedBalance: '1000000',
+                percentage: '5000', // 50% obligation
+              },
+            ],
+          },
+        ],
+      }
+
+      mockGetParticipantWeightInput.mockResolvedValue(mockBAppData)
+
+      const response = await calculateParticipantWeights(mockAPIs, {
+        bAppId: '0xbapp1' as Address,
+      })
+
+      // With risk = 0.5 and β = 0.5, e^(-0.5 * 1) ≈ 0.6065
+      // Since there's only one strategy, c_token = 1/0.6065 ≈ 1.649
+      // Final weight = 1.649 * 1 * 0.6065 = 1
+      expect(response).toHaveLength(1)
+      expect(response[0].strategyId).toBe('strategy1')
+      expect(response[0].token).toBe('0xtoken1')
+      expect(response[0].weight).toBeCloseTo(1, 4)
+      expect(response[0].finalWeight).toBeCloseTo(1, 4)
+    })
+
+    it('should handle multiple strategies with different risks', async () => {
+      const mockBAppData = {
+        bAppTokens: [
+          {
+            token: '0xtoken1' as Address,
+            sharedRiskLevel: '5000', // β = 0.5
+            totalObligatedBalance: '2000000',
+          },
+        ],
+        strategies: [
+          {
+            strategy: {
+              id: 'strategy1',
+              balances: [
+                { token: '0xtoken1' as Address, riskValue: '10000' },
+              ],
+              owner: { 
+                id: '0xowner1' as Address,
+                delegators: [] 
+              },
+            },
+            obligations: [
+              { 
+                token: '0xtoken1' as Address, 
+                obligatedBalance: '1000000',
+                percentage: '5000', // 50% obligation
+              },
+            ],
+          },
+          {
+            strategy: {
+              id: 'strategy2',
+              balances: [
+                { token: '0xtoken1' as Address, riskValue: '20000' },
+              ],
+              owner: { 
+                id: '0xowner2' as Address,
+                delegators: [] 
+              },
+            },
+            obligations: [
+              { 
+                token: '0xtoken1' as Address, 
+                obligatedBalance: '1000000',
+                percentage: '7500', // 75% obligation = higher risk
+              },
+            ],
+          },
+        ],
+      }
+
+      mockGetParticipantWeightInput.mockResolvedValue(mockBAppData)
+
+      const response = await calculateParticipantWeights(mockAPIs, {
+        bAppId: '0xbapp1' as Address,
+      })
+
+      expect(response).toHaveLength(2)
+      
+      // Strategy1: risk = 0.5, β = 0.5, e^(-0.5 * 1) ≈ 0.6065
+      // Strategy2: risk = 0.75, β = 0.5, e^(-0.5 * 1) ≈ 0.6065 (max(1,risk) = 1)
+      // Both have same risk-adjusted weight because max(1,risk) caps at 1
+      expect(response[0].weight).toBeCloseTo(0.5, 4)
+      expect(response[1].weight).toBeCloseTo(0.5, 4)
+      
+      // Weights should sum to 1
+      expect(response[0].weight + response[1].weight).toBeCloseTo(1, 4)
+    })
+
+    it('should handle validator balances', async () => {
+      const mockValidators = ['0x1234', '0x5678'] as `0x${string}`[]
+      const mockBalances = {
+        data: [
+          { balance: '32000000000', index: '0' },
+          { balance: '32000000000', index: '1' },
+        ],
+        execution_optimistic: false,
+        finalized: true,
+      }
+
+      const mockBAppData = {
+        bAppTokens: [
+          {
+            token: '0xtoken1' as Address,
+            sharedRiskLevel: '5000',
+            totalObligatedBalance: '1000000',
+          },
+        ],
+        strategies: [
+          {
+            strategy: {
+              id: 'strategy1',
+              balances: [
+                { token: '0xtoken1' as Address, riskValue: '10000' },
+              ],
+              owner: { 
+                id: '0xowner1' as Address,
+                delegators: [
+                  { percentage: '5000', id: '0xdelegator1' }, // 50% delegation
+                ],
+              },
+            },
+            obligations: [
+              { 
+                token: '0xtoken1' as Address, 
+                obligatedBalance: '1000000',
+                percentage: '5000',
+              },
+            ],
+          },
+        ],
+      }
+
+      mockGetParticipantWeightInput.mockResolvedValue(mockBAppData)
+      mockGetValidatorsByAccount.mockResolvedValue(mockValidators)
+      mockGetValidatorBalances.mockResolvedValue(mockBalances)
+
+      const response = await calculateParticipantWeights(mockAPIs, {
+        bAppId: '0xbapp1' as Address,
+      })
+
+      expect(response).toHaveLength(2) // One for token, one for validator balance
+      
+      // Check validator balance weight
+      const validatorWeight = response.find(
+        w => w.token === '0x0000000000000000000000000000000000000000',
+      )
+      expect(validatorWeight).toBeDefined()
+      expect(validatorWeight!.weight).toBe(32) // 50% of 64 ETH
+    })
+
+    it('should handle zero total obligated balance', async () => {
+      const mockBAppData = {
+        bAppTokens: [
+          {
+            token: '0xtoken1' as Address,
+            sharedRiskLevel: '5000',
+            totalObligatedBalance: '0',
+          },
+        ],
+        strategies: [],
+      }
+
+      mockGetParticipantWeightInput.mockResolvedValue(mockBAppData)
+
+      const response = await calculateParticipantWeights(mockAPIs, {
+        bAppId: '0xbapp1' as Address,
+      })
+
+      expect(response).toEqual([])
+    })
+
+    it('should handle missing obligations or balances', async () => {
+      const mockBAppData = {
+        bAppTokens: [
+          {
+            token: '0xtoken1' as Address,
+            sharedRiskLevel: '5000',
+            totalObligatedBalance: '1000000',
+          },
+        ],
+        strategies: [
+          {
+            strategy: {
+              id: 'strategy1',
+              balances: [],
+              owner: { 
+                id: '0xowner1' as Address,
+                delegators: [] 
+              },
+            },
+            obligations: [
+              { 
+                token: '0xtoken1' as Address, 
+                obligatedBalance: '1000000',
+                percentage: '5000',
+              },
+            ],
+          },
+        ],
+      }
+
+      mockGetParticipantWeightInput.mockResolvedValue(mockBAppData)
+
+      const response = await calculateParticipantWeights(mockAPIs, {
+        bAppId: '0xbapp1' as Address,
+      })
+
+      expect(response).toEqual([])
+    })
+
+    it('should throw error when bApp not found', async () => {
+      mockGetParticipantWeightInput.mockResolvedValue(null)
+
+      await expect(
+        calculateParticipantWeights(mockAPIs, {
+          bAppId: '0xbapp1' as Address,
+        }),
+      ).rejects.toThrow('bApp not found')
     })
   })
 })
