@@ -8,16 +8,25 @@ export const getValidatorsBalance = async (
   args: Parameters<APIs['dvt']['getValidatorsByAccount']>[0],
 ) => {
   const validators = await apis.dvt.getValidatorsByAccount(args)
-  const chunks = chunk(validators, 50)
 
-  const promises = chunks.map((chunk) =>
-    apis.beacon.getValidatorBalances({
-      stateId: 'head',
-      validatorIds: chunk,
-    }),
+  if (!validators.length)
+    return {
+      account: args.account,
+      validators: [],
+      balance: '0',
+    }
+
+  const chunks = chunk(validators, 500)
+
+  const results = await Promise.all(
+    chunks.map((chunk) =>
+      apis.beacon.getValidatorBalances({
+        stateId: 'head',
+        validatorIds: chunk,
+      }),
+    ),
   )
 
-  const results = await Promise.all(promises)
   const data = results.flatMap((v) => v.data)
 
   const totalBalance = formatGwei(
@@ -176,32 +185,23 @@ export const calculateParticipantWeights = async (
     const strategy = strategyData.strategy
     if (!strategy.owner.delegators.length) continue
 
-    let totalDelegatedBalance = 0
-    for (const delegator of strategy.owner.delegators) {
-      totalDelegatedBalance += Number(delegator.percentage) / 10000
-    }
-
-    if (totalDelegatedBalance > 0) {
-      const validatorBalance = await apis.dvt
-        .getValidatorsByAccount({
-          account: strategy.owner.id,
-        })
-        .then(async (validators) => {
-          if (!validators.length) return '0'
-          const balances = await apis.beacon.getValidatorBalances({
-            stateId: 'head',
-            validatorIds: validators,
+    console.log('strategy.owner.delegators:', strategy.owner.delegators)
+    const balances = await Promise.all(
+      strategy.owner.delegators
+        .filter((d) => Number(d.percentage) > 0)
+        .map(async (delegator) => {
+          const { balance } = await getValidatorsBalance(apis, {
+            account: delegator.delegator.id,
           })
-          return formatGwei(balances.data.reduce((acc, v) => acc + BigInt(v.balance), 0n))
-        })
+          return (BigInt(balance) * BigInt(delegator.percentage)) / 10000n
+        }),
+    )
 
-      const effectiveBalance =
-        (BigInt(validatorBalance) * BigInt(Math.floor(totalDelegatedBalance * 10000))) / 10000n
+    const effectiveBalance = balances.reduce((acc, balance) => acc + balance, 0n)
 
-      const strategyWeight = strategyWeightsMap.get(strategy.id)
-      if (strategyWeight) {
-        strategyWeight.validatorBalanceWeight = Number(effectiveBalance)
-      }
+    const strategyWeight = strategyWeightsMap.get(strategy.id)
+    if (strategyWeight) {
+      strategyWeight.validatorBalanceWeight = Number(effectiveBalance)
     }
   }
 
