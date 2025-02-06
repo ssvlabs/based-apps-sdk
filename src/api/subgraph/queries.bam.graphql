@@ -24,13 +24,17 @@ query GetParticipantWeightInput($bAppId: ID!) {
       obligations {
         obligatedBalance
         token
+        percentage
       }
       strategy {
         id
         owner {
+          id
           delegators {
             percentage
-            id
+            delegator {
+              id
+            }
           }
         }
         balances {

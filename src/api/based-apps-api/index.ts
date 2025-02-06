@@ -64,30 +64,44 @@ export interface ParticipantWeight {
   finalWeight?: number // Optional final combined weight
 }
 
+export interface TokenWeight {
+  token: Address
+  weight: number
+}
+
+export interface StrategyWeight {
+  id: string
+  tokenWeights: TokenWeight[]
+  validatorBalanceWeight?: number
+}
+
 export const calculateParticipantWeights = async (
   apis: APIs,
   args: { bAppId: Address },
-): Promise<ParticipantWeight[]> => {
+): Promise<StrategyWeight[]> => {
+  console.log(' apis.bam.getParticipantWeightInput:', apis.bam.getParticipantWeightInput)
   const bAppData = await apis.bam.getParticipantWeightInput(args)
   if (!bAppData) {
     throw new Error('bApp not found')
   }
 
-  const weights: ParticipantWeight[] = []
+  // Initialize strategy weights map
+  const strategyWeightsMap = new Map<string, StrategyWeight>()
   const riskByTokenAndStrategy = new Map<string, Map<string, number>>()
 
   // First pass: Calculate risks for each token and strategy
   for (const strategyData of bAppData.strategies) {
-    const strategy = strategyData.strategy as {
-      id: string
-      balances: { token: Address; riskValue: string }[]
-      owner: { id: Address; delegators: { percentage: string; id: string }[] }
-    }
-    const strategyId = strategy.id
+    const strategy = strategyData.strategy
+
+    // Initialize strategy weight object
+    strategyWeightsMap.set(strategy.id, {
+      id: strategy.id,
+      tokenWeights: [],
+    })
 
     // Sum all percentages for each token
     const tokenRisks = new Map<string, number>()
-    for (const obligation of strategyData.obligations as { token: Address; obligatedBalance: string; percentage: string }[]) {
+    for (const obligation of strategyData.obligations) {
       const token = obligation.token.toLowerCase()
       const currentRisk = tokenRisks.get(token) ?? 0
       tokenRisks.set(token, currentRisk + Number(obligation.percentage) / 10000) // Divide by 100 to get risk
@@ -98,22 +112,22 @@ export const calculateParticipantWeights = async (
       if (!riskByTokenAndStrategy.has(token)) {
         riskByTokenAndStrategy.set(token, new Map())
       }
-      riskByTokenAndStrategy.get(token)!.set(strategyId, risk)
+      riskByTokenAndStrategy.get(token)!.set(strategy.id, risk)
     }
   }
 
   // Process each token in the bApp
   for (const bAppToken of bAppData.bAppTokens) {
-    const token = bAppToken.token as Address
+    const token = bAppToken.token
     const tokenLower = token.toLowerCase()
-    const beta = Number(bAppToken.sharedRiskLevel) / 10000 // Normalize beta to 0-1 range
+    const beta = Number(bAppToken.sharedRiskLevel) / 10000
     const totalObligatedBalance = BigInt(bAppToken.totalObligatedBalance)
 
     if (totalObligatedBalance === 0n) continue
 
     // Calculate normalization constant c_token
     let normalizationDenominator = 0
-    const strategyWeights: { strategyId: string; weight: number }[] = []
+    const tempWeights: { strategyId: string; weight: number }[] = []
 
     // Calculate the denominator sum for c_token
     for (const strategyData of bAppData.strategies) {
@@ -126,50 +140,40 @@ export const calculateParticipantWeights = async (
       if (!obligation) continue
 
       // Check if we have balance info for this token
-      const balance = strategy.balances.find(
-        (bal) => bal.token.toLowerCase() === tokenLower,
-      )
+      const balance = strategy.balances.find((bal) => bal.token.toLowerCase() === tokenLower)
       if (!balance) continue
 
       const obligatedBalance = BigInt(obligation.obligatedBalance)
       const risk = Math.max(1, riskByTokenAndStrategy.get(tokenLower)?.get(strategyId) ?? 0)
 
-      // Calculate e^(-β × max(1,Risk))
       const exponentialTerm = Math.exp(-beta * risk)
-      
-      // Add to denominator: ObligatedBalance/TotalBAppBalance * e^(-β × max(1,Risk))
-      const term = Number(obligatedBalance) / Number(totalObligatedBalance) * exponentialTerm
+      const term = (Number(obligatedBalance) / Number(totalObligatedBalance)) * exponentialTerm
       normalizationDenominator += term
 
-      strategyWeights.push({
+      tempWeights.push({
         strategyId,
         weight: term,
       })
     }
 
-    // If no valid strategies found, skip this token
-    if (strategyWeights.length === 0) continue
-
     // Calculate c_token as the inverse of the sum
     const cToken = normalizationDenominator === 0 ? 0 : 1 / normalizationDenominator
 
     // Calculate final weights using c_token
-    for (const { strategyId, weight } of strategyWeights) {
-      weights.push({
-        strategyId,
-        token,
-        weight: weight * cToken,
-      })
+    for (const { strategyId, weight } of tempWeights) {
+      const strategyWeight = strategyWeightsMap.get(strategyId)
+      if (strategyWeight) {
+        strategyWeight.tokenWeights.push({
+          token,
+          weight: weight * cToken,
+        })
+      }
     }
   }
 
   // Handle validator balances if present
   for (const strategyData of bAppData.strategies) {
-    const strategy = strategyData.strategy as {
-      id: string
-      balances: { token: Address; riskValue: string }[]
-      owner: { id: Address; delegators: { percentage: string; id: string }[] }
-    }
+    const strategy = strategyData.strategy
     if (!strategy.owner.delegators.length) continue
 
     let totalDelegatedBalance = 0
@@ -178,62 +182,30 @@ export const calculateParticipantWeights = async (
     }
 
     if (totalDelegatedBalance > 0) {
-      // Get validator balance from beacon chain
-      const validatorBalance = await apis.dvt.getValidatorsByAccount({
-        account: strategy.owner.id,
-      }).then(async (validators) => {
-        if (!validators.length) return '0'
-        const balances = await apis.beacon.getValidatorBalances({
-          stateId: 'head',
-          validatorIds: validators,
+      const validatorBalance = await apis.dvt
+        .getValidatorsByAccount({
+          account: strategy.owner.id,
         })
-        return formatGwei(
-          balances.data.reduce((acc, v) => acc + BigInt(v.balance), 0n),
-        )
-      })
+        .then(async (validators) => {
+          if (!validators.length) return '0'
+          const balances = await apis.beacon.getValidatorBalances({
+            stateId: 'head',
+            validatorIds: validators,
+          })
+          return formatGwei(balances.data.reduce((acc, v) => acc + BigInt(v.balance), 0n))
+        })
 
-      // Calculate validator balance weight (no risk involved)
-      const effectiveBalance = (BigInt(validatorBalance) * BigInt(Math.floor(totalDelegatedBalance * 10000))) / 10000n
-      
-      weights.push({
-        strategyId: strategy.id,
-        token: '0x0000000000000000000000000000000000000000' as Address, // Special token for validator balance
-        weight: Number(effectiveBalance),
-      })
-    }
-  }
+      const effectiveBalance =
+        (BigInt(validatorBalance) * BigInt(Math.floor(totalDelegatedBalance * 10000))) / 10000n
 
-  // Optional: Calculate final combined weights using weighted harmonic mean
-  // This is an example using equal weights for all tokens
-  const strategyIds = new Set(weights.map(w => w.strategyId))
-  const tokenWeights = new Map<string, number>() // Equal weights for all tokens
-  bAppData.bAppTokens.forEach(token => {
-    tokenWeights.set(token.token.toLowerCase(), 1)
-  })
-
-  for (const strategyId of strategyIds) {
-    const strategyWeights = weights.filter(w => w.strategyId === strategyId)
-    if (strategyWeights.length === 0) continue
-
-    // Calculate harmonic mean denominator
-    let denominator = 0
-    let totalWeight = 0
-    for (const w of strategyWeights) {
-      const tokenWeight = tokenWeights.get(w.token.toLowerCase()) ?? 0
-      if (tokenWeight > 0 && w.weight > 0) {
-        denominator += tokenWeight / w.weight
-        totalWeight += tokenWeight
+      const strategyWeight = strategyWeightsMap.get(strategy.id)
+      if (strategyWeight) {
+        strategyWeight.validatorBalanceWeight = Number(effectiveBalance)
       }
     }
-
-    // Calculate final weight
-    const finalWeight = totalWeight / denominator
-    strategyWeights.forEach(w => {
-      w.finalWeight = finalWeight
-    })
   }
 
-  return weights
+  return Array.from(strategyWeightsMap.values())
 }
 
 export const getBasedAppsAPI = (apis: APIs) => {

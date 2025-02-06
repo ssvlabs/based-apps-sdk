@@ -9,13 +9,7 @@ import {
   roundOperatorFee,
   stringifyBigints,
 } from '@/utils/bigint'
-import {
-  add0x,
-  createClusterId,
-  createEmptyCluster,
-  getClusterSnapshot,
-  isClusterId,
-} from '@/utils/cluster'
+import { add0x, createClusterId, createEmptyCluster, isClusterId } from '@/utils/cluster'
 import {
   ensureNoKeysharesErrors,
   ensureValidatorsUniqueness,
@@ -312,27 +306,6 @@ describe('Cluster Utils', () => {
     expect(isClusterId(invalidAddress)).toBe(false)
     expect(isClusterId(tooFewOperators)).toBe(false)
     expect(isClusterId(invalidOperators)).toBe(false)
-  })
-
-  test('getClusterSnapshot converts cluster data correctly', () => {
-    const clusterData = {
-      active: true,
-      balance: '1000000000000000000',
-      index: '1',
-      networkFeeIndex: '2',
-      validatorCount: '3',
-      operatorIds: ['1', '2', '3', '4'],
-    }
-
-    const snapshot = getClusterSnapshot(clusterData)
-
-    expect(snapshot).toEqual({
-      active: true,
-      balance: 1000000000000000000n,
-      index: 1n,
-      networkFeeIndex: 2n,
-      validatorCount: 3,
-    })
   })
 
   test('createEmptyCluster creates default cluster snapshot', () => {

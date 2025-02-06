@@ -1,4 +1,3 @@
-import type { GetClusterQuery } from '@/graphql/graphql'
 import type { ClusterSnapshot } from '@/types/contract-interactions'
 import { merge } from 'lodash-es'
 import type { Hex } from 'viem'
@@ -20,17 +19,6 @@ export const isClusterId = (clusterId: string) => {
   )
 }
 
-export const getClusterSnapshot = (
-  cluster: NonNullable<GetClusterQuery['cluster']>,
-): ClusterSnapshot => {
-  return {
-    active: cluster.active,
-    balance: BigInt(cluster.balance),
-    index: BigInt(cluster.index),
-    networkFeeIndex: BigInt(cluster.networkFeeIndex),
-    validatorCount: +cluster.validatorCount,
-  }
-}
 export const createEmptyCluster = (cluster: Partial<ClusterSnapshot> = {}): ClusterSnapshot =>
   merge(
     {

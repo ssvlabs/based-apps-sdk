@@ -180,10 +180,11 @@ describe('Based Apps API Tests', () => {
       // Since there's only one strategy, c_token = 1/0.6065 ≈ 1.649
       // Final weight = 1.649 * 1 * 0.6065 = 1
       expect(response).toHaveLength(1)
-      expect(response[0].strategyId).toBe('strategy1')
-      expect(response[0].token).toBe('0xtoken1')
-      expect(response[0].weight).toBeCloseTo(1, 4)
-      expect(response[0].finalWeight).toBeCloseTo(1, 4)
+      expect(response[0].id).toBe('strategy1')
+      expect(response[0].tokenWeights).toHaveLength(1)
+      expect(response[0].tokenWeights[0].token).toBe('0xtoken1')
+      expect(response[0].tokenWeights[0].weight).toBeCloseTo(1, 4)
+      expect(response[0].validatorBalanceWeight).toBeUndefined()
     })
 
     it('should handle multiple strategies with different risks', async () => {
@@ -248,11 +249,12 @@ describe('Based Apps API Tests', () => {
       // Strategy1: risk = 0.5, β = 0.5, e^(-0.5 * 1) ≈ 0.6065
       // Strategy2: risk = 0.75, β = 0.5, e^(-0.5 * 1) ≈ 0.6065 (max(1,risk) = 1)
       // Both have same risk-adjusted weight because max(1,risk) caps at 1
-      expect(response[0].weight).toBeCloseTo(0.5, 4)
-      expect(response[1].weight).toBeCloseTo(0.5, 4)
+      expect(response[0].tokenWeights[0].weight).toBeCloseTo(0.5, 4)
+      expect(response[1].tokenWeights[0].weight).toBeCloseTo(0.5, 4)
       
       // Weights should sum to 1
-      expect(response[0].weight + response[1].weight).toBeCloseTo(1, 4)
+      const totalWeight = response.reduce((sum, s) => sum + s.tokenWeights[0].weight, 0)
+      expect(totalWeight).toBeCloseTo(1, 4)
     })
 
     it('should handle validator balances', async () => {
@@ -307,14 +309,10 @@ describe('Based Apps API Tests', () => {
         bAppId: '0xbapp1' as Address,
       })
 
-      expect(response).toHaveLength(2) // One for token, one for validator balance
-      
-      // Check validator balance weight
-      const validatorWeight = response.find(
-        w => w.token === '0x0000000000000000000000000000000000000000',
-      )
-      expect(validatorWeight).toBeDefined()
-      expect(validatorWeight!.weight).toBe(32) // 50% of 64 ETH
+      expect(response).toHaveLength(1)
+      expect(response[0].id).toBe('strategy1')
+      expect(response[0].tokenWeights).toHaveLength(1)
+      expect(response[0].validatorBalanceWeight).toBe(32) // 50% of 64 ETH
     })
 
     it('should handle zero total obligated balance', async () => {
@@ -326,7 +324,19 @@ describe('Based Apps API Tests', () => {
             totalObligatedBalance: '0',
           },
         ],
-        strategies: [],
+        strategies: [
+          {
+            strategy: {
+              id: 'strategy1',
+              balances: [],
+              owner: { 
+                id: '0xowner1' as Address,
+                delegators: [] 
+              },
+            },
+            obligations: [],
+          },
+        ],
       }
 
       mockGetParticipantWeightInput.mockResolvedValue(mockBAppData)
@@ -335,7 +345,9 @@ describe('Based Apps API Tests', () => {
         bAppId: '0xbapp1' as Address,
       })
 
-      expect(response).toEqual([])
+      expect(response).toHaveLength(1)
+      expect(response[0].tokenWeights).toHaveLength(0)
+      expect(response[0].validatorBalanceWeight).toBeUndefined()
     })
 
     it('should handle missing obligations or balances', async () => {
@@ -374,7 +386,9 @@ describe('Based Apps API Tests', () => {
         bAppId: '0xbapp1' as Address,
       })
 
-      expect(response).toEqual([])
+      expect(response).toHaveLength(1)
+      expect(response[0].tokenWeights).toHaveLength(0)
+      expect(response[0].validatorBalanceWeight).toBeUndefined()
     })
 
     it('should throw error when bApp not found', async () => {

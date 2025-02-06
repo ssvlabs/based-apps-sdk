@@ -1,6 +1,5 @@
 export * from './bigint'
 export * from './cluster'
-export * from './contract'
 export * from './keyshares'
 export * from './number'
 export * from './operator'

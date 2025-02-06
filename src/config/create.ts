@@ -103,7 +103,7 @@ export const createConfig = (props: ConfigArgs): ConfigReturnType => {
   const apis: APIs = {
     dvt: createQueries(dvtGraphQLClient),
     beacon: createBeaconChainAPI(beaconchainEndpoint),
-    bam: createBAMQueries(dvtGraphQLClient),
+    bam: createBAMQueries(bamGraphQLClient),
   }
 
   return {
