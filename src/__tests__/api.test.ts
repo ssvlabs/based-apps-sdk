@@ -1,5 +1,9 @@
 import type { APIs } from '@/api'
-import { calculateParticipantWeights, getBappSlashableBalance, getValidatorsBalance } from '@/api/based-apps-api'
+import {
+  calculateParticipantWeights,
+  getBappSlashableBalance,
+  getValidatorsBalance,
+} from '@/api/based-apps-api'
 import type { GetValidatorBalancesResponse } from '@/api/beacon-chain-api'
 import type { Address } from 'viem'
 import { describe, expect, it, vi } from 'vitest'
@@ -24,7 +28,6 @@ const mockAPIs = {
 } satisfies APIs
 
 describe('Based Apps API Tests', () => {
-
   describe('getValidatorsBalance', () => {
     it('should calculate total balance correctly', async () => {
       const mockValidators = ['0x1234', '0x5678'] as `0x${string}`[]
@@ -151,17 +154,15 @@ describe('Based Apps API Tests', () => {
           {
             strategy: {
               id: 'strategy1',
-              balances: [
-                { token: '0xtoken1' as Address, riskValue: '10000' },
-              ],
-              owner: { 
+              balances: [{ token: '0xtoken1' as Address, riskValue: '10000' }],
+              owner: {
                 id: '0xowner1' as Address,
-                delegators: [] 
+                delegators: [],
               },
             },
             obligations: [
-              { 
-                token: '0xtoken1' as Address, 
+              {
+                token: '0xtoken1' as Address,
                 obligatedBalance: '1000000',
                 percentage: '5000', // 50% obligation
               },
@@ -200,17 +201,15 @@ describe('Based Apps API Tests', () => {
           {
             strategy: {
               id: 'strategy1',
-              balances: [
-                { token: '0xtoken1' as Address, riskValue: '10000' },
-              ],
-              owner: { 
+              balances: [{ token: '0xtoken1' as Address, riskValue: '10000' }],
+              owner: {
                 id: '0xowner1' as Address,
-                delegators: [] 
+                delegators: [],
               },
             },
             obligations: [
-              { 
-                token: '0xtoken1' as Address, 
+              {
+                token: '0xtoken1' as Address,
                 obligatedBalance: '1000000',
                 percentage: '5000', // 50% obligation
               },
@@ -219,17 +218,15 @@ describe('Based Apps API Tests', () => {
           {
             strategy: {
               id: 'strategy2',
-              balances: [
-                { token: '0xtoken1' as Address, riskValue: '20000' },
-              ],
-              owner: { 
+              balances: [{ token: '0xtoken1' as Address, riskValue: '20000' }],
+              owner: {
                 id: '0xowner2' as Address,
-                delegators: [] 
+                delegators: [],
               },
             },
             obligations: [
-              { 
-                token: '0xtoken1' as Address, 
+              {
+                token: '0xtoken1' as Address,
                 obligatedBalance: '1000000',
                 percentage: '7500', // 75% obligation = higher risk
               },
@@ -245,13 +242,13 @@ describe('Based Apps API Tests', () => {
       })
 
       expect(response).toHaveLength(2)
-      
+
       // Strategy1: risk = 0.5, β = 0.5, e^(-0.5 * 1) ≈ 0.6065
       // Strategy2: risk = 0.75, β = 0.5, e^(-0.5 * 1) ≈ 0.6065 (max(1,risk) = 1)
       // Both have same risk-adjusted weight because max(1,risk) caps at 1
       expect(response[0].tokenWeights[0].weight).toBeCloseTo(0.5, 4)
       expect(response[1].tokenWeights[0].weight).toBeCloseTo(0.5, 4)
-      
+
       // Weights should sum to 1
       const totalWeight = response.reduce((sum, s) => sum + s.tokenWeights[0].weight, 0)
       expect(totalWeight).toBeCloseTo(1, 4)
@@ -280,19 +277,17 @@ describe('Based Apps API Tests', () => {
           {
             strategy: {
               id: 'strategy1',
-              balances: [
-                { token: '0xtoken1' as Address, riskValue: '10000' },
-              ],
-              owner: { 
+              balances: [{ token: '0xtoken1' as Address, riskValue: '10000' }],
+              owner: {
                 id: '0xowner1' as Address,
                 delegators: [
-                  { percentage: '5000', id: '0xdelegator1' }, // 50% delegation
+                  { percentage: '5000', delegator: { id: '0xdelegator1' } }, // 50% delegation
                 ],
               },
             },
             obligations: [
-              { 
-                token: '0xtoken1' as Address, 
+              {
+                token: '0xtoken1' as Address,
                 obligatedBalance: '1000000',
                 percentage: '5000',
               },
@@ -329,9 +324,9 @@ describe('Based Apps API Tests', () => {
             strategy: {
               id: 'strategy1',
               balances: [],
-              owner: { 
+              owner: {
                 id: '0xowner1' as Address,
-                delegators: [] 
+                delegators: [],
               },
             },
             obligations: [],
@@ -364,14 +359,14 @@ describe('Based Apps API Tests', () => {
             strategy: {
               id: 'strategy1',
               balances: [],
-              owner: { 
+              owner: {
                 id: '0xowner1' as Address,
-                delegators: [] 
+                delegators: [],
               },
             },
             obligations: [
-              { 
-                token: '0xtoken1' as Address, 
+              {
+                token: '0xtoken1' as Address,
                 obligatedBalance: '1000000',
                 percentage: '5000',
               },
