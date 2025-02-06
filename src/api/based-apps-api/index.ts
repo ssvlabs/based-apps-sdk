@@ -179,12 +179,14 @@ export const calculateParticipantWeights = async (
     }
   }
 
+  const delegatedBalances = new Map<string, bigint>()
+  let totalValidatorsBalance = 0n
+
   // Handle validator balances if present
   for (const strategyData of bAppData.strategies) {
     const strategy = strategyData.strategy
     if (!strategy.owner.delegators.length) continue
 
-    console.log('strategy.owner.delegators:', strategy.owner.delegators)
     const balances = await Promise.all(
       strategy.owner.delegators
         .filter((d) => Number(d.percentage) > 0)
@@ -192,15 +194,27 @@ export const calculateParticipantWeights = async (
           const { balance } = await getValidatorsBalance(apis, {
             account: delegator.delegator.id,
           })
-          return (BigInt(balance) * BigInt(delegator.percentage)) / 10000n
+          return {
+            total: BigInt(balance),
+            delegated: (BigInt(balance) * BigInt(delegator.percentage)) / 10000n,
+          }
         }),
     )
 
-    const effectiveBalance = balances.reduce((acc, balance) => acc + balance, 0n)
+    const delegatedBalance = balances.reduce((acc, balance) => acc + balance.delegated, 0n)
+    delegatedBalances.set(strategy.id, delegatedBalance)
 
-    const strategyWeight = strategyWeightsMap.get(strategy.id)
-    if (strategyWeight) {
-      strategyWeight.validatorBalanceWeight = Number(effectiveBalance)
+    const totalBalance = balances.reduce((acc, balance) => acc + balance.total, 0n)
+    totalValidatorsBalance += totalBalance
+  }
+
+  if (totalValidatorsBalance > 0n) {
+    for (const [strategyId, delegatedBalance] of delegatedBalances.entries()) {
+      const strategyWeight = strategyWeightsMap.get(strategyId)
+      if (strategyWeight) {
+        strategyWeight.validatorBalanceWeight =
+          Number(delegatedBalance) / Number(totalValidatorsBalance)
+      }
     }
   }
 
