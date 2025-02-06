@@ -88,7 +88,6 @@ export const calculateParticipantWeights = async (
   apis: APIs,
   args: { bAppId: Address },
 ): Promise<StrategyWeight[]> => {
-  console.log(' apis.bam.getParticipantWeightInput:', apis.bam.getParticipantWeightInput)
   const bAppData = await apis.bam.getParticipantWeightInput(args)
   if (!bAppData) {
     throw new Error('bApp not found')
