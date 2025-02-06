@@ -307,7 +307,7 @@ describe('Based Apps API Tests', () => {
       expect(response).toHaveLength(1)
       expect(response[0].id).toBe('strategy1')
       expect(response[0].tokenWeights).toHaveLength(1)
-      expect(response[0].validatorBalanceWeight).toBe(0.5) // 50% of 64 ETH
+      expect(response[0].validatorBalanceWeight).toBe(1) // 50% of 64 ETH
     })
 
     it('should handle zero total obligated balance', async () => {

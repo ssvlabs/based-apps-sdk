@@ -20,7 +20,8 @@ import { bam_graph_endpoints, beaconchain_endpoints, dvt_graph_endpoints } from 
 export type ConfigReturnType = {
   // publicClient: PublicClient
   chain: SupportedChainsIDs
-  api: APIs & ReturnType<typeof createBasedAppsAPI>
+  apis: APIs
+  basedAppsAPI: ReturnType<typeof createBasedAppsAPI>
   graphs: {
     dvt: {
       client: GraphQLClient
@@ -108,12 +109,8 @@ export const createConfig = (props: ConfigArgs): ConfigReturnType => {
 
   return {
     chain,
-    api: {
-      dvt: createQueries(dvtGraphQLClient),
-      beacon: createBeaconChainAPI(beaconchainEndpoint),
-      bam: createBAMQueries(bamGraphQLClient),
-      ...createBasedAppsAPI(apis),
-    },
+    apis: apis,
+    basedAppsAPI: createBasedAppsAPI(apis),
     graphs: {
       dvt: {
         client: dvtGraphQLClient,

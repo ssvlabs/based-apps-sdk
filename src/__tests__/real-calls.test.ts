@@ -10,6 +10,7 @@ describe('BAM Real Calls', () => {
     const basedApps = await sdk.api.calculateParticipantWeights({
       bAppId: '0x64714cf5db177398729e37627be0fc08f43b17a6',
     })
+
     console.log('basedApps:', JSON.stringify(basedApps, null, 2))
   })
 })

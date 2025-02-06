@@ -180,7 +180,7 @@ export const calculateParticipantWeights = async (
   }
 
   const delegatedBalances = new Map<string, bigint>()
-  let totalValidatorsBalance = 0n
+  let totalBAppBalance = 0n
 
   // Handle validator balances if present
   for (const strategyData of bAppData.strategies) {
@@ -204,16 +204,14 @@ export const calculateParticipantWeights = async (
     const delegatedBalance = balances.reduce((acc, balance) => acc + balance.delegated, 0n)
     delegatedBalances.set(strategy.id, delegatedBalance)
 
-    const totalBalance = balances.reduce((acc, balance) => acc + balance.total, 0n)
-    totalValidatorsBalance += totalBalance
+    totalBAppBalance += delegatedBalance
   }
 
-  if (totalValidatorsBalance > 0n) {
+  if (totalBAppBalance > 0n) {
     for (const [strategyId, delegatedBalance] of delegatedBalances.entries()) {
       const strategyWeight = strategyWeightsMap.get(strategyId)
       if (strategyWeight) {
-        strategyWeight.validatorBalanceWeight =
-          Number(delegatedBalance) / Number(totalValidatorsBalance)
+        strategyWeight.validatorBalanceWeight = Number(delegatedBalance) / Number(totalBAppBalance)
       }
     }
   }
