@@ -45,3 +45,37 @@ query GetParticipantWeightInput($bAppId: ID!) {
     }
   }
 }
+
+query GetObligatedBalances($bAppId: ID!) {
+  bapp(id: $bAppId) {
+    bAppTokens {
+      totalObligatedBalance
+      token
+    }
+    strategies {
+      id
+      obligations {
+        token
+        obligatedBalance
+      }
+    }
+  }
+}
+
+query GetBAppDelegators($bAppId: ID!) {
+  bapp(id: $bAppId) {
+    strategies {
+      strategy {
+        id
+        owner {
+          delegators {
+            percentage
+            delegator {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+}

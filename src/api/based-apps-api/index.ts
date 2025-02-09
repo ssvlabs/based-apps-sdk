@@ -217,10 +217,35 @@ export const calculateParticipantWeights = async (
   return Array.from(strategyWeightsMap.values())
 }
 
+export const getDelegatedBalances = async (apis: APIs, args: { bAppId: Address }) => {
+  const bAppDelegators = await apis.bam.getBAppDelegators(args)
+  if (!bAppDelegators) return []
+
+  return Promise.all(
+    bAppDelegators.strategies.map(async (strategy) => {
+      const totalDelegatedBalance = (
+        await Promise.all(
+          strategy.strategy.owner.delegators.map((d) =>
+            getValidatorsBalance(apis, {
+              account: d.delegator.id,
+            }),
+          ),
+        )
+      ).reduce((acc, balance) => acc + Number(balance.balance), 0)
+
+      return {
+        strategyId: strategy.strategy.id,
+        totalDelegatedBalance,
+      }
+    }),
+  )
+}
+
 export const getBasedAppsAPI = (apis: APIs) => {
   return {
     getValidatorsBalance: getValidatorsBalance.bind(null, apis),
     getBappSlashableBalance: getBappSlashableBalance.bind(null, apis),
     calculateParticipantWeights: calculateParticipantWeights.bind(null, apis),
+    getDelegatedBalances: getDelegatedBalances.bind(null, apis),
   }
 }
