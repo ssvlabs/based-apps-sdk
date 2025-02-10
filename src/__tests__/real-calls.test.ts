@@ -1,6 +1,5 @@
 import { BasedAppsSDK } from '@/sdk'
 import { describe, test } from 'vitest'
-import { getObligatedBalances } from '../api/subgraph/bam';
 
 describe('BAM Real Calls', () => {
   const sdk = new BasedAppsSDK({
@@ -23,8 +22,6 @@ describe('BAM Real Calls', () => {
     //   bAppId: '0x64714cf5db177398729e37627be0fc08f43b17a6',
     // })
     // console.log('delegatedBalances:', JSON.stringify(obligatedBalance, null, 2))
-
-
 
     // based apps api functions
     sdk.api.getValidatorsBalance

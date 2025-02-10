@@ -1,14 +1,13 @@
 import type { APIs } from '@/api'
 import { chunk } from 'lodash-es'
 import type { Address } from 'viem'
-import { formatGwei, parseGwei } from 'viem'
+import { parseGwei } from 'viem'
 
 export const getValidatorsBalance = async (
   apis: APIs,
   args: Parameters<APIs['dvt']['getValidatorsByAccount']>[0],
 ) => {
   const validators = await apis.dvt.getValidatorsByAccount(args)
-  console.log('validators:', validators)
 
   if (!validators.length)
     return {
