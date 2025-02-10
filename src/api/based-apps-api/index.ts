@@ -1,7 +1,7 @@
 import type { APIs } from '@/api'
 import { chunk } from 'lodash-es'
 import type { Address } from 'viem'
-import { formatGwei } from 'viem'
+import { formatGwei, parseGwei } from 'viem'
 
 export const getValidatorsBalance = async (
   apis: APIs,
@@ -30,10 +30,12 @@ export const getValidatorsBalance = async (
 
   const data = results.flatMap((v) => v.data)
 
-  const totalBalance = formatGwei(
-    data.reduce((acc, v) => {
-      return acc + BigInt(v.balance)
-    }, 0n),
+  const totalBalance = parseGwei(
+    data
+      .reduce((acc, v) => {
+        return acc + BigInt(v.balance)
+      }, 0n)
+      .toString(),
   )
 
   return {
@@ -195,7 +197,6 @@ export const calculateParticipantWeights = async (
           const response = await getValidatorsBalance(apis, {
             account: delegator.delegator.id,
           })
-          console.log(`balance for delegator:${delegator.delegator.id}`, response)
           return {
             delegated: (Number(response.balance) * Number(delegator.percentage)) / 10000,
           }
@@ -217,13 +218,24 @@ export const calculateParticipantWeights = async (
   return Array.from(strategyWeightsMap.values())
 }
 
-export const getDelegatedBalances = async (apis: APIs, args: { bAppId: Address }) => {
+type GetDelegatedBalancesResponse = {
+  bAppTotalDelegatedBalance: bigint
+  bAppTotalDelegatedBalances: { strategyId: string; delegation: bigint }[]
+}
+export const getDelegatedBalances = async (
+  apis: APIs,
+  args: { bAppId: Address },
+): Promise<GetDelegatedBalancesResponse> => {
   const bAppDelegators = await apis.bam.getBAppDelegators(args)
-  if (!bAppDelegators) return []
+  if (!bAppDelegators)
+    return {
+      bAppTotalDelegatedBalance: 0n,
+      bAppTotalDelegatedBalances: [],
+    }
 
-  return Promise.all(
+  const bAppTotalDelegatedBalances = await Promise.all(
     bAppDelegators.strategies.map(async (strategy) => {
-      const totalDelegatedBalance = (
+      const delegation = (
         await Promise.all(
           strategy.strategy.owner.delegators.map((d) =>
             getValidatorsBalance(apis, {
@@ -231,14 +243,31 @@ export const getDelegatedBalances = async (apis: APIs, args: { bAppId: Address }
             }),
           ),
         )
-      ).reduce((acc, balance) => acc + Number(balance.balance), 0)
+      ).reduce((acc, balance) => acc + BigInt(balance.balance), 0n)
 
       return {
         strategyId: strategy.strategy.id,
-        totalDelegatedBalance,
+        delegation,
       }
     }),
   )
+
+  const bAppTotalDelegatedBalance = bAppTotalDelegatedBalances.reduce(
+    (acc, balance) => acc + balance.delegation,
+    0n,
+  )
+
+  return {
+    bAppTotalDelegatedBalance,
+    bAppTotalDelegatedBalances,
+  }
+}
+
+export const getObligatedBalances = async (apis: APIs, args: { bAppId: Address }) => {
+  const bAppObligations = await apis.bam.getObligatedBalances(args)
+  if (!bAppObligations) return []
+
+  return bAppObligations
 }
 
 export const getBasedAppsAPI = (apis: APIs) => {
@@ -247,5 +276,6 @@ export const getBasedAppsAPI = (apis: APIs) => {
     getBappSlashableBalance: getBappSlashableBalance.bind(null, apis),
     calculateParticipantWeights: calculateParticipantWeights.bind(null, apis),
     getDelegatedBalances: getDelegatedBalances.bind(null, apis),
+    getObligatedBalances: getObligatedBalances.bind(null, apis),
   }
 }

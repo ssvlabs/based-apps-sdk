@@ -19,8 +19,8 @@ export const bam_graph_endpoints: Record<SupportedChainsIDs, string> = {
 }
 
 export const beaconchain_endpoints: Record<SupportedChainsIDs, string> = {
-  [mainnet.id]: 'http://141.95.98.197:31056/',
-  [holesky.id]: 'http://141.95.98.197:31056/',
+  [mainnet.id]: 'http://57.129.73.156:31101',
+  [holesky.id]: 'http://57.129.73.156:31101',
 }
 
 export const rest_endpoints: Record<SupportedChainsIDs, string> = {
