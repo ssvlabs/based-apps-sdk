@@ -1,31 +1,20 @@
-import type { APIs } from '@/api'
 import {
   calculateParticipantWeights,
   getBappSlashableBalance,
   getValidatorsBalance,
 } from '@/api/based-apps-api'
 import type { GetValidatorBalancesResponse } from '@/api/beacon-chain-api'
-import type { Address } from 'viem'
-import { describe, expect, it, vi } from 'vitest'
+import { parseEther, type Address } from 'viem'
+import { describe, expect, it } from 'vitest'
+import {
+  mockGetValidatorsByAccount,
+  mockGetValidatorBalances,
+  mockAPIs,
+  mockGetStrategyBAppOptIns,
+  mockGetParticipantWeightInput,
+} from './mock-api'
 
 // Mock dependencies
-const mockGetValidatorsByAccount = vi.fn()
-const mockGetValidatorBalances = vi.fn()
-const mockGetStrategyBAppOptIns = vi.fn()
-const mockGetParticipantWeightInput = vi.fn()
-
-const mockAPIs = {
-  dvt: {
-    getValidatorsByAccount: mockGetValidatorsByAccount,
-  },
-  beacon: {
-    getValidatorBalances: mockGetValidatorBalances,
-  },
-  bam: {
-    getStrategyBAppOptIns: mockGetStrategyBAppOptIns,
-    getParticipantWeightInput: mockGetParticipantWeightInput,
-  },
-} satisfies APIs
 
 describe('Based Apps API Tests', () => {
   describe('getValidatorsBalance', () => {
@@ -48,7 +37,7 @@ describe('Based Apps API Tests', () => {
       })
 
       expect(response.validators).toEqual(mockValidators)
-      expect(response.balance).toBe('64')
+      expect(response.balance).toBe(parseEther('64'))
       expect(response.account).toBe('0x77fc6e8b24a623725d935bc88057098d0bca6eb3')
     })
   })
