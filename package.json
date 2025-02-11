@@ -1,6 +1,6 @@
 {
-  "name": "@ssv-labs/based-apps-sdk",
-  "version": "0.0.3",
+  "name": "bapps-sdk",
+  "version": "0.0.1",
   "author": "SSV.Labs",
   "description": "ssv labs based apps sdk",
   "keywords": [
