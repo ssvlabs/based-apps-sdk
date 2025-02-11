@@ -13,19 +13,19 @@ describe('BAM Real Calls', () => {
     // })
     // console.log('basedApps:', JSON.stringify(basedApps, null, 2))
 
-    const delegatedBalances = await sdk.api.getDelegatedBalances({
-      bAppId: '0x64714cf5db177398729e37627be0fc08f43b17a6',
-    })
-    console.log('delegatedBalances:', delegatedBalances)
-
-    // const obligatedBalance = await sdk.api.getObligatedBalances({
+    // const delegatedBalances = await sdk.api.getDelegatedBalances({
     //   bAppId: '0x64714cf5db177398729e37627be0fc08f43b17a6',
     // })
-    // console.log('delegatedBalances:', JSON.stringify(obligatedBalance, null, 2))
+    // console.log('delegatedBalances:', delegatedBalances)
+
+    const obligatedBalance = await sdk.api.getObligatedBalances({
+      bAppId: '0x64714cf5db177398729e37627be0fc08f43b17a6',
+    })
+
+    console.log('delegatedBalances:', JSON.stringify(obligatedBalance, null, 2))
 
     // based apps api functions
     sdk.api.getValidatorsBalance
-    sdk.api.getBappSlashableBalance
     sdk.api.calculateParticipantWeights
 
     // access core

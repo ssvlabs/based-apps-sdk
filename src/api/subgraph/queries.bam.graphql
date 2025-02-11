@@ -53,11 +53,14 @@ query GetObligatedBalances($bAppId: ID!) {
       token
     }
     strategies {
-      id
+      strategy {
+        id
+      }
       obligations {
         token
         obligatedBalance
       }
+
     }
   }
 }

@@ -1,17 +1,12 @@
-import {
-  calculateParticipantWeights,
-  getBappSlashableBalance,
-  getValidatorsBalance,
-} from '@/api/based-apps-api'
+import { calculateParticipantWeights, getValidatorsBalance } from '@/api/based-apps-api'
 import type { GetValidatorBalancesResponse } from '@/api/beacon-chain-api'
 import { parseEther, type Address } from 'viem'
 import { describe, expect, it } from 'vitest'
 import {
-  mockGetValidatorsByAccount,
-  mockGetValidatorBalances,
   mockAPIs,
-  mockGetStrategyBAppOptIns,
   mockGetParticipantWeightInput,
+  mockGetValidatorBalances,
+  mockGetValidatorsByAccount,
 } from './mock-api'
 
 // Mock dependencies
@@ -39,93 +34,6 @@ describe('Based Apps API Tests', () => {
       expect(response.validators).toEqual(mockValidators)
       expect(response.balance).toBe(parseEther('64'))
       expect(response.account).toBe('0x77fc6e8b24a623725d935bc88057098d0bca6eb3')
-    })
-  })
-
-  describe('getBappSlashableBalance', () => {
-    it('should calculate slashable balances correctly', async () => {
-      const mockOptIns = [
-        {
-          id: '0x1',
-          strategy: {
-            balances: [
-              { token: '0xtoken1' as Address, balance: '1000000' },
-              { token: '0xtoken2' as Address, balance: '2000000' },
-            ],
-          },
-          obligations: [
-            { token: '0xtoken1' as Address, percentage: '5000' }, // 50%
-            { token: '0xtoken2' as Address, percentage: '2500' }, // 25%
-          ],
-        },
-      ]
-
-      mockGetStrategyBAppOptIns.mockResolvedValue(mockOptIns)
-
-      const response = await getBappSlashableBalance(mockAPIs, {
-        bAppId: '0xbapp1' as Address,
-      })
-
-      expect(response).toEqual([
-        { token: '0xtoken1', balance: 500000n }, // 50% of 1000000
-        { token: '0xtoken2', balance: 500000n }, // 25% of 2000000
-      ])
-
-      expect(mockGetStrategyBAppOptIns).toHaveBeenCalledWith({
-        bAppId: '0xbapp1',
-      })
-    })
-
-    it('should handle multiple strategies and tokens correctly', async () => {
-      const mockOptIns = [
-        {
-          id: '0x1',
-          strategy: {
-            balances: [
-              { token: '0xtoken1' as Address, balance: '1000000' },
-              { token: '0xtoken2' as Address, balance: '1000000' },
-            ],
-          },
-          obligations: [
-            { token: '0xtoken1' as Address, percentage: '5000' },
-            { token: '0xtoken2' as Address, percentage: '2500' },
-          ],
-        },
-        {
-          id: '0x2',
-          strategy: {
-            balances: [
-              { token: '0xtoken1' as Address, balance: '1000000' },
-              { token: '0xtoken2' as Address, balance: '1000000' },
-            ],
-          },
-          obligations: [
-            { token: '0xtoken1' as Address, percentage: '7500' },
-            { token: '0xtoken2' as Address, percentage: '2500' },
-          ],
-        },
-      ]
-
-      mockGetStrategyBAppOptIns.mockResolvedValue(mockOptIns)
-
-      const response = await getBappSlashableBalance(mockAPIs, {
-        bAppId: '0xbapp1' as Address,
-      })
-
-      expect(response).toEqual([
-        { token: '0xtoken1', balance: 1250000n }, // (50% of 1000000) + (75% of 1000000)
-        { token: '0xtoken2', balance: 500000n }, // (25% of 2000000) + (25% of 2000000)
-      ])
-    })
-
-    it('should handle empty responses', async () => {
-      mockGetStrategyBAppOptIns.mockResolvedValue([])
-
-      const response = await getBappSlashableBalance(mockAPIs, {
-        bAppId: '0xbapp1' as Address,
-      })
-
-      expect(response).toEqual([])
     })
   })
 
