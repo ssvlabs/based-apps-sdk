@@ -10,12 +10,12 @@ export const chainIds = Object.values(chains).map((chain) => chain.id)
 export type SupportedChainsIDs = (typeof chainIds)[number]
 
 export const dvt_graph_endpoints: Record<SupportedChainsIDs, string> = {
-  [mainnet.id]: 'https://api.studio.thegraph.com/query/53804/ssv-bapps-subgraph/version/latest/',
-  [holesky.id]: 'https://api.studio.thegraph.com/query/53804/ssv-bapps-subgraph/version/latest/',
+  [mainnet.id]: 'https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/',
+  [holesky.id]: 'https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/',
 }
 export const bam_graph_endpoints: Record<SupportedChainsIDs, string> = {
-  [mainnet.id]: 'https://api.studio.thegraph.com/query/53804/ssv-bapps-subgraph/version/latest/',
-  [holesky.id]: 'https://api.studio.thegraph.com/query/53804/ssv-bapps-subgraph/version/latest/',
+  [mainnet.id]: 'https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/',
+  [holesky.id]: 'https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/',
 }
 
 export const beaconchain_endpoints: Record<SupportedChainsIDs, string> = {
