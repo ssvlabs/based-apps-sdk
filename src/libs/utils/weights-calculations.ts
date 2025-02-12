@@ -6,8 +6,7 @@ interface CoefficientDefinition {
   coefficient: number
 }
 
-export interface WeightCalculationParams {
-  strategyTokenWeights: StrategyWeight[]
+export interface WeightCalculationOptions {
   coefficients: CoefficientDefinition[]
   validatorCoefficient?: number
 }
@@ -71,14 +70,14 @@ const calculateWeightedLogSum = (
 
 /**
  * Calculate strategy weights using arithmetic weighted average.
- * @param {WeightCalculationParams} params - Parameters for weight calculation
+ * @param {StrategyWeight[]} strategyTokenWeights - Array of strategy weights to calculate from
+ * @param {WeightCalculationOptions} options - Configuration containing token coefficients for weight adjustments and an optional validator coefficient
  * @returns {Map<string, number>} - Map of strategy IDs to their calculated weights.
  */
-export const calcSimpleStrategyWeights = ({
-  strategyTokenWeights,
-  coefficients,
-  validatorCoefficient = 0,
-}: WeightCalculationParams): Map<string, number> => {
+export const calcSimpleStrategyWeights = (
+  strategyTokenWeights: StrategyWeight[],
+  { coefficients, validatorCoefficient = 0 }: WeightCalculationOptions,
+): Map<string, number> => {
   const strategyWeights = strategyTokenWeights.reduce((weightMap, strategy) => {
     const { totalWeight, totalCoefficient } = calculateWeightTotals(
       strategy,
@@ -93,14 +92,14 @@ export const calcSimpleStrategyWeights = ({
 
 /**
  * Calculate strategy weights using harmonic weighted average.
- * @param {WeightCalculationParams} params - Parameters for weight calculation
+ * @param {StrategyWeight[]} strategyTokenWeights - Array of strategy weights to calculate from
+ * @param {WeightCalculationOptions} options - Configuration containing token coefficients for weight adjustments and an optional validator coefficient
  * @returns {Map<string, number>} - Map of strategy IDs to their calculated weights.
  */
-export const calcHarmonicStrategyWeights = ({
-  strategyTokenWeights,
-  coefficients,
-  validatorCoefficient = 0,
-}: WeightCalculationParams): Map<string, number> => {
+export const calcHarmonicStrategyWeights = (
+  strategyTokenWeights: StrategyWeight[],
+  { coefficients, validatorCoefficient = 0 }: WeightCalculationOptions,
+): Map<string, number> => {
   const normalizationCoefficient = strategyTokenWeights.reduce(
     (sum, strategy) => sum + calculateHarmonicSum(strategy, coefficients, validatorCoefficient),
     0,
@@ -116,24 +115,19 @@ export const calcHarmonicStrategyWeights = ({
     new Map<string, number>(),
   )
 
-  console.info(
-    `Final Strategy weights: ${JSON.stringify(Object.fromEntries(strategyWeights), undefined, 2)}`,
-  )
   return strategyWeights
 }
 
 /**
  * Calculate strategy weights using geometric weighted average.
- * @param {WeightCalculationParams} params - Parameters for weight calculation
+ * @param {StrategyWeight[]} strategyTokenWeights - Array of strategy weights to calculate from
+ * @param {WeightCalculationOptions} options - Configuration containing token coefficients for weight adjustments and an optional validator coefficient
  * @returns {Map<string, number>} - Map of strategy IDs to their calculated weights.
  */
-export const calcGeometricStrategyWeights = ({
-  strategyTokenWeights,
-  coefficients,
-  validatorCoefficient = 0,
-}: WeightCalculationParams): Map<string, number> => {
-  console.info('Using weighted geometric average to calculate Strategy weights.')
-
+export const calcGeometricStrategyWeights = (
+  strategyTokenWeights: StrategyWeight[],
+  { coefficients, validatorCoefficient = 0 }: WeightCalculationOptions,
+): Map<string, number> => {
   const strategyWeights = strategyTokenWeights.reduce((weightMap, strategy) => {
     const { logSum, totalCoefficient } = calculateWeightedLogSum(
       strategy,
@@ -143,8 +137,5 @@ export const calcGeometricStrategyWeights = ({
     return weightMap.set(strategy.id, Math.exp(logSum / totalCoefficient))
   }, new Map<string, number>())
 
-  console.info(
-    `Final Strategy weights: ${JSON.stringify(Object.fromEntries(strategyWeights), undefined, 2)}`,
-  )
   return strategyWeights
 }
