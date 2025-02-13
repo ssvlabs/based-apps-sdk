@@ -1,31 +1,51 @@
 import type { Address } from 'abitype'
-import { holesky, mainnet } from 'viem/chains'
+import { holesky } from 'viem/chains'
 export const chains = {
-  mainnet,
   holesky,
 } as const
 
 export const chainIds = Object.values(chains).map((chain) => chain.id)
 
+export type SDKEnvironment = 'stage' | 'prod'
+
 export type SupportedChainsIDs = (typeof chainIds)[number]
 
-export const dvt_graph_endpoints: Record<SupportedChainsIDs, string> = {
-  [mainnet.id]: 'https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/',
-  [holesky.id]: 'https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/',
+type EndpointsRecord = Record<SDKEnvironment, Record<SupportedChainsIDs, string>>
+
+export const dvt_graph_endpoints: EndpointsRecord = {
+  stage: {
+    [holesky.id]: 'https://api.studio.thegraph.com/query/53804/ssv-bapps-subgraph/version/latest/',
+  },
+  prod: {
+    [holesky.id]:
+      'https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/',
+  },
 }
-export const bam_graph_endpoints: Record<SupportedChainsIDs, string> = {
-  [mainnet.id]: 'https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/',
-  [holesky.id]: 'https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/',
+export const bam_graph_endpoints: EndpointsRecord = {
+  stage: {
+    [holesky.id]: 'https://api.studio.thegraph.com/query/53804/ssv-bapps-subgraph/version/latest/',
+  },
+  prod: {
+    [holesky.id]:
+      'https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/',
+  },
+}
+export const beaconchain_endpoints: EndpointsRecord = {
+  stage: {
+    [holesky.id]: 'http://57.129.73.156:31101',
+  },
+  prod: {
+    [holesky.id]: 'http://57.129.73.156:31101',
+  },
 }
 
-export const beaconchain_endpoints: Record<SupportedChainsIDs, string> = {
-  [mainnet.id]: 'http://57.129.73.156:31101',
-  [holesky.id]: 'http://57.129.73.156:31101',
-}
-
-export const rest_endpoints: Record<SupportedChainsIDs, string> = {
-  [mainnet.id]: 'https://api.ssv.network/api/v4/mainnet',
-  [holesky.id]: 'https://api.ssv.network/api/v4/holesky',
+export const rest_endpoints: EndpointsRecord = {
+  stage: {
+    [holesky.id]: 'https://api.ssv.network/api/v4/holesky',
+  },
+  prod: {
+    [holesky.id]: 'https://api.ssv.network/api/v4/holesky',
+  },
 }
 
 export type ContractAddresses = {
@@ -34,11 +54,6 @@ export type ContractAddresses = {
   token: Address
 }
 export const contracts: Record<SupportedChainsIDs, ContractAddresses> = {
-  [mainnet.id]: {
-    setter: '0xDD9BC35aE942eF0cFa76930954a156B3fF30a4E1',
-    getter: '0xafE830B6Ee262ba11cce5F32fDCd760FFE6a66e4',
-    token: '0x9D65fF81a3c488d585bBfb0Bfe3c7707c7917f54',
-  },
   [holesky.id]: {
     setter: '0x38A4794cCEd47d3baf7370CcC43B560D3a1beEFA',
     getter: '0x352A18AEe90cdcd825d1E37d9939dCA86C00e281',

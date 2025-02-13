@@ -14,12 +14,13 @@ import type { ConfigArgs } from '@/utils/zod/config'
 import { configArgsSchema } from '@/utils/zod/config'
 import { GraphQLClient } from 'graphql-request'
 import type { PublicClient, WalletClient } from 'viem'
-import type { ContractAddresses, SupportedChainsIDs } from './chains'
+import type { ContractAddresses, SDKEnvironment, SupportedChainsIDs } from './chains'
 import { bam_graph_endpoints, beaconchain_endpoints, dvt_graph_endpoints } from './chains'
 
 export type ConfigReturnType = {
   // publicClient: PublicClient
   chain: SupportedChainsIDs
+  env: SDKEnvironment
   apis: APIs
   basedAppsAPI: ReturnType<typeof createBasedAppsAPI>
   graphs: {
@@ -38,9 +39,10 @@ export const isConfig = (props: unknown): props is ConfigReturnType => {
   return (
     typeof props === 'object' &&
     props !== null &&
-    'publicClient' in props &&
     'chain' in props &&
-    'api' in props &&
+    'env' in props &&
+    'apis' in props &&
+    'basedAppsAPI' in props &&
     'graphs' in props
   )
 }
@@ -88,15 +90,15 @@ export const createContractInteractions = ({
 
 export const createConfig = (props: ConfigArgs): ConfigReturnType => {
   const parsed = configArgsSchema.parse(props)
-  const { chain } = parsed
+  const { chain, env } = parsed
   // const { publicClient } = parsed
   // if (!publicClient.chain || !chainIds.includes(publicClient.chain?.id as SupportedChainsIDs))
   //   throw new Error(`Chain must be one of ${chainIds.join(', ')}`)
 
-  const beaconchainEndpoint = beaconchain_endpoints[chain]
+  const beaconchainEndpoint = beaconchain_endpoints[env][chain]
 
-  const dvtGraphEndpoint = dvt_graph_endpoints[chain]
-  const bamGraphEndpoint = bam_graph_endpoints[chain]
+  const dvtGraphEndpoint = dvt_graph_endpoints[env][chain]
+  const bamGraphEndpoint = bam_graph_endpoints[env][chain]
 
   const dvtGraphQLClient = new GraphQLClient(dvtGraphEndpoint)
   const bamGraphQLClient = new GraphQLClient(bamGraphEndpoint)
@@ -109,6 +111,7 @@ export const createConfig = (props: ConfigArgs): ConfigReturnType => {
 
   return {
     chain,
+    env,
     apis: apis,
     basedAppsAPI: createBasedAppsAPI(apis),
     graphs: {
