@@ -10,7 +10,7 @@
   </a>
 </p>
 
-> **⚠️ Development Notice**: This SDK is currently under active development and testing. It is not recommended for production use at this time. For updates and documentation, please refer to our [official documentation](https://docs.ssv.network).
+> **⚠️ Development Notice**: This SDK is currently under active development and testing. It is not recommended for production use at this time. For updates and documentation, please refer to our [official documentation](https://docs.ssv.network/based-applications/developers/BA-SDK/).
 
 ## Overview
 
@@ -28,13 +28,13 @@ The SDK consists of three main modules:
 
 ```bash
 # Using npm
-npm i @ssv-labs/ba-sdk
+npm i @ssv-labs/bapps-sdk
 
 # Using yarn
-yarn add @ssv-labs/ba-sdk
+yarn add @ssv-labs/bapps-sdk
 
 # Using pnpm
-pnpm install @ssv-labs/ba-sdk
+pnpm install @ssv-labs/bapps-sdk
 ```
 
 ## Quick Start
@@ -42,7 +42,7 @@ pnpm install @ssv-labs/ba-sdk
 ### Initialize the SDK
 
 ```typescript
-import { BasedAppsSDK } from 'bam-sdk'
+import { BasedAppsSDK } from "@ssv-labs/bapps-sdk";
 
 const sdk = new BasedAppsSDK({
   chain: 17000,
@@ -53,23 +53,23 @@ const sdk = new BasedAppsSDK({
 
 ```typescript
 // get validator balance of a given account
-const response = await sdk.api.bam.getValidatorsBalance({
-  account: '0x77fc6e8b24a623725d935bc88057098d0bca6eb3',
-})
+const validatorBalance = await sdk.api.getValidatorsBalance({
+    account: '0x77fc6e8b24a623725d935bc88057098d0bca6eb3',
+});
 
-console.log('response:', response)
+console.log('response:', validatorBalance)
 ```
 
-### Calculate Participants Weights
+### Calculate Strategy Weights
 
 ```ts
 const strategiesWeights = await sdk.utils.getParticipantWeights({
   bAppId: '0x64714cf5db177398729e37627be0fc08f43b17a6',
 })
 
-console.log('response:', response)
+console.log('response:', strategyTokenWeights)
 ```
 
 ## Documentation
 
-For detailed documentation and examples, visit our [official documentation](https://docs.ssv.network).
+For detailed documentation and examples, visit our [official documentation](https://docs.ssv.network/based-applications/developers/BA-SDK/).
