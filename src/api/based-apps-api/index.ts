@@ -45,7 +45,7 @@ export const getValidatorsBalance = async (
   }
 }
 
-export const calculateParticipantWeights = async (
+export const getParticipantWeights = async (
   apis: APIs,
   args: { bAppId: Address },
 ): Promise<StrategyWeight[]> => {
@@ -231,7 +231,7 @@ export const getObligatedBalances = async (apis: APIs, args: { bAppId: Address }
 export const getBasedAppsAPI = (apis: APIs) => {
   return {
     getValidatorsBalance: getValidatorsBalance.bind(null, apis),
-    calculateParticipantWeights: calculateParticipantWeights.bind(null, apis),
+    getParticipantWeights: getParticipantWeights.bind(null, apis),
     getDelegatedBalances: getDelegatedBalances.bind(null, apis),
     getObligatedBalances: getObligatedBalances.bind(null, apis),
   }

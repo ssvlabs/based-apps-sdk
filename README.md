@@ -63,7 +63,7 @@ console.log('response:', response)
 ### Calculate Participants Weights
 
 ```ts
-const strategiesWeights = await sdk.utils.calculateParticipantWeights({
+const strategiesWeights = await sdk.utils.getParticipantWeights({
   bAppId: '0x64714cf5db177398729e37627be0fc08f43b17a6',
 })
 

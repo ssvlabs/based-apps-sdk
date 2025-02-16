@@ -31,42 +31,42 @@ const calculateWeightTotals = (
     },
   )
 
-const calculateHarmonicSum = (
-  strategy: StrategyWeight,
-  coefficients: CoefficientDefinition[],
-  validatorCoefficient: number,
-): number =>
-  1 /
-  coefficients.reduce(
-    (sum, coefficient) =>
-      sum +
-      coefficient.coefficient /
-        (strategy.tokenWeights.find((tokenWeight) => tokenWeight.token === coefficient.token)
-          ?.weight || 0),
-    validatorCoefficient / (strategy.validatorBalanceWeight || 1),
-  )
+// const calculateHarmonicSum = (
+//   strategy: StrategyWeight,
+//   coefficients: CoefficientDefinition[],
+//   validatorCoefficient: number,
+// ): number =>
+//   1 /
+//   coefficients.reduce(
+//     (sum, coefficient) =>
+//       sum +
+//       coefficient.coefficient /
+//         (strategy.tokenWeights.find((tokenWeight) => tokenWeight.token === coefficient.token)
+//           ?.weight || 0),
+//     validatorCoefficient / (strategy.validatorBalanceWeight || 1),
+//   )
 
-const calculateWeightedLogSum = (
-  strategy: StrategyWeight,
-  coefficients: CoefficientDefinition[],
-  validatorCoefficient: number,
-): { logSum: number; totalCoefficient: number } =>
-  coefficients.reduce(
-    (accumulator, coefficient) => ({
-      logSum:
-        accumulator.logSum +
-        coefficient.coefficient *
-          Math.log(
-            strategy.tokenWeights.find((tokenWeight) => tokenWeight.token === coefficient.token)
-              ?.weight || 1,
-          ),
-      totalCoefficient: accumulator.totalCoefficient + coefficient.coefficient,
-    }),
-    {
-      logSum: validatorCoefficient * Math.log(strategy.validatorBalanceWeight || 1),
-      totalCoefficient: validatorCoefficient,
-    },
-  )
+// const calculateWeightedLogSum = (
+//   strategy: StrategyWeight,
+//   coefficients: CoefficientDefinition[],
+//   validatorCoefficient: number,
+// ): { logSum: number; totalCoefficient: number } =>
+//   coefficients.reduce(
+//     (accumulator, coefficient) => ({
+//       logSum:
+//         accumulator.logSum +
+//         coefficient.coefficient *
+//           Math.log(
+//             strategy.tokenWeights.find((tokenWeight) => tokenWeight.token === coefficient.token)
+//               ?.weight || 1,
+//           ),
+//       totalCoefficient: accumulator.totalCoefficient + coefficient.coefficient,
+//     }),
+//     {
+//       logSum: validatorCoefficient * Math.log(strategy.validatorBalanceWeight || 1),
+//       totalCoefficient: validatorCoefficient,
+//     },
+//   )
 
 /**
  * Calculate strategy weights using arithmetic weighted average.
@@ -90,52 +90,62 @@ export const calcSimpleStrategyWeights = (
   return strategyWeights
 }
 
-/**
- * Calculate strategy weights using harmonic weighted average.
- * @param {StrategyWeight[]} strategyTokenWeights - Array of strategy weights to calculate from
- * @param {WeightCalculationOptions} options - Configuration containing token coefficients for weight adjustments and an optional validator coefficient
- * @returns {Map<string, number>} - Map of strategy IDs to their calculated weights.
- */
-export const calcHarmonicStrategyWeights = (
-  strategyTokenWeights: StrategyWeight[],
-  { coefficients, validatorCoefficient = 0 }: WeightCalculationOptions,
-): Map<string, number> => {
-  const normalizationCoefficient = strategyTokenWeights.reduce(
-    (sum, strategy) => sum + calculateHarmonicSum(strategy, coefficients, validatorCoefficient),
-    0,
-  )
+// /**
+//  * Calculate strategy weights using harmonic weighted average.
+//  * @param {StrategyWeight[]} strategyTokenWeights - Array of strategy weights to calculate from
+//  * @param {WeightCalculationOptions} options - Configuration containing token coefficients for weight adjustments and an optional validator coefficient
+//  * @returns {Map<string, number>} - Map of strategy IDs to their calculated weights.
+//  */
+// export const calcHarmonicStrategyWeights = (
+//   strategyTokenWeights: StrategyWeight[],
+//   { coefficients, validatorCoefficient = 0 }: WeightCalculationOptions,
+// ): Map<string, number> => {
+//   const normalizationCoefficient = strategyTokenWeights.reduce(
+//     (sum, strategy) => sum + calculateHarmonicSum(strategy, coefficients, validatorCoefficient),
+//     0,
+//   )
 
-  const strategyWeights = strategyTokenWeights.reduce(
-    (weightMap, strategy) =>
-      weightMap.set(
-        strategy.id,
-        calculateHarmonicSum(strategy, coefficients, validatorCoefficient) /
-          normalizationCoefficient,
-      ),
-    new Map<string, number>(),
-  )
+//   const strategyWeights = strategyTokenWeights.reduce(
+//     (weightMap, strategy) =>
+//       weightMap.set(
+//         strategy.id,
+//         calculateHarmonicSum(strategy, coefficients, validatorCoefficient) /
+//           normalizationCoefficient,
+//       ),
+//     new Map<string, number>(),
+//   )
 
-  return strategyWeights
-}
+//   return strategyWeights
+// }
 
-/**
- * Calculate strategy weights using geometric weighted average.
- * @param {StrategyWeight[]} strategyTokenWeights - Array of strategy weights to calculate from
- * @param {WeightCalculationOptions} options - Configuration containing token coefficients for weight adjustments and an optional validator coefficient
- * @returns {Map<string, number>} - Map of strategy IDs to their calculated weights.
- */
-export const calcGeometricStrategyWeights = (
-  strategyTokenWeights: StrategyWeight[],
-  { coefficients, validatorCoefficient = 0 }: WeightCalculationOptions,
-): Map<string, number> => {
-  const strategyWeights = strategyTokenWeights.reduce((weightMap, strategy) => {
-    const { logSum, totalCoefficient } = calculateWeightedLogSum(
-      strategy,
-      coefficients,
-      validatorCoefficient,
-    )
-    return weightMap.set(strategy.id, Math.exp(logSum / totalCoefficient))
-  }, new Map<string, number>())
+// /**
+//  * Calculate strategy weights using geometric weighted average.
+//  * @param {StrategyWeight[]} strategyTokenWeights - Array of strategy weights to calculate from
+//  * @param {WeightCalculationOptions} options - Configuration containing token coefficients for weight adjustments and an optional validator coefficient
+//  * @returns {Map<string, number>} - Map of strategy IDs to their calculated weights.
+//  */
+// export const calcGeometricStrategyWeights = (
+//   strategyTokenWeights: StrategyWeight[],
+//   { coefficients, validatorCoefficient = 0 }: WeightCalculationOptions,
+// ): Map<string, number> => {
+//   // First calculate unnormalized weights
+//   const unnormalizedWeights = strategyTokenWeights.reduce((weightMap, strategy) => {
+//     const { logSum, totalCoefficient } = calculateWeightedLogSum(
+//       strategy,
+//       coefficients,
+//       validatorCoefficient,
+//     )
+//     return weightMap.set(strategy.id, Math.exp(logSum / totalCoefficient))
+//   }, new Map<string, number>())
 
-  return strategyWeights
-}
+//   // Calculate sum for normalization
+//   const weightSum = Array.from(unnormalizedWeights.values()).reduce((sum, weight) => sum + weight, 0)
+
+//   // Normalize weights to sum to 1
+//   const normalizedWeights = new Map<string, number>()
+//   for (const [id, weight] of unnormalizedWeights.entries()) {
+//     normalizedWeights.set(id, weight / weightSum)
+//   }
+
+//   return normalizedWeights
+// }

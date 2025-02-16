@@ -1,4 +1,4 @@
-import { calculateParticipantWeights, getValidatorsBalance } from '@/api/based-apps-api'
+import { getParticipantWeights, getValidatorsBalance } from '@/api/based-apps-api'
 import type { GetValidatorBalancesResponse } from '@/api/beacon-chain-api'
 import { parseEther, type Address } from 'viem'
 import { describe, expect, it } from 'vitest'
@@ -37,7 +37,7 @@ describe('Based Apps API Tests', () => {
     })
   })
 
-  describe('calculateParticipantWeights', () => {
+  describe('getParticipantWeights', () => {
     it('should calculate weights correctly for single strategy and token', async () => {
       const mockBAppData = {
         bAppTokens: [
@@ -70,7 +70,7 @@ describe('Based Apps API Tests', () => {
 
       mockGetParticipantWeightInput.mockResolvedValue(mockBAppData)
 
-      const response = await calculateParticipantWeights(mockAPIs, {
+      const response = await getParticipantWeights(mockAPIs, {
         bAppId: '0xbapp1' as Address,
       })
 
@@ -134,7 +134,7 @@ describe('Based Apps API Tests', () => {
 
       mockGetParticipantWeightInput.mockResolvedValue(mockBAppData)
 
-      const response = await calculateParticipantWeights(mockAPIs, {
+      const response = await getParticipantWeights(mockAPIs, {
         bAppId: '0xbapp1' as Address,
       })
 
@@ -197,7 +197,7 @@ describe('Based Apps API Tests', () => {
       mockGetValidatorsByAccount.mockResolvedValue(mockValidators)
       mockGetValidatorBalances.mockResolvedValue(mockBalances)
 
-      const response = await calculateParticipantWeights(mockAPIs, {
+      const response = await getParticipantWeights(mockAPIs, {
         bAppId: '0xbapp1' as Address,
       })
 
@@ -233,7 +233,7 @@ describe('Based Apps API Tests', () => {
 
       mockGetParticipantWeightInput.mockResolvedValue(mockBAppData)
 
-      const response = await calculateParticipantWeights(mockAPIs, {
+      const response = await getParticipantWeights(mockAPIs, {
         bAppId: '0xbapp1' as Address,
       })
 
@@ -274,7 +274,7 @@ describe('Based Apps API Tests', () => {
 
       mockGetParticipantWeightInput.mockResolvedValue(mockBAppData)
 
-      const response = await calculateParticipantWeights(mockAPIs, {
+      const response = await getParticipantWeights(mockAPIs, {
         bAppId: '0xbapp1' as Address,
       })
 
@@ -287,7 +287,7 @@ describe('Based Apps API Tests', () => {
       mockGetParticipantWeightInput.mockResolvedValue(null)
 
       await expect(
-        calculateParticipantWeights(mockAPIs, {
+        getParticipantWeights(mockAPIs, {
           bAppId: '0xbapp1' as Address,
         }),
       ).rejects.toThrow('bApp not found')
