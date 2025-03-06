@@ -11,4 +11,7 @@ export const configArgsSchema = z.object({
     .default('holesky') as z.ZodType<Network>,
   beaconchainUrl: z.string().url(),
 })
-export type ConfigArgs = z.infer<typeof configArgsSchema>
+export type ConfigArgs = {
+  chain: Network
+  beaconchainUrl: string
+}

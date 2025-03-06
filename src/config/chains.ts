@@ -4,10 +4,10 @@ export const chains = {
 } as const
 
 export const networks = Object.values(chains).map((chain) => chain.name.toLowerCase())
-export type Network = Lowercase<(typeof networks)[number]>
+export type Network = 'holesky'
 type EndpointsRecord = Record<Network, string>
 
 export const bam_graph_endpoints: EndpointsRecord = {
-  [holesky.name.toLowerCase()]:
+  [holesky.name.toLowerCase() as Network]:
     'https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/',
 }

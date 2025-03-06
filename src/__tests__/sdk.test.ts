@@ -50,8 +50,6 @@ describe('BasedAppsSDK', () => {
       chain: 'holesky',
     })
 
-    console.log(import.meta.env.VITE_BAM_GRAPH_ENDPOINT)
-
     expect(sdk.core.graphs.bam.endpoint).toBe(customEndpoint)
     vi.unstubAllEnvs()
   })

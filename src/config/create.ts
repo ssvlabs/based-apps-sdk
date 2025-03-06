@@ -20,8 +20,6 @@ export const isConfig = (props: unknown): props is ConfigReturnType => {
   return (
     typeof props === 'object' &&
     props !== null &&
-    'chain' in props &&
-    'env' in props &&
     'apis' in props &&
     'basedAppsAPI' in props &&
     'graphs' in props
