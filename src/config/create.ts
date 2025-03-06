@@ -1,10 +1,6 @@
 import type { APIs } from '@/api'
-import {
-  createBAMQueries,
-  createBasedAppsAPI,
-  createBeaconChainAPI,
-  createQueries,
-} from '@/libs/api'
+import { createBAMQueries, createBasedAppsAPI, createBeaconChainAPI } from '@/libs/api'
+import { bam_graph_endpoints } from '@/main'
 import type { ConfigArgs } from '@/utils/zod/config'
 import { configArgsSchema } from '@/utils/zod/config'
 import { GraphQLClient } from 'graphql-request'
@@ -13,10 +9,6 @@ export type ConfigReturnType = {
   apis: APIs
   basedAppsAPI: ReturnType<typeof createBasedAppsAPI>
   graphs: {
-    dvt: {
-      client: GraphQLClient
-      endpoint: string
-    }
     bam: {
       client: GraphQLClient
       endpoint: string
@@ -39,11 +31,10 @@ export const isConfig = (props: unknown): props is ConfigReturnType => {
 export const createConfig = (props: ConfigArgs): ConfigReturnType => {
   const parsed = configArgsSchema.parse(props)
 
-  const dvtGraphQLClient = new GraphQLClient(parsed.dvtGraphUrl)
-  const bamGraphQLClient = new GraphQLClient(parsed.bamGraphUrl)
+  const bapEndpoint = import.meta.env.VITE_BAM_GRAPH_ENDPOINT || bam_graph_endpoints[parsed.chain]
+  const bamGraphQLClient = new GraphQLClient(bapEndpoint)
 
   const apis: APIs = {
-    dvt: createQueries(dvtGraphQLClient),
     beacon: createBeaconChainAPI(parsed.beaconchainUrl),
     bam: createBAMQueries(bamGraphQLClient),
   }
@@ -52,13 +43,9 @@ export const createConfig = (props: ConfigArgs): ConfigReturnType => {
     apis: apis,
     basedAppsAPI: createBasedAppsAPI(apis),
     graphs: {
-      dvt: {
-        client: dvtGraphQLClient,
-        endpoint: parsed.dvtGraphUrl,
-      },
       bam: {
         client: bamGraphQLClient,
-        endpoint: parsed.bamGraphUrl,
+        endpoint: bapEndpoint,
       },
     },
   } satisfies ConfigReturnType

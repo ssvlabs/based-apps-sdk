@@ -1,7 +1,6 @@
-import type { createBAMQueries, createBeaconChainAPI, createQueries } from '@/main'
+import type { createBAMQueries, createBeaconChainAPI } from '@/main'
 
 export type APIs = {
-  dvt: ReturnType<typeof createQueries>
   beacon: ReturnType<typeof createBeaconChainAPI>
   bam: ReturnType<typeof createBAMQueries>
 }

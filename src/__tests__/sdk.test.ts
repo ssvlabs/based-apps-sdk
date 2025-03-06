@@ -1,13 +1,17 @@
 import { BasedAppsSDK } from '@/sdk'
 import type { ConfigArgs } from '@/utils/zod/config'
-import { describe, test, expect } from 'vitest'
+import { describe, test, expect, vi, beforeEach } from 'vitest'
 
 describe('BasedAppsSDK', () => {
+  beforeEach(() => {
+    // Reset the import.meta.env before each test
+    vi.stubGlobal('import.meta', { env: {} })
+  })
+
   test('should instantiate SDK with valid URLs', () => {
     const sdk = new BasedAppsSDK({
-      bamGraphUrl: 'https://example.com/bam',
-      dvtGraphUrl: 'https://example.com/dvt',
       beaconchainUrl: 'https://example.com/beacon',
+      chain: 'holesky',
     })
 
     expect(sdk).toBeInstanceOf(BasedAppsSDK)
@@ -24,18 +28,31 @@ describe('BasedAppsSDK', () => {
     expect(
       () =>
         new BasedAppsSDK({
-          bamGraphUrl: 'not-a-url',
-          dvtGraphUrl: 'not-a-url',
           beaconchainUrl: 'not-a-url',
+          chain: 'holesky',
         }),
     ).toThrow()
   })
 
   test('should throw error when some URLs are missing', () => {
-    const partialConfig: Pick<ConfigArgs, 'bamGraphUrl' | 'beaconchainUrl'> = {
-      bamGraphUrl: 'https://example.com/bam',
-      beaconchainUrl: 'https://example.com/beacon',
+    const partialConfig: Pick<ConfigArgs, 'chain'> = {
+      chain: 'holesky',
     }
     expect(() => new BasedAppsSDK(partialConfig as ConfigArgs)).toThrow()
+  })
+
+  test('should use VITE_BAM_GRAPH_ENDPOINT when provided', () => {
+    const customEndpoint = 'https://custom.endpoint/graphql'
+    vi.stubEnv('VITE_BAM_GRAPH_ENDPOINT', customEndpoint)
+
+    const sdk = new BasedAppsSDK({
+      beaconchainUrl: 'https://example.com/beacon',
+      chain: 'holesky',
+    })
+
+    console.log(import.meta.env.VITE_BAM_GRAPH_ENDPOINT)
+
+    expect(sdk.core.graphs.bam.endpoint).toBe(customEndpoint)
+    vi.unstubAllEnvs()
   })
 })

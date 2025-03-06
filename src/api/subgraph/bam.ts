@@ -3,12 +3,14 @@ import type {
   GetObligatedBalancesQueryVariables,
   GetParticipantWeightInputQueryVariables,
   GetStrategyBAppOptInsQueryVariables,
+  GetValidatorsByAccountQueryVariables,
 } from '@/graphql/bam/graphql'
 import {
   GetBAppDelegatorsDocument,
   GetObligatedBalancesDocument,
   GetParticipantWeightInputDocument,
   GetStrategyBAppOptInsDocument,
+  GetValidatorsByAccountDocument,
 } from '@/graphql/bam/graphql'
 import type { RemoveConfigArg } from '@/types/methods'
 import type { GraphQLClient } from 'graphql-request'
@@ -31,6 +33,14 @@ export const getObligatedBalances = (
 export const getBAppDelegators = (client: GraphQLClient, args: GetBAppDelegatorsQueryVariables) =>
   client.request(GetBAppDelegatorsDocument, args).then((res) => res.bapp)
 
+export const getValidatorsByAccount = (
+  client: GraphQLClient,
+  args: GetValidatorsByAccountQueryVariables,
+) =>
+  client
+    .request(GetValidatorsByAccountDocument, args)
+    .then((res) => res.validators.map((v) => v.id))
+
 export const getBAMQueries = (client: GraphQLClient) => ({
   getStrategyBAppOptIns: getStrategyBAppOptIns.bind(null, client) as RemoveConfigArg<
     typeof getStrategyBAppOptIns
@@ -43,5 +53,8 @@ export const getBAMQueries = (client: GraphQLClient) => ({
   >,
   getBAppDelegators: getBAppDelegators.bind(null, client) as RemoveConfigArg<
     typeof getBAppDelegators
+  >,
+  getValidatorsByAccount: getValidatorsByAccount.bind(null, client) as RemoveConfigArg<
+    typeof getValidatorsByAccount
   >,
 })

@@ -1,11 +1,11 @@
 import {
-  calcSimpleStrategyWeights,
+  calcArithmeticStrategyWeights,
   calcGeometricStrategyWeights,
   calcHarmonicStrategyWeights,
 } from '@/libs/utils/weights-calculations'
 
 export const utils = {
-  calcSimpleStrategyWeights,
+  calcArithmeticStrategyWeights,
   calcGeometricStrategyWeights,
   calcHarmonicStrategyWeights,
 }

@@ -23,6 +23,7 @@ type Account {
   deposits(first: Int = 100, orderBy: StrategyUserBalance_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: StrategyUserBalance_filter): [StrategyUserBalance!]!
   feeRecipient: Bytes!
   id: Bytes!
+  metadataURI: String
   nonce: BigInt!
   operators(first: Int = 100, orderBy: Operator_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: Operator_filter): [Operator!]
   receivers(first: Int = 100, orderBy: Delegation_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: Delegation_filter): [Delegation!]!
@@ -30,6 +31,97 @@ type Account {
   totalDelegatedPercentage: BigInt!
   validatorCount: BigInt!
   validators(first: Int = 100, orderBy: Validator_orderBy, orderDirection: OrderDirection, skip: Int = 0, where: Validator_filter): [Validator!]
+}
+
+type AccountMetadataURIUpdated {
+  account: Bytes!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  id: Bytes!
+  metadataURI: String!
+  transactionHash: Bytes!
+}
+
+input AccountMetadataURIUpdated_filter {
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  account: Bytes
+  account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
+  account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
+  account_not: Bytes
+  account_not_contains: Bytes
+  account_not_in: [Bytes!]
+  and: [AccountMetadataURIUpdated_filter]
+  blockNumber: BigInt
+  blockNumber_gt: BigInt
+  blockNumber_gte: BigInt
+  blockNumber_in: [BigInt!]
+  blockNumber_lt: BigInt
+  blockNumber_lte: BigInt
+  blockNumber_not: BigInt
+  blockNumber_not_in: [BigInt!]
+  blockTimestamp: BigInt
+  blockTimestamp_gt: BigInt
+  blockTimestamp_gte: BigInt
+  blockTimestamp_in: [BigInt!]
+  blockTimestamp_lt: BigInt
+  blockTimestamp_lte: BigInt
+  blockTimestamp_not: BigInt
+  blockTimestamp_not_in: [BigInt!]
+  id: Bytes
+  id_contains: Bytes
+  id_gt: Bytes
+  id_gte: Bytes
+  id_in: [Bytes!]
+  id_lt: Bytes
+  id_lte: Bytes
+  id_not: Bytes
+  id_not_contains: Bytes
+  id_not_in: [Bytes!]
+  metadataURI: String
+  metadataURI_contains: String
+  metadataURI_contains_nocase: String
+  metadataURI_ends_with: String
+  metadataURI_ends_with_nocase: String
+  metadataURI_gt: String
+  metadataURI_gte: String
+  metadataURI_in: [String!]
+  metadataURI_lt: String
+  metadataURI_lte: String
+  metadataURI_not: String
+  metadataURI_not_contains: String
+  metadataURI_not_contains_nocase: String
+  metadataURI_not_ends_with: String
+  metadataURI_not_ends_with_nocase: String
+  metadataURI_not_in: [String!]
+  metadataURI_not_starts_with: String
+  metadataURI_not_starts_with_nocase: String
+  metadataURI_starts_with: String
+  metadataURI_starts_with_nocase: String
+  or: [AccountMetadataURIUpdated_filter]
+  transactionHash: Bytes
+  transactionHash_contains: Bytes
+  transactionHash_gt: Bytes
+  transactionHash_gte: Bytes
+  transactionHash_in: [Bytes!]
+  transactionHash_lt: Bytes
+  transactionHash_lte: Bytes
+  transactionHash_not: Bytes
+  transactionHash_not_contains: Bytes
+  transactionHash_not_in: [Bytes!]
+}
+
+enum AccountMetadataURIUpdated_orderBy {
+  account
+  blockNumber
+  blockTimestamp
+  id
+  metadataURI
+  transactionHash
 }
 
 input Account_filter {
@@ -60,6 +152,26 @@ input Account_filter {
   id_not: Bytes
   id_not_contains: Bytes
   id_not_in: [Bytes!]
+  metadataURI: String
+  metadataURI_contains: String
+  metadataURI_contains_nocase: String
+  metadataURI_ends_with: String
+  metadataURI_ends_with_nocase: String
+  metadataURI_gt: String
+  metadataURI_gte: String
+  metadataURI_in: [String!]
+  metadataURI_lt: String
+  metadataURI_lte: String
+  metadataURI_not: String
+  metadataURI_not_contains: String
+  metadataURI_not_contains_nocase: String
+  metadataURI_not_ends_with: String
+  metadataURI_not_ends_with_nocase: String
+  metadataURI_not_in: [String!]
+  metadataURI_not_starts_with: String
+  metadataURI_not_starts_with_nocase: String
+  metadataURI_starts_with: String
+  metadataURI_starts_with_nocase: String
   nonce: BigInt
   nonce_gt: BigInt
   nonce_gte: BigInt
@@ -98,6 +210,7 @@ enum Account_orderBy {
   deposits
   feeRecipient
   id
+  metadataURI
   nonce
   operators
   receivers
@@ -831,6 +944,7 @@ enum BApp_orderBy {
   owner
   owner__feeRecipient
   owner__id
+  owner__metadataURI
   owner__nonce
   owner__totalDelegatedPercentage
   owner__validatorCount
@@ -1550,6 +1664,7 @@ enum Cluster_orderBy {
   owner
   owner__feeRecipient
   owner__id
+  owner__metadataURI
   owner__nonce
   owner__totalDelegatedPercentage
   owner__validatorCount
@@ -2233,6 +2348,7 @@ enum Delegation_orderBy {
   delegator
   delegator__feeRecipient
   delegator__id
+  delegator__metadataURI
   delegator__nonce
   delegator__totalDelegatedPercentage
   delegator__validatorCount
@@ -2241,6 +2357,7 @@ enum Delegation_orderBy {
   receiver
   receiver__feeRecipient
   receiver__id
+  receiver__metadataURI
   receiver__nonce
   receiver__totalDelegatedPercentage
   receiver__validatorCount
@@ -4656,6 +4773,7 @@ enum Operator_orderBy {
   owner
   owner__feeRecipient
   owner__id
+  owner__metadataURI
   owner__nonce
   owner__totalDelegatedPercentage
   owner__validatorCount
@@ -4769,6 +4887,32 @@ type Query {
     """
     subgraphError: _SubgraphErrorPolicy_! = deny
   ): Account
+  accountMetadataURIUpdated(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    id: ID!
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): AccountMetadataURIUpdated
+  accountMetadataURIUpdateds(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    first: Int = 100
+    orderBy: AccountMetadataURIUpdated_orderBy
+    orderDirection: OrderDirection
+    skip: Int = 0
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+    where: AccountMetadataURIUpdated_filter
+  ): [AccountMetadataURIUpdated!]!
   accounts(
     """
     The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
@@ -6136,6 +6280,32 @@ type Query {
     subgraphError: _SubgraphErrorPolicy_! = deny
     where: StrategyFeeUpdated_filter
   ): [StrategyFeeUpdated!]!
+  strategyMetadataURIUpdated(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    id: ID!
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): StrategyMetadataURIUpdated
+  strategyMetadataURIUpdateds(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    first: Int = 100
+    orderBy: StrategyMetadataURIUpdated_orderBy
+    orderDirection: OrderDirection
+    skip: Int = 0
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+    where: StrategyMetadataURIUpdated_filter
+  ): [StrategyMetadataURIUpdated!]!
   strategyTokenBalance(
     """
     The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
@@ -6354,6 +6524,7 @@ type Strategy {
   feeProposed: BigInt!
   feeProposedTimestamp: BigInt!
   id: String!
+  metadataURI: String
   owner: Account!
   strategyId: BigInt!
 }
@@ -6446,6 +6617,7 @@ enum StrategyBAppOptIn_orderBy {
   strategy__feeProposed
   strategy__feeProposedTimestamp
   strategy__id
+  strategy__metadataURI
   strategy__strategyId
 }
 
@@ -6454,6 +6626,7 @@ type StrategyCreated {
   blockTimestamp: BigInt!
   fee: BigInt!
   id: Bytes!
+  metadataURI: String
   owner: Bytes!
   strategyId: BigInt!
   transactionHash: Bytes!
@@ -6497,6 +6670,26 @@ input StrategyCreated_filter {
   id_not: Bytes
   id_not_contains: Bytes
   id_not_in: [Bytes!]
+  metadataURI: String
+  metadataURI_contains: String
+  metadataURI_contains_nocase: String
+  metadataURI_ends_with: String
+  metadataURI_ends_with_nocase: String
+  metadataURI_gt: String
+  metadataURI_gte: String
+  metadataURI_in: [String!]
+  metadataURI_lt: String
+  metadataURI_lte: String
+  metadataURI_not: String
+  metadataURI_not_contains: String
+  metadataURI_not_contains_nocase: String
+  metadataURI_not_ends_with: String
+  metadataURI_not_ends_with_nocase: String
+  metadataURI_not_in: [String!]
+  metadataURI_not_starts_with: String
+  metadataURI_not_starts_with_nocase: String
+  metadataURI_starts_with: String
+  metadataURI_starts_with_nocase: String
   or: [StrategyCreated_filter]
   owner: Bytes
   owner_contains: Bytes
@@ -6533,6 +6726,7 @@ enum StrategyCreated_orderBy {
   blockTimestamp
   fee
   id
+  metadataURI
   owner
   strategyId
   transactionHash
@@ -6837,6 +7031,95 @@ enum StrategyFeeUpdated_orderBy {
   transactionHash
 }
 
+type StrategyMetadataURIUpdated {
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  id: Bytes!
+  metadataURI: String!
+  strategyId: BigInt!
+  transactionHash: Bytes!
+}
+
+input StrategyMetadataURIUpdated_filter {
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [StrategyMetadataURIUpdated_filter]
+  blockNumber: BigInt
+  blockNumber_gt: BigInt
+  blockNumber_gte: BigInt
+  blockNumber_in: [BigInt!]
+  blockNumber_lt: BigInt
+  blockNumber_lte: BigInt
+  blockNumber_not: BigInt
+  blockNumber_not_in: [BigInt!]
+  blockTimestamp: BigInt
+  blockTimestamp_gt: BigInt
+  blockTimestamp_gte: BigInt
+  blockTimestamp_in: [BigInt!]
+  blockTimestamp_lt: BigInt
+  blockTimestamp_lte: BigInt
+  blockTimestamp_not: BigInt
+  blockTimestamp_not_in: [BigInt!]
+  id: Bytes
+  id_contains: Bytes
+  id_gt: Bytes
+  id_gte: Bytes
+  id_in: [Bytes!]
+  id_lt: Bytes
+  id_lte: Bytes
+  id_not: Bytes
+  id_not_contains: Bytes
+  id_not_in: [Bytes!]
+  metadataURI: String
+  metadataURI_contains: String
+  metadataURI_contains_nocase: String
+  metadataURI_ends_with: String
+  metadataURI_ends_with_nocase: String
+  metadataURI_gt: String
+  metadataURI_gte: String
+  metadataURI_in: [String!]
+  metadataURI_lt: String
+  metadataURI_lte: String
+  metadataURI_not: String
+  metadataURI_not_contains: String
+  metadataURI_not_contains_nocase: String
+  metadataURI_not_ends_with: String
+  metadataURI_not_ends_with_nocase: String
+  metadataURI_not_in: [String!]
+  metadataURI_not_starts_with: String
+  metadataURI_not_starts_with_nocase: String
+  metadataURI_starts_with: String
+  metadataURI_starts_with_nocase: String
+  or: [StrategyMetadataURIUpdated_filter]
+  strategyId: BigInt
+  strategyId_gt: BigInt
+  strategyId_gte: BigInt
+  strategyId_in: [BigInt!]
+  strategyId_lt: BigInt
+  strategyId_lte: BigInt
+  strategyId_not: BigInt
+  strategyId_not_in: [BigInt!]
+  transactionHash: Bytes
+  transactionHash_contains: Bytes
+  transactionHash_gt: Bytes
+  transactionHash_gte: Bytes
+  transactionHash_in: [Bytes!]
+  transactionHash_lt: Bytes
+  transactionHash_lte: Bytes
+  transactionHash_not: Bytes
+  transactionHash_not_contains: Bytes
+  transactionHash_not_in: [Bytes!]
+}
+
+enum StrategyMetadataURIUpdated_orderBy {
+  blockNumber
+  blockTimestamp
+  id
+  metadataURI
+  strategyId
+  transactionHash
+}
+
 type StrategyTokenBalance {
   balance: BigInt!
   id: String!
@@ -6928,6 +7211,7 @@ enum StrategyTokenBalance_orderBy {
   strategy__feeProposed
   strategy__feeProposedTimestamp
   strategy__id
+  strategy__metadataURI
   strategy__strategyId
   token
 }
@@ -7049,6 +7333,7 @@ enum StrategyUserBalance_orderBy {
   contributor
   contributor__feeRecipient
   contributor__id
+  contributor__metadataURI
   contributor__nonce
   contributor__totalDelegatedPercentage
   contributor__validatorCount
@@ -7061,6 +7346,7 @@ enum StrategyUserBalance_orderBy {
   strategy__feeProposed
   strategy__feeProposedTimestamp
   strategy__id
+  strategy__metadataURI
   strategy__strategyId
   token
 }
@@ -7324,6 +7610,26 @@ input Strategy_filter {
   id_not_starts_with_nocase: String
   id_starts_with: String
   id_starts_with_nocase: String
+  metadataURI: String
+  metadataURI_contains: String
+  metadataURI_contains_nocase: String
+  metadataURI_ends_with: String
+  metadataURI_ends_with_nocase: String
+  metadataURI_gt: String
+  metadataURI_gte: String
+  metadataURI_in: [String!]
+  metadataURI_lt: String
+  metadataURI_lte: String
+  metadataURI_not: String
+  metadataURI_not_contains: String
+  metadataURI_not_contains_nocase: String
+  metadataURI_not_ends_with: String
+  metadataURI_not_ends_with_nocase: String
+  metadataURI_not_in: [String!]
+  metadataURI_not_starts_with: String
+  metadataURI_not_starts_with_nocase: String
+  metadataURI_starts_with: String
+  metadataURI_starts_with_nocase: String
   or: [Strategy_filter]
   owner: String
   owner_: Account_filter
@@ -7364,9 +7670,11 @@ enum Strategy_orderBy {
   feeProposed
   feeProposedTimestamp
   id
+  metadataURI
   owner
   owner__feeRecipient
   owner__id
+  owner__metadataURI
   owner__nonce
   owner__totalDelegatedPercentage
   owner__validatorCount
@@ -7387,6 +7695,32 @@ type Subscription {
     """
     subgraphError: _SubgraphErrorPolicy_! = deny
   ): Account
+  accountMetadataURIUpdated(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    id: ID!
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): AccountMetadataURIUpdated
+  accountMetadataURIUpdateds(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    first: Int = 100
+    orderBy: AccountMetadataURIUpdated_orderBy
+    orderDirection: OrderDirection
+    skip: Int = 0
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+    where: AccountMetadataURIUpdated_filter
+  ): [AccountMetadataURIUpdated!]!
   accounts(
     """
     The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
@@ -8754,6 +9088,32 @@ type Subscription {
     subgraphError: _SubgraphErrorPolicy_! = deny
     where: StrategyFeeUpdated_filter
   ): [StrategyFeeUpdated!]!
+  strategyMetadataURIUpdated(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    id: ID!
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): StrategyMetadataURIUpdated
+  strategyMetadataURIUpdateds(
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    first: Int = 100
+    orderBy: StrategyMetadataURIUpdated_orderBy
+    orderDirection: OrderDirection
+    skip: Int = 0
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+    where: StrategyMetadataURIUpdated_filter
+  ): [StrategyMetadataURIUpdated!]!
   strategyTokenBalance(
     """
     The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
@@ -9478,6 +9838,7 @@ enum Validator_orderBy {
   owner
   owner__feeRecipient
   owner__id
+  owner__metadataURI
   owner__nonce
   owner__totalDelegatedPercentage
   owner__validatorCount

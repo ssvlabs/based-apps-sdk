@@ -60,7 +60,6 @@ query GetObligatedBalances($bAppId: ID!) {
         token
         obligatedBalance
       }
-
     }
   }
 }
@@ -80,5 +79,11 @@ query GetBAppDelegators($bAppId: ID!) {
         }
       }
     }
+  }
+}
+
+query GetValidatorsByAccount($account: String!) {
+  validators(where: { owner: $account }) {
+    id
   }
 }

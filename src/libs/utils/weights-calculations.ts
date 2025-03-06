@@ -123,7 +123,7 @@ const calculateWeightedLogSum = (
  * @param {WeightCalculationOptions} options - Configuration containing token coefficients for weight adjustments and an optional validator coefficient
  * @returns {Map<string, number>} - Map of strategy IDs to their calculated weights.
  */
-export const calcSimpleStrategyWeights = (
+export const calcArithmeticStrategyWeights = (
   strategyTokenWeights: StrategyWeight[],
   { coefficients, validatorCoefficient = 0 }: WeightCalculationOptions,
 ): Map<string, number> => {

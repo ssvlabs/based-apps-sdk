@@ -1,8 +1,13 @@
-import { holesky, mainnet } from 'viem/chains'
+import { holesky } from 'viem/chains'
 export const chains = {
-  mainnet,
   holesky,
 } as const
 
-export const networks = Object.values(chains).map((chain) => chain.name)
-export type Network = (typeof networks)[number]
+export const networks = Object.values(chains).map((chain) => chain.name.toLowerCase())
+export type Network = Lowercase<(typeof networks)[number]>
+type EndpointsRecord = Record<Network, string>
+
+export const bam_graph_endpoints: EndpointsRecord = {
+  [holesky.name.toLowerCase()]:
+    'https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/',
+}
