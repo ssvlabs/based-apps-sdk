@@ -1,5 +1,6 @@
 import type { Network } from '@/config'
-import { networks } from '@/config'
+import { chainIds, networks } from '@/config'
+import type { PublicClient, WalletClient } from 'viem'
 import { z } from 'zod'
 
 export const configArgsSchema = z.object({
@@ -10,5 +11,66 @@ export const configArgsSchema = z.object({
     })
     .default('holesky') as z.ZodType<Network>,
   beaconchainUrl: z.string().url(),
-})
-export type ConfigArgs = z.infer<typeof configArgsSchema>
+  publicClient: z.custom().superRefine((val, ctx) => {
+    const client = val as PublicClient | undefined
+    if (!client) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Public client must be provided',
+      })
+      return false
+    }
+
+    if (client.chain === undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Public client must have a chain property',
+      })
+      return false
+    }
+
+    if (!chainIds.includes(client.chain?.id as (typeof chainIds)[number])) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Public client chain must be one of [${networks.join(', ')}]`,
+      })
+      return false
+    }
+
+    return true
+  }),
+  walletClient: z.custom().superRefine((val, ctx) => {
+    const client = val as WalletClient | undefined
+    if (!client) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Wallet client must be provided',
+      })
+      return false
+    }
+
+    if (client.chain === undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Wallet client must have a chain property',
+      })
+      return false
+    }
+
+    if (!chainIds.includes(client.chain?.id as (typeof chainIds)[number])) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Wallet client chain must be one of [${networks.join(', ')}]`,
+      })
+      return false
+    }
+
+    return true
+  }),
+}) as z.ZodType<ConfigArgs>
+export type ConfigArgs = {
+  chain: Network
+  beaconchainUrl: string
+  publicClient: PublicClient
+  walletClient: WalletClient
+}

@@ -1,5 +1,6 @@
 import type { MainnetV4GetterABI } from '@/abi/mainnet/v4/getter'
 import type { MainnetV4SetterABI } from '@/abi/mainnet/v4/setter'
+import type { BAppABI } from '@/abi/b-app'
 import type { TokenABI } from '@/abi/token'
 import type { AbiInputsToParams } from '@/types/contract-interactions'
 import type { Prettify } from '@/types/utils'
@@ -21,6 +22,7 @@ export type SupportedAbis =
   | typeof TokenABI
   | typeof MainnetV4GetterABI
   | typeof MainnetV4SetterABI
+  | typeof BAppABI
 
 export type TokenEvents = DecodeEventLogReturnType<typeof TokenABI>
 export type MainnetEvents = DecodeEventLogReturnType<typeof MainnetV4SetterABI>
@@ -51,6 +53,14 @@ export type Contracts = {
     writeFunctions: ExtractAbiFunctions<typeof TokenABI, 'nonpayable' | 'payable'>
     readFnNames: ContractFunctionName<typeof TokenABI, 'view' | 'pure'>
     readFunctions: ExtractAbiFunctions<typeof TokenABI, 'view' | 'pure'>
+  }
+  bapp: {
+    events: MainnetEvents | TokenEvents
+    abi: typeof BAppABI
+    writeFnNames: ContractFunctionName<typeof BAppABI, 'nonpayable' | 'payable'>
+    writeFunctions: ExtractAbiFunctions<typeof BAppABI, 'nonpayable' | 'payable'>
+    readFnNames: ContractFunctionName<typeof BAppABI, 'view' | 'pure'>
+    readFunctions: ExtractAbiFunctions<typeof BAppABI, 'view' | 'pure'>
   }
 }
 

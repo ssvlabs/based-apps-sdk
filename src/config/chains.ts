@@ -1,13 +1,22 @@
+import type { Address } from 'abitype'
 import { holesky } from 'viem/chains'
 export const chains = {
   holesky,
 } as const
 
-export const networks = Object.values(chains).map((chain) => chain.name.toLowerCase())
+export const chainIds = [holesky.id] as const
+export const networks = ['holesky'] as const
 export type Network = Lowercase<(typeof networks)[number]>
-type EndpointsRecord = Record<Network, string>
-
-export const bam_graph_endpoints: EndpointsRecord = {
-  [holesky.name.toLowerCase()]:
+export const bam_graph_endpoints: Record<Network, string> = {
+  holesky:
     'https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/',
+}
+
+export type ContractAddresses = {
+  bapp: Address
+}
+export const contracts: Record<Network, ContractAddresses> = {
+  holesky: {
+    bapp: '0x352A18AEe90cdcd825d1E37d9939dCA86C00e281',
+  },
 }
