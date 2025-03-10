@@ -1,16 +1,9 @@
-import type { Network } from '@/config'
 import { chainIds, networks } from '@/config'
 import type { PublicClient, WalletClient } from 'viem'
 import { z } from 'zod'
 
 export const configArgsSchema = z
   .object({
-    chain: z
-      .string()
-      .refine((val) => networks.includes(val as Network), {
-        message: `Chain must be one of [${networks.join(', ')}]`,
-      })
-      .default('holesky') as z.ZodType<Network>,
     beaconchainUrl: z.string().url(),
     publicClient: z.custom().superRefine((val, ctx) => {
       const client = val as PublicClient | undefined
@@ -73,17 +66,13 @@ export const configArgsSchema = z
     (val) => {
       const publicClient = val.publicClient as PublicClient
       const walletClient = val.walletClient as WalletClient
-      if (publicClient.chain?.id !== walletClient.chain?.id) {
-        return false
-      }
-      return true
+      return publicClient?.chain?.id === walletClient?.chain?.id
     },
     {
       message: 'Public and wallet client chains must be the same',
     },
   ) as z.ZodType<ConfigArgs>
 export type ConfigArgs = {
-  chain: Network
   beaconchainUrl: string
   publicClient: PublicClient
   walletClient: WalletClient

@@ -2,6 +2,7 @@ import { BAppABI } from '@/abi/b-app'
 import type { APIs } from '@/api'
 import type { ContractInteractions } from '@/contract-interactions/types'
 import { createBAMQueries, createBasedAppsAPI, createBeaconChainAPI } from '@/libs/api'
+import type { ChainId } from '@/main'
 import { bam_graph_endpoints, contracts, createReader, createWriter } from '@/main'
 import type { ConfigArgs } from '@/utils/zod/config'
 import { configArgsSchema } from '@/utils/zod/config'
@@ -36,7 +37,9 @@ export const isConfig = (props: unknown): props is ConfigReturnType => {
 export const createConfig = (props: ConfigArgs): ConfigReturnType => {
   const parsed = configArgsSchema.parse(props)
 
-  const bapEndpoint = import.meta.env.VITE_BAM_GRAPH_ENDPOINT || bam_graph_endpoints[parsed.chain]
+  const chain = parsed.publicClient.chain!.id as ChainId
+
+  const bapEndpoint = import.meta.env.VITE_BAM_GRAPH_ENDPOINT || bam_graph_endpoints[chain]
   const bamGraphQLClient = new GraphQLClient(bapEndpoint)
 
   const apis: APIs = {
@@ -51,12 +54,12 @@ export const createConfig = (props: ConfigArgs): ConfigReturnType => {
       bapp: {
         read: createReader({
           abi: BAppABI,
-          contractAddress: contracts[props.chain].bapp,
+          contractAddress: contracts[chain].bapp,
           publicClient: parsed.publicClient,
         }),
         write: createWriter({
           abi: BAppABI,
-          contractAddress: contracts[props.chain].bapp,
+          contractAddress: contracts[chain].bapp,
           publicClient: parsed.publicClient,
           walletClient: parsed.walletClient,
         }),
