@@ -91,11 +91,43 @@ describe('BasedAppsSDK', () => {
       walletClient,
     })
 
-    expect(sdk.contracts).toBeDefined()
-    expect(sdk.contracts.bapp).toBeDefined()
-    expect(sdk.contracts.bapp.read).toBeDefined()
-    expect(sdk.contracts.bapp.write).toBeDefined()
-    expect(typeof sdk.contracts.bapp.read).toBe('object')
-    expect(typeof sdk.contracts.bapp.write).toBe('object')
+    expect(sdk.core.contracts).toBeDefined()
+    expect(sdk.core.contracts.bapp).toBeDefined()
+    expect(sdk.core.contracts.bapp.read).toBeDefined()
+    expect(sdk.core.contracts.bapp.write).toBeDefined()
+    expect(typeof sdk.core.contracts.bapp.read).toBe('object')
+    expect(typeof sdk.core.contracts.bapp.write).toBe('object')
+  })
+
+  test('should throw error when public client and wallet client have different chains', () => {
+    // Create a public client with the holesky chain
+    const holeskyPublicClient = createPublicClient({
+      chain: chains.holesky,
+      transport,
+    })
+
+    // Create another chain for test (simulating a different chain)
+    const differentChain = {
+      ...chains.holesky,
+      id: chains.holesky.id + 1, // Use a different chain ID
+      name: 'Different Chain',
+    }
+
+    // Create a wallet client with a different chain
+    const differentChainWalletClient = createWalletClient({
+      account,
+      chain: differentChain,
+      transport,
+    })
+
+    // Expect the SDK to throw an error when chains don't match
+    expect(() => 
+      new BasedAppsSDK({
+        beaconchainUrl: 'https://example.com/beacon',
+        chain: 'holesky',
+        publicClient: holeskyPublicClient,
+        walletClient: differentChainWalletClient,
+      })
+    ).toThrow('Public and wallet client chains must be the same')
   })
 })
