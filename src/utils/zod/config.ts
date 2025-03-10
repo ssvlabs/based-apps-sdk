@@ -72,6 +72,8 @@ export const configArgsSchema = z
       message: 'Public and wallet client chains must be the same',
     },
   ) as z.ZodType<ConfigArgs>
+
+console.log('testing trigger')
 export type ConfigArgs = {
   beaconchainUrl: string
   publicClient: PublicClient

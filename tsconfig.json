@@ -31,6 +31,6 @@
       "ssv-sdk": ["./dist/*"]
     }
   },
-  "include": ["src/**/*", "examples/**/*", "hardhat.types.d.ts"],
+  "include": ["src/**/*", "src/__tests__/**/*", "examples/**/*", "hardhat.types.d.ts"],
   "exclude": ["node_modules", "dist", "src/graphql/**/*"]
 }

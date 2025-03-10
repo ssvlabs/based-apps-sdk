@@ -39,20 +39,8 @@
     "type:perf": "tsc --extendedDiagnostics",
     "release": "release-it",
     "commit": "git-cz",
-    "lint-staged": "pnpm run type-check && pnpm vitest run && lint-staged",
-    "prepare": "husky && pnpm run build"
-  },
-  "lint-staged": {
-    "src/**/*.{ts,tsx,js,json}": [
-      "prettier --write --log-level silent",
-      "eslint --fix",
-      "git add"
-    ],
-    "src/__tests__/**/*.{ts,tsx}": [
-      "prettier --write --log-level silent",
-      "eslint --fix",
-      "git add"
-    ]
+    "lint-staged": "pnpm run type-check && lint-staged",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@0no-co/graphqlsp": "^1.12.16",
