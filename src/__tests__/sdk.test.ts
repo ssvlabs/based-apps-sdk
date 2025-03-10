@@ -32,7 +32,6 @@ describe('BasedAppsSDK', () => {
   test('should instantiate SDK with valid URLs', () => {
     const sdk = new BasedAppsSDK({
       beaconchainUrl: 'https://example.com/beacon',
-      chain: 'holesky',
       publicClient,
       walletClient,
     })
@@ -52,7 +51,6 @@ describe('BasedAppsSDK', () => {
       () =>
         new BasedAppsSDK({
           beaconchainUrl: 'not-a-url',
-          chain: 'holesky',
           publicClient,
           walletClient,
         }),
@@ -60,9 +58,7 @@ describe('BasedAppsSDK', () => {
   })
 
   test('should throw error when some URLs are missing', () => {
-    const partialConfig: Pick<ConfigArgs, 'chain'> = {
-      chain: 'holesky',
-    }
+    const partialConfig = {}
     expect(() => new BasedAppsSDK(partialConfig as ConfigArgs)).toThrow()
   })
 
@@ -72,12 +68,9 @@ describe('BasedAppsSDK', () => {
 
     const sdk = new BasedAppsSDK({
       beaconchainUrl: 'https://example.com/beacon',
-      chain: 'holesky',
       publicClient,
       walletClient,
     })
-
-    console.log(import.meta.env.VITE_BAM_GRAPH_ENDPOINT)
 
     expect(sdk.core.graphs.bam.endpoint).toBe(customEndpoint)
     vi.unstubAllEnvs()
@@ -86,7 +79,6 @@ describe('BasedAppsSDK', () => {
   test('should have contract.bapp.read and contract.bapp.write functionality', () => {
     const sdk = new BasedAppsSDK({
       beaconchainUrl: 'https://example.com/beacon',
-      chain: 'holesky',
       publicClient,
       walletClient,
     })
@@ -121,13 +113,13 @@ describe('BasedAppsSDK', () => {
     })
 
     // Expect the SDK to throw an error when chains don't match
-    expect(() => 
-      new BasedAppsSDK({
-        beaconchainUrl: 'https://example.com/beacon',
-        chain: 'holesky',
-        publicClient: holeskyPublicClient,
-        walletClient: differentChainWalletClient,
-      })
+    expect(
+      () =>
+        new BasedAppsSDK({
+          beaconchainUrl: 'https://example.com/beacon',
+          publicClient: holeskyPublicClient,
+          walletClient: differentChainWalletClient,
+        }),
     ).toThrow('Public and wallet client chains must be the same')
   })
 })

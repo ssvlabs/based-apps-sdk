@@ -3,7 +3,7 @@
     "plugins": [
       {
         "name": "@0no-co/graphqlsp",
-        "schema": "./schema.graphql"
+        "schema": "./schema.bam.graphql"
       }
     ],
     "target": "ES2020",
@@ -31,6 +31,6 @@
       "ssv-sdk": ["./dist/*"]
     }
   },
-  "include": ["src/**/*", "src/__tests__/**/*", "examples/**/*", "hardhat.types.d.ts"],
+  "include": ["src/**/*", "examples/**/*", "hardhat.types.d.ts"],
   "exclude": ["node_modules", "dist", "src/graphql/**/*"]
 }
