@@ -24,7 +24,7 @@
     "declaration": true,
     "declarationDir": "./dist/types",
     "forceConsistentCasingInFileNames": true,
-    "emitDeclarationOnly": true,
+    // "emitDeclarationOnly": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],

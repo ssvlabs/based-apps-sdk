@@ -35,7 +35,7 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "v-pub-tarball": "npm publish --dry-run",
-    "type-check": "tsc -b",
+    "type-check": "tsc --noEmit",
     "type:perf": "tsc --extendedDiagnostics",
     "release": "release-it",
     "commit": "git-cz",
