@@ -18,6 +18,6 @@ export type ContractAddresses = {
 }
 export const contracts: Record<ChainId, ContractAddresses> = {
   [holesky.id]: {
-    bapp: '0x352A18AEe90cdcd825d1E37d9939dCA86C00e281',
+    bapp: '0x9B3345F3B1Ce2d8655FC4B6e2ed39322d52aA317',
   },
 }
