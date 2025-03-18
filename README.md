@@ -43,13 +43,44 @@ pnpm install @ssv-labs/bapps-sdk
 
 ```typescript
 import { BasedAppsSDK } from "@ssv-labs/bapps-sdk";
+import { createPublicClient, createWalletClient, http } from 'viem'
+import { privateKeyToAccount } from 'viem/accounts'
+
+// Setup viem clients
+const chain = chains.mainnet // or chains.holesky
+const transport = http()
+
+const publicClient = createPublicClient({
+  chain,
+  transport,
+})
+
+const account = privateKeyToAccount('0x...')
+const walletClient = createWalletClient({
+  account,
+  chain,
+  transport,
+})
 
 const sdk = new BasedAppsSDK({
-  chain: 17000,
-})
+   beaconchainUrl: 'https://example.com/beacon',
+   publicClient,
+   walletClient,
+ })
 ```
 
-### API Examples
+### Based App Manager Contract Call example
+
+```typescript
+const receipt = await sdk.core.contracts.bapp.write.delegateBalance({
+    args: {
+      account: "0xA4831B989972605A62141a667578d742927Cbef9",
+      percentage: 10,
+    },
+  }).then((tx) => tx.wait())
+```
+
+### API Example
 
 ```typescript
 // get validator balance of a given account
@@ -60,7 +91,7 @@ const validatorBalance = await sdk.api.getValidatorsBalance({
 console.log('response:', validatorBalance)
 ```
 
-### Calculate Strategy Weights
+### Utils example
 
 ```ts
 const strategiesWeights = await sdk.utils.getParticipantWeights({
