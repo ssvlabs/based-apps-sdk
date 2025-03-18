@@ -6,9 +6,9 @@ import { parseGwei } from 'viem'
 
 export const getValidatorsBalance = async (
   apis: APIs,
-  args: Parameters<APIs['dvt']['getValidatorsByAccount']>[0],
+  args: Parameters<APIs['bam']['getValidatorsByAccount']>[0],
 ) => {
-  const validators = await apis.dvt.getValidatorsByAccount(args)
+  const validators = await apis.bam.getValidatorsByAccount(args)
 
   if (!validators.length)
     return {

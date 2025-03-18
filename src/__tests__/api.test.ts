@@ -4,12 +4,38 @@ import { parseEther, type Address } from 'viem'
 import { describe, expect, it } from 'vitest'
 import {
   mockAPIs,
+  mockGetAllBappsMetadataURIs,
+  mockGetAllStrategiesDepositedTo,
+  mockGetAllStrategiesForAccount,
+  mockGetAllStrategiesForBapp,
+  mockGetAllStrategyObligatedBalancesForBapp,
+  mockGetBappMetadataURI,
+  mockGetDepositedBalancesForStrategy,
   mockGetParticipantWeightInput,
+  mockGetTotalDelegatedPercentageForAccount,
   mockGetValidatorBalances,
   mockGetValidatorsByAccount,
 } from './mock-api'
+import { BasedAppsSDK } from '@/sdk'
+import { createBasedAppsAPI } from '@/main'
+import type { GraphQLClient } from 'graphql-request'
+import type { ContractInteractions } from '@/contract-interactions/types'
 
 // Mock dependencies
+
+const sdk = new BasedAppsSDK({
+  apis: mockAPIs,
+  basedAppsAPI: createBasedAppsAPI(mockAPIs),
+  contracts: {
+    bapp: {} as ContractInteractions<'bapp'>,
+  },
+  graphs: {
+    bam: {
+      client: {} as GraphQLClient,
+      endpoint: '',
+    },
+  },
+})
 
 describe('Based Apps API Tests', () => {
   describe('getValidatorsBalance', () => {
@@ -291,6 +317,149 @@ describe('Based Apps API Tests', () => {
           bAppId: '0xbapp1' as Address,
         }),
       ).rejects.toThrow('bApp not found')
+    })
+  })
+
+  // New tests for the GraphQL queries we added
+  describe('getBappMetadataURI', () => {
+    it('should fetch bapp metadata URI', async () => {
+      mockGetBappMetadataURI.mockResolvedValue('ipfs://metadata-uri')
+
+      const result = await sdk.api.getBappMetadataURI({ bAppId: '1' })
+      expect(result).toBe('ipfs://metadata-uri')
+      expect(mockGetBappMetadataURI).toHaveBeenCalledWith({ bAppId: '1' })
+    })
+  })
+
+  describe('getAllBappsMetadataURIs', () => {
+    it('should fetch all bapps metadata URIs', async () => {
+      mockGetAllBappsMetadataURIs.mockResolvedValue([
+        { id: '1', metadataURI: 'ipfs://metadata-uri-1' },
+        { id: '2', metadataURI: 'ipfs://metadata-uri-2' },
+      ])
+
+      const result = await sdk.api.getAllBappsMetadataURIs()
+      expect(result).toHaveLength(2)
+      expect(result[0].id).toBe('1')
+      expect(result[0].metadataURI).toBe('ipfs://metadata-uri-1')
+      expect(mockGetAllBappsMetadataURIs).toHaveBeenCalled()
+    })
+  })
+
+  describe('getAllStrategyObligatedBalancesForBapp', () => {
+    it('should fetch all strategy obligated balances for a bapp', async () => {
+      const mockBapp = {
+        strategies: [
+          {
+            strategy: {
+              balances: [{ balance: '1000000000000000000', token: '0xtoken1' as Address }],
+            },
+          },
+        ],
+      }
+      mockGetAllStrategyObligatedBalancesForBapp.mockResolvedValue(mockBapp)
+
+      const result = await sdk.api.getAllStrategyObligatedBalancesForBapp({ bAppId: '1' })
+      expect(result?.strategies).toHaveLength(1)
+      expect(result?.strategies[0].strategy.balances[0].balance).toBe('1000000000000000000')
+      expect(mockGetAllStrategyObligatedBalancesForBapp).toHaveBeenCalledWith({ bAppId: '1' })
+    })
+  })
+
+  describe('getDepositedBalancesForStrategy', () => {
+    it('should fetch deposited balances for a strategy', async () => {
+      const mockStrategy = {
+        deposits: [
+          {
+            contributor: { id: '0xcontributor1' as Address },
+            depositAmount: '1000000000000000000',
+            token: '0xtoken1' as Address,
+          },
+        ],
+      }
+      mockGetDepositedBalancesForStrategy.mockResolvedValue(mockStrategy)
+
+      const result = await sdk.api.getDepositedBalancesForStrategy({ strategyId: '1' })
+      expect(result?.deposits).toHaveLength(1)
+      expect(result?.deposits[0].depositAmount).toBe('1000000000000000000')
+      expect(result?.deposits[0].contributor.id).toBe('0xcontributor1')
+      expect(mockGetDepositedBalancesForStrategy).toHaveBeenCalledWith({ strategyId: '1' })
+    })
+  })
+
+  describe('getAllStrategiesDepositedTo', () => {
+    it('should fetch all strategies deposited to by an account', async () => {
+      const mockAccount = {
+        deposits: [
+          {
+            strategy: {
+              id: 'strategy1',
+              balances: [{ balance: '1000000000000000000', token: '0xtoken1' as Address }],
+            },
+            depositAmount: '500000000000000000',
+            token: '0xtoken1' as Address,
+          },
+        ],
+      }
+      mockGetAllStrategiesDepositedTo.mockResolvedValue(mockAccount)
+
+      const result = await sdk.api.getAllStrategiesDepositedTo({ accountId: '0xaccount1' })
+      expect(result?.deposits).toHaveLength(1)
+      expect(result?.deposits[0].strategy.id).toBe('strategy1')
+      expect(result?.deposits[0].depositAmount).toBe('500000000000000000')
+      expect(mockGetAllStrategiesDepositedTo).toHaveBeenCalledWith({ accountId: '0xaccount1' })
+    })
+  })
+
+  describe('getTotalDelegatedPercentageForAccount', () => {
+    it('should fetch total delegated percentage for an account', async () => {
+      mockGetTotalDelegatedPercentageForAccount.mockResolvedValue('5000') // 50%
+
+      const result = await sdk.api.getTotalDelegatedPercentageForAccount({
+        accountId: '0xaccount1',
+      })
+      expect(result).toBe('5000')
+      expect(mockGetTotalDelegatedPercentageForAccount).toHaveBeenCalledWith({
+        accountId: '0xaccount1',
+      })
+    })
+  })
+
+  describe('getAllStrategiesForBapp', () => {
+    it('should fetch all strategy IDs for a bapp', async () => {
+      mockGetAllStrategiesForBapp.mockResolvedValue(['strategy1', 'strategy2'])
+
+      const result = await sdk.api.getAllStrategiesForBapp({ bAppId: '1' })
+      expect(result).toHaveLength(2)
+      expect(result).toContain('strategy1')
+      expect(result).toContain('strategy2')
+      expect(mockGetAllStrategiesForBapp).toHaveBeenCalledWith({ bAppId: '1' })
+    })
+  })
+
+  describe('getAllStrategiesForAccount', () => {
+    it('should fetch all strategies and their balances for an account', async () => {
+      const mockStrategies = [
+        {
+          id: 'strategy1',
+          balances: [{ balance: '1000000000000000000', token: '0xtoken1' as Address }],
+        },
+        {
+          id: 'strategy2',
+          balances: [{ balance: '2000000000000000000', token: '0xtoken2' as Address }],
+        },
+      ]
+      mockGetAllStrategiesForAccount.mockResolvedValue(mockStrategies)
+
+      const result = await sdk.api.getAllStrategiesForAccount({ accountId: '0xaccount1' })
+      expect(result).not.toBeNull()
+      if (result) {
+        expect(result).toHaveLength(2)
+        expect(result[0].id).toBe('strategy1')
+        expect(result[1].id).toBe('strategy2')
+        expect(result[0].balances[0].balance).toBe('1000000000000000000')
+      }
+      expect(mockGetAllStrategiesForAccount).toHaveBeenCalledWith({ accountId: '0xaccount1' })
     })
   })
 })

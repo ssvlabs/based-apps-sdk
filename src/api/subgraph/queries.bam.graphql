@@ -87,3 +87,85 @@ query GetValidatorsByAccount($account: String!) {
     id
   }
 }
+
+query GetBappMetadataURI($bAppId: ID!) {
+  bapp(id: $bAppId) {
+    metadataURI
+  }
+}
+
+query GetAllBappsMetadataURIs {
+  bapps {
+    id
+    metadataURI
+  }
+}
+
+query GetAllStrategyObligatedBalancesForBapp($bAppId: ID!) {
+  bapp(id: $bAppId) {
+    strategies {
+      strategy {
+        balances {
+          balance
+          token
+        }
+      }
+    }
+  }
+}
+
+query GetDepositedBalancesForStrategy($strategyId: ID!) {
+  strategy(id: $strategyId) {
+    deposits {
+      contributor {
+        id
+      }
+      depositAmount
+      token
+    }
+  }
+}
+
+query GetAllStrategiesDepositedTo($accountId: ID!) {
+  account(id: $accountId) {
+    deposits {
+      strategy {
+        id
+        balances {
+          balance
+          token
+        }
+      }
+      depositAmount
+      token
+    }
+  }
+}
+
+query GetTotalDelegatedPercentageForAccount($accountId: ID!) {
+  account(id: $accountId) {
+    totalDelegatedPercentage
+  }
+}
+
+query GetAllStrategiesForBapp($bAppId: ID!) {
+  bapp(id: $bAppId) {
+    strategies {
+      strategy {
+        id
+      }
+    }
+  }
+}
+
+query GetAllStrategiesForAccount($accountId: ID!) {
+  account(id: $accountId) {
+    strategies {
+      id
+      balances {
+        balance
+        token
+      }
+    }
+  }
+}
