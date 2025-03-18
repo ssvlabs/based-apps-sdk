@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
-const tryCatch$1 = require("./try-catch-BUhy_jn-.js");
+const tryCatch$1 = require("./try-catch-D29uveXH.js");
 const viem = require("viem");
 const BAppABI = [
   {
