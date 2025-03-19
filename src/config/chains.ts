@@ -31,7 +31,7 @@ export const bam_graph_endpoints: Record<ChainId, string> = {
   [holesky.id]:
     'https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/',
   [hoodi.id]:
-    'https://api.studio.thegraph.com/query/71118/based-applications-ssv-hoodi/version/latest/',
+    'https://graph-node-hoodi.stage.ops.ssvlabsinternal.com/subgraphs/name/ssv-bapps-hoodi-stage/graphql',
 }
 
 export type ContractAddresses = {
