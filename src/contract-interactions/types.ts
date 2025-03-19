@@ -166,4 +166,5 @@ export type ReaderFunctions<
 export type ContractInteractions<ContractName extends ContractNames> = {
   write: WriterFunctions<ContractName>
   read: ReaderFunctions<ContractName>
+  address: Address
 }

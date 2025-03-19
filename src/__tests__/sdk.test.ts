@@ -15,7 +15,7 @@ const publicClient = createPublicClient({
 })
 
 const account = privateKeyToAccount(
-  '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80',
+  '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80', // Hardhat Account,
 )
 const walletClient = createWalletClient({
   account,
@@ -73,6 +73,20 @@ describe('BasedAppsSDK', () => {
     })
 
     expect(sdk.core.graphs.bam.endpoint).toBe(customEndpoint)
+    vi.unstubAllEnvs()
+  })
+
+  test('should use VITE_BAM_CONTRACT_ADDRESS when provided', () => {
+    const customAddress = '0x1234567890abcdef'
+    vi.stubEnv('VITE_BAM_CONTRACT_ADDRESS', customAddress)
+
+    const sdk = new BasedAppsSDK({
+      beaconchainUrl: 'https://example.com/beacon',
+      publicClient,
+      walletClient,
+    })
+
+    expect(sdk.core.contracts.bapp.address).toBe(customAddress)
     vi.unstubAllEnvs()
   })
 

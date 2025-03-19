@@ -45,6 +45,8 @@ export const createConfig = (props: ConfigArgs): ConfigReturnType => {
     bam: createBAMQueries(bamGraphQLClient),
   }
 
+  const bappContractAddress = import.meta.env.VITE_BAM_CONTRACT_ADDRESS || contracts[chain].bapp
+
   return {
     apis: apis,
     basedAppsAPI: createBasedAppsAPI(apis),
@@ -52,15 +54,16 @@ export const createConfig = (props: ConfigArgs): ConfigReturnType => {
       bapp: {
         read: createReader({
           abi: BAppABI,
-          contractAddress: contracts[chain].bapp,
+          contractAddress: bappContractAddress,
           publicClient: parsed.publicClient,
         }),
         write: createWriter({
           abi: BAppABI,
-          contractAddress: contracts[chain].bapp,
+          contractAddress: bappContractAddress,
           publicClient: parsed.publicClient,
           walletClient: parsed.walletClient,
         }),
+        address: bappContractAddress,
       },
     },
     graphs: {
