@@ -62,32 +62,32 @@ describe('BasedAppsSDK', () => {
     expect(() => new BasedAppsSDK(partialConfig as ConfigArgs)).toThrow()
   })
 
-  test('should use VITE_BAM_GRAPH_ENDPOINT when provided', () => {
+  test('should use custom subgraph url when provided', () => {
     const customEndpoint = 'https://custom.endpoint/graphql'
-    vi.stubEnv('VITE_BAM_GRAPH_ENDPOINT', customEndpoint)
-
     const sdk = new BasedAppsSDK({
       beaconchainUrl: 'https://example.com/beacon',
       publicClient,
       walletClient,
+      _: {
+        subgraphUrl: customEndpoint,
+      },
     })
 
     expect(sdk.core.graphs.bam.endpoint).toBe(customEndpoint)
-    vi.unstubAllEnvs()
   })
 
-  test('should use VITE_BAM_CONTRACT_ADDRESS when provided', () => {
+  test('should use custom contract address when provided', () => {
     const customAddress = '0x1234567890abcdef'
-    vi.stubEnv('VITE_BAM_CONTRACT_ADDRESS', customAddress)
-
     const sdk = new BasedAppsSDK({
       beaconchainUrl: 'https://example.com/beacon',
       publicClient,
       walletClient,
+      _: {
+        contractAddress: customAddress,
+      },
     })
 
     expect(sdk.core.contracts.bapp.address).toBe(customAddress)
-    vi.unstubAllEnvs()
   })
 
   test('should have contract.bapp.read and contract.bapp.write functionality', () => {

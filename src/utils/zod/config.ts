@@ -1,5 +1,5 @@
 import { chainIds, networks } from '@/config'
-import type { PublicClient, WalletClient } from 'viem'
+import type { Address, PublicClient, WalletClient } from 'viem'
 import { z } from 'zod'
 
 export const configArgsSchema = z
@@ -61,6 +61,12 @@ export const configArgsSchema = z
 
       return true
     }),
+    _: z
+      .object({
+        subgraphUrl: z.string().url().optional(),
+        contractAddress: z.string().optional(),
+      })
+      .optional(),
   })
   .refine(
     (val) => {
@@ -78,4 +84,8 @@ export type ConfigArgs = {
   beaconchainUrl: string
   publicClient: PublicClient
   walletClient: WalletClient
+  _?: {
+    subgraphUrl?: string
+    contractAddress?: Address
+  }
 }
