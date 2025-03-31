@@ -37,7 +37,7 @@ export const createConfig = (props: ConfigArgs): ConfigReturnType => {
 
   const chain = parsed.publicClient.chain!.id as ChainId
 
-  const bapEndpoint = import.meta.env.VITE_BAM_GRAPH_ENDPOINT || bam_graph_endpoints[chain]
+  const bapEndpoint = parsed._?.subgraphUrl || bam_graph_endpoints[chain]
   const bamGraphQLClient = new GraphQLClient(bapEndpoint)
 
   const apis: APIs = {
@@ -45,7 +45,7 @@ export const createConfig = (props: ConfigArgs): ConfigReturnType => {
     bam: createBAMQueries(bamGraphQLClient),
   }
 
-  const bappContractAddress = import.meta.env.VITE_BAM_CONTRACT_ADDRESS || contracts[chain].bapp
+  const bappContractAddress = parsed._?.contractAddress || contracts[chain].bapp
 
   return {
     apis: apis,
