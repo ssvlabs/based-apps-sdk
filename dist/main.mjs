@@ -1,5 +1,5 @@
-import { i as isObjectLike$1, b as baseGetTag, a as isObject, p as process$1, c as configArgsSchema, d as bam_graph_endpoints, e as contracts, s as stringifyBigints, f as isUndefined, t as tryCatch$1 } from "./try-catch-D0oR5yTx.mjs";
-import { h, g, j, n, r } from "./try-catch-D0oR5yTx.mjs";
+import { i as isObjectLike$1, b as baseGetTag, a as isObject, p as process$1, c as configArgsSchema, d as bam_graph_endpoints, e as contracts, s as stringifyBigints, f as isUndefined, t as tryCatch$1 } from "./try-catch-Dv3F8dNn.mjs";
+import { j, g, k, h, n, r } from "./try-catch-Dv3F8dNn.mjs";
 import { parseGwei, decodeEventLog } from "viem";
 const BAppABI = [
   {
@@ -3225,7 +3225,7 @@ const uppercase = (str) => str.toUpperCase();
 const callOrIdentity = (value) => {
   return typeof value === `function` ? value() : value;
 };
-const zip = (a, b) => a.map((k, i) => [k, b[i]]);
+const zip = (a, b) => a.map((k2, i) => [k2, b[i]]);
 const HeadersInitToPlainObject = (headers) => {
   let oHeaders = {};
   if (headers instanceof Headers) {
@@ -3243,8 +3243,8 @@ const HeadersInitToPlainObject = (headers) => {
 };
 const HeadersInstanceToPlainObject = (headers) => {
   const o = {};
-  headers.forEach((v, k) => {
-    o[k] = v;
+  headers.forEach((v, k2) => {
+    o[k2] = v;
   });
   return o;
 };
@@ -6693,12 +6693,13 @@ const isConfig = (props) => {
 const createConfig = (props) => {
   const parsed = configArgsSchema.parse(props);
   const chain = parsed.publicClient.chain.id;
-  const bapEndpoint = bam_graph_endpoints[chain];
+  const bapEndpoint = parsed._?.subgraphUrl || bam_graph_endpoints[chain];
   const bamGraphQLClient = new GraphQLClient(bapEndpoint);
   const apis = {
     beacon: createBeaconChainAPI(parsed.beaconchainUrl),
     bam: createBAMQueries(bamGraphQLClient)
   };
+  const bappContractAddress = parsed._?.contractAddress || contracts[chain].bapp;
   return {
     apis,
     basedAppsAPI: createBasedAppsAPI(apis),
@@ -6706,15 +6707,16 @@ const createConfig = (props) => {
       bapp: {
         read: createReader({
           abi: BAppABI,
-          contractAddress: contracts[chain].bapp,
+          contractAddress: bappContractAddress,
           publicClient: parsed.publicClient
         }),
         write: createWriter({
           abi: BAppABI,
-          contractAddress: contracts[chain].bapp,
+          contractAddress: bappContractAddress,
           publicClient: parsed.publicClient,
           walletClient: parsed.walletClient
-        })
+        }),
+        address: bappContractAddress
       }
     },
     graphs: {
@@ -10521,7 +10523,7 @@ class BasedAppsSDK {
 export {
   BasedAppsSDK,
   bam_graph_endpoints,
-  h as chainIds,
+  j as chainIds,
   g as chains,
   contracts,
   createBAMQueries,
@@ -10531,7 +10533,8 @@ export {
   createReader,
   createSSVAPI,
   createWriter,
-  j as globals,
+  k as globals,
+  h as hoodi,
   isConfig,
   n as networks,
   r as registerValidatorsByClusterSizeLimits

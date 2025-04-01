@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
-const tryCatch$1 = require("./try-catch-D29uveXH.js");
+const tryCatch$1 = require("./try-catch-CqimbFJS.js");
 const viem = require("viem");
 const BAppABI = [
   {
@@ -6694,12 +6694,13 @@ const isConfig = (props) => {
 const createConfig = (props) => {
   const parsed = tryCatch$1.configArgsSchema.parse(props);
   const chain = parsed.publicClient.chain.id;
-  const bapEndpoint = tryCatch$1.bam_graph_endpoints[chain];
+  const bapEndpoint = parsed._?.subgraphUrl || tryCatch$1.bam_graph_endpoints[chain];
   const bamGraphQLClient = new GraphQLClient(bapEndpoint);
   const apis = {
     beacon: createBeaconChainAPI(parsed.beaconchainUrl),
     bam: createBAMQueries(bamGraphQLClient)
   };
+  const bappContractAddress = parsed._?.contractAddress || tryCatch$1.contracts[chain].bapp;
   return {
     apis,
     basedAppsAPI: createBasedAppsAPI(apis),
@@ -6707,15 +6708,16 @@ const createConfig = (props) => {
       bapp: {
         read: createReader({
           abi: BAppABI,
-          contractAddress: tryCatch$1.contracts[chain].bapp,
+          contractAddress: bappContractAddress,
           publicClient: parsed.publicClient
         }),
         write: createWriter({
           abi: BAppABI,
-          contractAddress: tryCatch$1.contracts[chain].bapp,
+          contractAddress: bappContractAddress,
           publicClient: parsed.publicClient,
           walletClient: parsed.walletClient
-        })
+        }),
+        address: bappContractAddress
       }
     },
     graphs: {
@@ -10524,6 +10526,7 @@ exports.chainIds = tryCatch$1.chainIds;
 exports.chains = tryCatch$1.chains;
 exports.contracts = tryCatch$1.contracts;
 exports.globals = tryCatch$1.globals;
+exports.hoodi = tryCatch$1.hoodi;
 exports.networks = tryCatch$1.networks;
 exports.registerValidatorsByClusterSizeLimits = tryCatch$1.registerValidatorsByClusterSizeLimits;
 exports.BasedAppsSDK = BasedAppsSDK;

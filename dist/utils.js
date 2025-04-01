@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
-const tryCatch = require("./try-catch-D29uveXH.js");
+const tryCatch = require("./try-catch-CqimbFJS.js");
 const viem = require("viem");
 function identity(value) {
   return value;
