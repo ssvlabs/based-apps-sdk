@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HoleskyV4GetterABI } from '@/abi/holesky/v4/getter'
+import { TestnetV4GetterABI } from '@/abi/testnet/v4/getter'
 import { MainnetV4SetterABI } from '@/abi/mainnet/v4/setter'
 import { TokenABI } from '@/abi/token'
 import { paramsToArray } from '@/types/contract-interactions'
@@ -16,7 +16,7 @@ import type {
   WriterFunctions,
 } from './types'
 
-const ABIS = [TokenABI, MainnetV4SetterABI, HoleskyV4GetterABI]
+const ABIS = [TokenABI, MainnetV4SetterABI, TestnetV4GetterABI]
 
 export const createWriter = <T extends ContractNames>({
   abi,

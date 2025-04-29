@@ -1,6 +1,5 @@
 import type { Address } from 'abitype'
 import { defineChain } from 'viem'
-import { holesky } from 'viem/chains'
 
 export const hoodi = defineChain({
   id: 560048,
@@ -19,29 +18,26 @@ export const hoodi = defineChain({
 })
 
 export const chains = {
-  holesky,
   hoodi,
 } as const
 
-export const chainIds = [holesky.id, hoodi.id] as const
+export const chainIds = [hoodi.id] as const
 export type ChainId = (typeof chainIds)[number]
-export const networks = ['holesky', 'hoodi'] as const
+export const networks = ['hoodi'] as const
 export type Network = Lowercase<(typeof networks)[number]>
 export const bam_graph_endpoints: Record<ChainId, string> = {
-  [holesky.id]:
-    'https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/',
+  [hoodi.id]: 'https://api.studio.thegraph.com/query/71118/ssv-network-hoodi/version/latest/',
+}
+export const bam_paid_graph_endpoints: Record<ChainId, string> = {
   [hoodi.id]:
-    'https://graph-node-hoodi.stage.ops.ssvlabsinternal.com/subgraphs/name/ssv-bapps-hoodi-stage/graphql',
+    'https://gateway.thegraph.com/api/subgraphs/id/F4AU5vPCuKfHvnLsusibxJEiTN7ELCoYTvnzg3YHGYbh',
 }
 
 export type ContractAddresses = {
   bapp: Address
 }
 export const contracts: Record<ChainId, ContractAddresses> = {
-  [holesky.id]: {
-    bapp: '0x9B3345F3B1Ce2d8655FC4B6e2ed39322d52aA317',
-  },
   [hoodi.id]: {
-    bapp: '0x3F2983b813054Eba76Ae137DfA77836CA8b00ACE',
+    bapp: '0xc7fCFeEc5FB9962bDC2234A7a25dCec739e27f9f',
   },
 }
