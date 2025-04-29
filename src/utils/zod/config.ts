@@ -61,10 +61,15 @@ export const configArgsSchema = z
 
       return true
     }),
-    _: z
+    extendedConfig: z
       .object({
-        subgraphUrl: z.string().url().optional(),
-        contractAddress: z.string().optional(),
+        subgraph: z
+          .object({
+            url: z.string().url().optional(),
+            apiKey: z.string().optional(),
+          })
+          .optional(),
+        contract: z.string().optional(),
       })
       .optional(),
   })
@@ -79,13 +84,15 @@ export const configArgsSchema = z
     },
   ) as z.ZodType<ConfigArgs>
 
-console.log('testing trigger')
 export type ConfigArgs = {
   beaconchainUrl: string
   publicClient: PublicClient
   walletClient: WalletClient
-  _?: {
-    subgraphUrl?: string
-    contractAddress?: Address
+  extendedConfig?: {
+    subgraph?: {
+      url?: string
+      apiKey?: string
+    }
+    contract?: Address
   }
 }

@@ -4,9 +4,9 @@ import { describe, test, expect, vi, beforeEach } from 'vitest'
 
 import { createPublicClient, createWalletClient, http } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
-import { chains } from '@/config'
+import { bam_paid_graph_endpoints, chains } from '@/config'
 
-const chain = chains.holesky // or chains.holesky
+const chain = chains.hoodi
 const transport = http()
 
 const publicClient = createPublicClient({
@@ -68,8 +68,10 @@ describe('BasedAppsSDK', () => {
       beaconchainUrl: 'https://example.com/beacon',
       publicClient,
       walletClient,
-      _: {
-        subgraphUrl: customEndpoint,
+      extendedConfig: {
+        subgraph: {
+          url: customEndpoint,
+        },
       },
     })
 
@@ -82,12 +84,58 @@ describe('BasedAppsSDK', () => {
       beaconchainUrl: 'https://example.com/beacon',
       publicClient,
       walletClient,
-      _: {
-        contractAddress: customAddress,
+      extendedConfig: {
+        contract: customAddress,
       },
     })
 
     expect(sdk.core.contracts.bapp.address).toBe(customAddress)
+  })
+
+  test('should use paid graph when api key is provided', () => {
+    const apiKey = '1234567890abcdef'
+    const sdk = new BasedAppsSDK({
+      beaconchainUrl: 'https://example.com/beacon',
+      publicClient,
+      walletClient,
+      extendedConfig: {
+        subgraph: {
+          apiKey,
+        },
+      },
+    })
+    const requestHeaders = sdk.core.graphs.bam.client.requestConfig.headers as Record<
+      string,
+      string
+    >
+
+    expect(sdk.core.graphs.bam.endpoint).toBe(bam_paid_graph_endpoints[chain.id])
+    expect(requestHeaders['Authorization']).toBe(`Bearer ${apiKey}`)
+  })
+
+  test('should use custom graph endpoint and api key when both are provided', () => {
+    const customEndpoint = 'https://custom.endpoint/graphql'
+    const apiKey = '1234567890abcdef'
+
+    const sdk = new BasedAppsSDK({
+      beaconchainUrl: 'https://example.com/beacon',
+      publicClient,
+      walletClient,
+      extendedConfig: {
+        subgraph: {
+          url: customEndpoint,
+          apiKey,
+        },
+      },
+    })
+
+    const requestHeaders = sdk.core.graphs.bam.client.requestConfig.headers as Record<
+      string,
+      string
+    >
+
+    expect(sdk.core.graphs.bam.endpoint).toBe(customEndpoint)
+    expect(requestHeaders['Authorization']).toBe(`Bearer ${apiKey}`)
   })
 
   test('should have contract.bapp.read and contract.bapp.write functionality', () => {
@@ -106,16 +154,16 @@ describe('BasedAppsSDK', () => {
   })
 
   test('should throw error when public client and wallet client have different chains', () => {
-    // Create a public client with the holesky chain
-    const holeskyPublicClient = createPublicClient({
-      chain: chains.holesky,
+    // Create a public client with the hoodi chain
+    const hoodiPublicClient = createPublicClient({
+      chain: chains.hoodi,
       transport,
     })
 
     // Create another chain for test (simulating a different chain)
     const differentChain = {
-      ...chains.holesky,
-      id: chains.holesky.id + 1, // Use a different chain ID
+      ...chains.hoodi,
+      id: chains.hoodi.id + 1, // Use a different chain ID
       name: 'Different Chain',
     }
 
@@ -131,7 +179,7 @@ describe('BasedAppsSDK', () => {
       () =>
         new BasedAppsSDK({
           beaconchainUrl: 'https://example.com/beacon',
-          publicClient: holeskyPublicClient,
+          publicClient: hoodiPublicClient,
           walletClient: differentChainWalletClient,
         }),
     ).toThrow('Public and wallet client chains must be the same')
