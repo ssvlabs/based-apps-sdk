@@ -49,6 +49,9 @@ jobs:
       - name: Run tests with coverage
         run: pnpm test:coverage
 
+      - name: Build
+        run: pnpm build
+
   build-on-merge:
     name: Build and Upload Artifacts
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -88,15 +91,6 @@ jobs:
 
     - name: Run tests with coverage
       run: pnpm test:coverage
-
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v5
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        fail_ci_if_error: true
-        codecov_yml_path: codecov.yml
-        verbose: true
-
 
     - name: Build
       run: pnpm build
