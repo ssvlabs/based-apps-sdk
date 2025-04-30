@@ -46,6 +46,12 @@ jobs:
       - name: Type check
         run: pnpm type-check
 
+      - name: Run tests with coverage
+        run: pnpm test:coverage
+
+      - name: Build
+        run: pnpm build
+
   build-on-merge:
     name: Build and Upload Artifacts
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -82,6 +88,9 @@ jobs:
 
     - name: Type check
       run: pnpm type-check
+
+    - name: Run tests with coverage
+      run: pnpm test:coverage
 
     - name: Build
       run: pnpm build
