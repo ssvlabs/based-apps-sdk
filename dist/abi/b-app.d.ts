@@ -20,7 +20,23 @@ export declare const BAppABI: readonly [{
     readonly type: "error";
 }, {
     readonly inputs: readonly [];
+    readonly name: "BAppDoesNotSupportInterface";
+    readonly type: "error";
+}, {
+    readonly inputs: readonly [];
     readonly name: "BAppNotOptedIn";
+    readonly type: "error";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "BAppNotRegistered";
+    readonly type: "error";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "BAppOptInFailed";
+    readonly type: "error";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "BAppSlashingFailed";
     readonly type: "error";
 }, {
     readonly inputs: readonly [];
@@ -48,7 +64,7 @@ export declare const BAppABI: readonly [{
     readonly type: "error";
 }, {
     readonly inputs: readonly [];
-    readonly name: "EmptyTokenList";
+    readonly name: "ExceedingMaxShares";
     readonly type: "error";
 }, {
     readonly inputs: readonly [];
@@ -65,6 +81,14 @@ export declare const BAppABI: readonly [{
 }, {
     readonly inputs: readonly [];
     readonly name: "InsufficientBalance";
+    readonly type: "error";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "InsufficientLiquidity";
+    readonly type: "error";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "InvalidAccountGeneration";
     readonly type: "error";
 }, {
     readonly inputs: readonly [];
@@ -92,10 +116,6 @@ export declare const BAppABI: readonly [{
     readonly type: "error";
 }, {
     readonly inputs: readonly [];
-    readonly name: "InvalidPercentage";
-    readonly type: "error";
-}, {
-    readonly inputs: readonly [];
     readonly name: "InvalidPercentageIncrement";
     readonly type: "error";
 }, {
@@ -120,10 +140,6 @@ export declare const BAppABI: readonly [{
     readonly type: "error";
 }, {
     readonly inputs: readonly [];
-    readonly name: "LengthsNotMatching";
-    readonly type: "error";
-}, {
-    readonly inputs: readonly [];
     readonly name: "NoPendingFeeUpdate";
     readonly type: "error";
 }, {
@@ -133,10 +149,6 @@ export declare const BAppABI: readonly [{
 }, {
     readonly inputs: readonly [];
     readonly name: "NoPendingWithdrawal";
-    readonly type: "error";
-}, {
-    readonly inputs: readonly [];
-    readonly name: "NoPendingWithdrawalETH";
     readonly type: "error";
 }, {
     readonly inputs: readonly [];
@@ -168,23 +180,19 @@ export declare const BAppABI: readonly [{
     readonly type: "error";
 }, {
     readonly inputs: readonly [];
-    readonly name: "ReentrancyGuardReentrantCall";
-    readonly type: "error";
-}, {
-    readonly inputs: readonly [];
     readonly name: "RequestTimeExpired";
     readonly type: "error";
 }, {
-    readonly inputs: readonly [{
-        readonly internalType: "address";
-        readonly name: "token";
-        readonly type: "address";
-    }];
-    readonly name: "SafeERC20FailedOperation";
+    readonly inputs: readonly [];
+    readonly name: "SlashingDisabled";
     readonly type: "error";
 }, {
-    readonly inputs: readonly [];
-    readonly name: "SharedRiskLevelAlreadySet";
+    readonly inputs: readonly [{
+        readonly internalType: "uint8";
+        readonly name: "moduleId";
+        readonly type: "uint8";
+    }];
+    readonly name: "TargetModuleDoesNotExist";
     readonly type: "error";
 }, {
     readonly inputs: readonly [];
@@ -199,16 +207,12 @@ export declare const BAppABI: readonly [{
     readonly name: "TokenAlreadyAddedToBApp";
     readonly type: "error";
 }, {
-    readonly inputs: readonly [];
-    readonly name: "TokenIsUsedByTheBApp";
-    readonly type: "error";
-}, {
     readonly inputs: readonly [{
         readonly internalType: "address";
         readonly name: "token";
         readonly type: "address";
     }];
-    readonly name: "TokenNoTSupportedByBApp";
+    readonly name: "TokenNotSupportedByBApp";
     readonly type: "error";
 }, {
     readonly inputs: readonly [];
@@ -221,6 +225,14 @@ export declare const BAppABI: readonly [{
         readonly type: "bytes32";
     }];
     readonly name: "UUPSUnsupportedProxiableUUID";
+    readonly type: "error";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "WithdrawTransferFailed";
+    readonly type: "error";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "WithdrawalsDisabled";
     readonly type: "error";
 }, {
     readonly inputs: readonly [];
@@ -246,7 +258,7 @@ export declare const BAppABI: readonly [{
     readonly inputs: readonly [{
         readonly indexed: true;
         readonly internalType: "address";
-        readonly name: "bAppAddress";
+        readonly name: "bApp";
         readonly type: "address";
     }, {
         readonly indexed: false;
@@ -291,12 +303,7 @@ export declare const BAppABI: readonly [{
     readonly inputs: readonly [{
         readonly indexed: true;
         readonly internalType: "address";
-        readonly name: "bAppAddress";
-        readonly type: "address";
-    }, {
-        readonly indexed: true;
-        readonly internalType: "address";
-        readonly name: "owner";
+        readonly name: "bApp";
         readonly type: "address";
     }, {
         readonly indexed: false;
@@ -321,38 +328,22 @@ export declare const BAppABI: readonly [{
     readonly inputs: readonly [{
         readonly indexed: true;
         readonly internalType: "address";
-        readonly name: "bAppAddress";
+        readonly name: "bApp";
         readonly type: "address";
     }, {
+        readonly components: readonly [{
+            readonly internalType: "address";
+            readonly name: "token";
+            readonly type: "address";
+        }, {
+            readonly internalType: "uint32";
+            readonly name: "sharedRiskLevel";
+            readonly type: "uint32";
+        }];
         readonly indexed: false;
-        readonly internalType: "address[]";
-        readonly name: "tokens";
-        readonly type: "address[]";
-    }, {
-        readonly indexed: false;
-        readonly internalType: "uint32[]";
-        readonly name: "sharedRiskLevels";
-        readonly type: "uint32[]";
-    }];
-    readonly name: "BAppTokensCreated";
-    readonly type: "event";
-}, {
-    readonly anonymous: false;
-    readonly inputs: readonly [{
-        readonly indexed: true;
-        readonly internalType: "address";
-        readonly name: "bAppAddress";
-        readonly type: "address";
-    }, {
-        readonly indexed: false;
-        readonly internalType: "address[]";
-        readonly name: "tokens";
-        readonly type: "address[]";
-    }, {
-        readonly indexed: false;
-        readonly internalType: "uint32[]";
-        readonly name: "sharedRiskLevels";
-        readonly type: "uint32[]";
+        readonly internalType: "struct ICore.TokenConfig[]";
+        readonly name: "tokenConfigs";
+        readonly type: "tuple[]";
     }];
     readonly name: "BAppTokensUpdated";
     readonly type: "event";
@@ -415,6 +406,36 @@ export declare const BAppABI: readonly [{
     readonly anonymous: false;
     readonly inputs: readonly [{
         readonly indexed: false;
+        readonly internalType: "uint32";
+        readonly name: "disabledFeatures";
+        readonly type: "uint32";
+    }];
+    readonly name: "DisabledFeaturesUpdated";
+    readonly type: "event";
+}, {
+    readonly anonymous: false;
+    readonly inputs: readonly [{
+        readonly indexed: false;
+        readonly internalType: "uint32";
+        readonly name: "feeExpireTime";
+        readonly type: "uint32";
+    }];
+    readonly name: "FeeExpireTimeUpdated";
+    readonly type: "event";
+}, {
+    readonly anonymous: false;
+    readonly inputs: readonly [{
+        readonly indexed: false;
+        readonly internalType: "uint32";
+        readonly name: "feeTimelockPeriod";
+        readonly type: "uint32";
+    }];
+    readonly name: "FeeTimelockPeriodUpdated";
+    readonly type: "event";
+}, {
+    readonly anonymous: false;
+    readonly inputs: readonly [{
+        readonly indexed: false;
         readonly internalType: "uint64";
         readonly name: "version";
         readonly type: "uint64";
@@ -430,6 +451,21 @@ export declare const BAppABI: readonly [{
         readonly type: "uint32";
     }];
     readonly name: "MaxFeeIncrementSet";
+    readonly type: "event";
+}, {
+    readonly anonymous: false;
+    readonly inputs: readonly [{
+        readonly indexed: true;
+        readonly internalType: "enum SSVCoreModules";
+        readonly name: "moduleId";
+        readonly type: "uint8";
+    }, {
+        readonly indexed: false;
+        readonly internalType: "address";
+        readonly name: "moduleAddress";
+        readonly type: "address";
+    }];
+    readonly name: "ModuleUpdated";
     readonly type: "event";
 }, {
     readonly anonymous: false;
@@ -455,6 +491,26 @@ export declare const BAppABI: readonly [{
         readonly type: "uint32";
     }];
     readonly name: "ObligationCreated";
+    readonly type: "event";
+}, {
+    readonly anonymous: false;
+    readonly inputs: readonly [{
+        readonly indexed: false;
+        readonly internalType: "uint32";
+        readonly name: "obligationExpireTime";
+        readonly type: "uint32";
+    }];
+    readonly name: "ObligationExpireTimeUpdated";
+    readonly type: "event";
+}, {
+    readonly anonymous: false;
+    readonly inputs: readonly [{
+        readonly indexed: false;
+        readonly internalType: "uint32";
+        readonly name: "obligationTimelockPeriod";
+        readonly type: "uint32";
+    }];
+    readonly name: "ObligationTimelockPeriodUpdated";
     readonly type: "event";
 }, {
     readonly anonymous: false;
@@ -503,11 +559,6 @@ export declare const BAppABI: readonly [{
         readonly internalType: "uint32";
         readonly name: "percentage";
         readonly type: "uint32";
-    }, {
-        readonly indexed: false;
-        readonly internalType: "bool";
-        readonly name: "isFast";
-        readonly type: "bool";
     }];
     readonly name: "ObligationUpdated";
     readonly type: "event";
@@ -524,7 +575,37 @@ export declare const BAppABI: readonly [{
         readonly name: "newOwner";
         readonly type: "address";
     }];
+    readonly name: "OwnershipTransferStarted";
+    readonly type: "event";
+}, {
+    readonly anonymous: false;
+    readonly inputs: readonly [{
+        readonly indexed: true;
+        readonly internalType: "address";
+        readonly name: "previousOwner";
+        readonly type: "address";
+    }, {
+        readonly indexed: true;
+        readonly internalType: "address";
+        readonly name: "newOwner";
+        readonly type: "address";
+    }];
     readonly name: "OwnershipTransferred";
+    readonly type: "event";
+}, {
+    readonly anonymous: false;
+    readonly inputs: readonly [{
+        readonly indexed: false;
+        readonly internalType: "address";
+        readonly name: "token";
+        readonly type: "address";
+    }, {
+        readonly indexed: false;
+        readonly internalType: "uint256";
+        readonly name: "amount";
+        readonly type: "uint256";
+    }];
+    readonly name: "SlashingFundWithdrawn";
     readonly type: "event";
 }, {
     readonly anonymous: false;
@@ -593,11 +674,6 @@ export declare const BAppABI: readonly [{
         readonly internalType: "uint32";
         readonly name: "proposedFee";
         readonly type: "uint32";
-    }, {
-        readonly indexed: false;
-        readonly internalType: "uint32";
-        readonly name: "fee";
-        readonly type: "uint32";
     }];
     readonly name: "StrategyFeeUpdateProposed";
     readonly type: "event";
@@ -616,15 +692,35 @@ export declare const BAppABI: readonly [{
     }, {
         readonly indexed: false;
         readonly internalType: "uint32";
-        readonly name: "fee";
+        readonly name: "newFee";
         readonly type: "uint32";
     }, {
         readonly indexed: false;
-        readonly internalType: "uint32";
-        readonly name: "oldFee";
-        readonly type: "uint32";
+        readonly internalType: "bool";
+        readonly name: "isFast";
+        readonly type: "bool";
     }];
     readonly name: "StrategyFeeUpdated";
+    readonly type: "event";
+}, {
+    readonly anonymous: false;
+    readonly inputs: readonly [{
+        readonly indexed: false;
+        readonly internalType: "uint32";
+        readonly name: "maxFeeIncrement";
+        readonly type: "uint32";
+    }];
+    readonly name: "StrategyMaxFeeIncrementUpdated";
+    readonly type: "event";
+}, {
+    readonly anonymous: false;
+    readonly inputs: readonly [{
+        readonly indexed: false;
+        readonly internalType: "uint256";
+        readonly name: "maxShares";
+        readonly type: "uint256";
+    }];
+    readonly name: "StrategyMaxSharesUpdated";
     readonly type: "event";
 }, {
     readonly anonymous: false;
@@ -640,6 +736,36 @@ export declare const BAppABI: readonly [{
         readonly type: "string";
     }];
     readonly name: "StrategyMetadataURIUpdated";
+    readonly type: "event";
+}, {
+    readonly anonymous: false;
+    readonly inputs: readonly [{
+        readonly indexed: true;
+        readonly internalType: "uint32";
+        readonly name: "strategyId";
+        readonly type: "uint32";
+    }, {
+        readonly indexed: true;
+        readonly internalType: "address";
+        readonly name: "bApp";
+        readonly type: "address";
+    }, {
+        readonly indexed: false;
+        readonly internalType: "address";
+        readonly name: "token";
+        readonly type: "address";
+    }, {
+        readonly indexed: false;
+        readonly internalType: "uint32";
+        readonly name: "percentage";
+        readonly type: "uint32";
+    }, {
+        readonly indexed: false;
+        readonly internalType: "address";
+        readonly name: "receiver";
+        readonly type: "address";
+    }];
+    readonly name: "StrategySlashed";
     readonly type: "event";
 }, {
     readonly anonymous: false;
@@ -699,6 +825,16 @@ export declare const BAppABI: readonly [{
 }, {
     readonly anonymous: false;
     readonly inputs: readonly [{
+        readonly indexed: false;
+        readonly internalType: "uint32";
+        readonly name: "tokenUpdateTimelockPeriod";
+        readonly type: "uint32";
+    }];
+    readonly name: "TokenUpdateTimelockPeriodUpdated";
+    readonly type: "event";
+}, {
+    readonly anonymous: false;
+    readonly inputs: readonly [{
         readonly indexed: true;
         readonly internalType: "address";
         readonly name: "implementation";
@@ -707,65 +843,25 @@ export declare const BAppABI: readonly [{
     readonly name: "Upgraded";
     readonly type: "event";
 }, {
-    readonly inputs: readonly [];
-    readonly name: "ETH_ADDRESS";
-    readonly outputs: readonly [{
-        readonly internalType: "address";
-        readonly name: "";
-        readonly type: "address";
-    }];
-    readonly stateMutability: "view";
-    readonly type: "function";
-}, {
-    readonly inputs: readonly [];
-    readonly name: "FEE_EXPIRE_TIME";
-    readonly outputs: readonly [{
+    readonly anonymous: false;
+    readonly inputs: readonly [{
+        readonly indexed: false;
         readonly internalType: "uint32";
-        readonly name: "";
+        readonly name: "withdrawalExpireTime";
         readonly type: "uint32";
     }];
-    readonly stateMutability: "view";
-    readonly type: "function";
+    readonly name: "WithdrawalExpireTimeUpdated";
+    readonly type: "event";
 }, {
-    readonly inputs: readonly [];
-    readonly name: "FEE_TIMELOCK_PERIOD";
-    readonly outputs: readonly [{
+    readonly anonymous: false;
+    readonly inputs: readonly [{
+        readonly indexed: false;
         readonly internalType: "uint32";
-        readonly name: "";
+        readonly name: "withdrawalTimelockPeriod";
         readonly type: "uint32";
     }];
-    readonly stateMutability: "view";
-    readonly type: "function";
-}, {
-    readonly inputs: readonly [];
-    readonly name: "MAX_PERCENTAGE";
-    readonly outputs: readonly [{
-        readonly internalType: "uint32";
-        readonly name: "";
-        readonly type: "uint32";
-    }];
-    readonly stateMutability: "view";
-    readonly type: "function";
-}, {
-    readonly inputs: readonly [];
-    readonly name: "OBLIGATION_EXPIRE_TIME";
-    readonly outputs: readonly [{
-        readonly internalType: "uint32";
-        readonly name: "";
-        readonly type: "uint32";
-    }];
-    readonly stateMutability: "view";
-    readonly type: "function";
-}, {
-    readonly inputs: readonly [];
-    readonly name: "OBLIGATION_TIMELOCK_PERIOD";
-    readonly outputs: readonly [{
-        readonly internalType: "uint32";
-        readonly name: "";
-        readonly type: "uint32";
-    }];
-    readonly stateMutability: "view";
-    readonly type: "function";
+    readonly name: "WithdrawalTimelockPeriodUpdated";
+    readonly type: "event";
 }, {
     readonly inputs: readonly [];
     readonly name: "UPGRADE_INTERFACE_VERSION";
@@ -778,23 +874,9 @@ export declare const BAppABI: readonly [{
     readonly type: "function";
 }, {
     readonly inputs: readonly [];
-    readonly name: "WITHDRAWAL_EXPIRE_TIME";
-    readonly outputs: readonly [{
-        readonly internalType: "uint32";
-        readonly name: "";
-        readonly type: "uint32";
-    }];
-    readonly stateMutability: "view";
-    readonly type: "function";
-}, {
-    readonly inputs: readonly [];
-    readonly name: "WITHDRAWAL_TIMELOCK_PERIOD";
-    readonly outputs: readonly [{
-        readonly internalType: "uint32";
-        readonly name: "";
-        readonly type: "uint32";
-    }];
-    readonly stateMutability: "view";
+    readonly name: "acceptOwnership";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
     readonly type: "function";
 }, {
     readonly inputs: readonly [{
@@ -809,40 +891,8 @@ export declare const BAppABI: readonly [{
     readonly name: "accountBAppStrategy";
     readonly outputs: readonly [{
         readonly internalType: "uint32";
-        readonly name: "strategyId";
+        readonly name: "";
         readonly type: "uint32";
-    }];
-    readonly stateMutability: "view";
-    readonly type: "function";
-}, {
-    readonly inputs: readonly [{
-        readonly internalType: "address";
-        readonly name: "bApp";
-        readonly type: "address";
-    }, {
-        readonly internalType: "address[]";
-        readonly name: "tokens";
-        readonly type: "address[]";
-    }, {
-        readonly internalType: "uint32[]";
-        readonly name: "sharedRiskLevels";
-        readonly type: "uint32[]";
-    }];
-    readonly name: "addTokensToBApp";
-    readonly outputs: readonly [];
-    readonly stateMutability: "nonpayable";
-    readonly type: "function";
-}, {
-    readonly inputs: readonly [{
-        readonly internalType: "address";
-        readonly name: "bApp";
-        readonly type: "address";
-    }];
-    readonly name: "bAppOwners";
-    readonly outputs: readonly [{
-        readonly internalType: "address";
-        readonly name: "owner";
-        readonly type: "address";
     }];
     readonly stateMutability: "view";
     readonly type: "function";
@@ -859,12 +909,20 @@ export declare const BAppABI: readonly [{
     readonly name: "bAppTokens";
     readonly outputs: readonly [{
         readonly internalType: "uint32";
-        readonly name: "value";
+        readonly name: "currentValue";
         readonly type: "uint32";
     }, {
         readonly internalType: "bool";
         readonly name: "isSet";
         readonly type: "bool";
+    }, {
+        readonly internalType: "uint32";
+        readonly name: "pendingValue";
+        readonly type: "uint32";
+    }, {
+        readonly internalType: "uint32";
+        readonly name: "effectTime";
+        readonly type: "uint32";
     }];
     readonly stateMutability: "view";
     readonly type: "function";
@@ -911,7 +969,7 @@ export declare const BAppABI: readonly [{
 }, {
     readonly inputs: readonly [{
         readonly internalType: "address";
-        readonly name: "account";
+        readonly name: "receiver";
         readonly type: "address";
     }, {
         readonly internalType: "uint32";
@@ -925,17 +983,17 @@ export declare const BAppABI: readonly [{
 }, {
     readonly inputs: readonly [{
         readonly internalType: "address";
-        readonly name: "delegator";
+        readonly name: "account";
         readonly type: "address";
     }, {
         readonly internalType: "address";
-        readonly name: "account";
+        readonly name: "receiver";
         readonly type: "address";
     }];
     readonly name: "delegations";
     readonly outputs: readonly [{
         readonly internalType: "uint32";
-        readonly name: "percentage";
+        readonly name: "";
         readonly type: "uint32";
     }];
     readonly stateMutability: "view";
@@ -969,58 +1027,62 @@ export declare const BAppABI: readonly [{
     readonly stateMutability: "payable";
     readonly type: "function";
 }, {
-    readonly inputs: readonly [{
+    readonly inputs: readonly [];
+    readonly name: "disabledFeatures";
+    readonly outputs: readonly [{
         readonly internalType: "uint32";
-        readonly name: "strategyId";
-        readonly type: "uint32";
-    }, {
-        readonly internalType: "address";
-        readonly name: "bApp";
-        readonly type: "address";
-    }, {
-        readonly internalType: "address";
-        readonly name: "token";
-        readonly type: "address";
-    }, {
-        readonly internalType: "uint32";
-        readonly name: "obligationPercentage";
+        readonly name: "";
         readonly type: "uint32";
     }];
-    readonly name: "fastUpdateObligation";
-    readonly outputs: readonly [];
-    readonly stateMutability: "nonpayable";
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "ethAddress";
+    readonly outputs: readonly [{
+        readonly internalType: "address";
+        readonly name: "";
+        readonly type: "address";
+    }];
+    readonly stateMutability: "pure";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "feeExpireTime";
+    readonly outputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "";
+        readonly type: "uint32";
+    }];
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "feeTimelockPeriod";
+    readonly outputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "";
+        readonly type: "uint32";
+    }];
+    readonly stateMutability: "view";
     readonly type: "function";
 }, {
     readonly inputs: readonly [{
         readonly internalType: "uint32";
         readonly name: "strategyId";
         readonly type: "uint32";
-    }, {
-        readonly internalType: "contract IERC20";
-        readonly name: "token";
-        readonly type: "address";
-    }, {
-        readonly internalType: "uint256";
-        readonly name: "amount";
-        readonly type: "uint256";
     }];
-    readonly name: "fastWithdrawERC20";
-    readonly outputs: readonly [];
-    readonly stateMutability: "nonpayable";
-    readonly type: "function";
-}, {
-    readonly inputs: readonly [{
+    readonly name: "feeUpdateRequests";
+    readonly outputs: readonly [{
         readonly internalType: "uint32";
-        readonly name: "strategyId";
+        readonly name: "percentage";
         readonly type: "uint32";
     }, {
-        readonly internalType: "uint256";
-        readonly name: "amount";
-        readonly type: "uint256";
+        readonly internalType: "uint32";
+        readonly name: "requestTime";
+        readonly type: "uint32";
     }];
-    readonly name: "fastWithdrawETH";
-    readonly outputs: readonly [];
-    readonly stateMutability: "nonpayable";
+    readonly stateMutability: "view";
     readonly type: "function";
 }, {
     readonly inputs: readonly [{
@@ -1076,13 +1138,112 @@ export declare const BAppABI: readonly [{
     readonly type: "function";
 }, {
     readonly inputs: readonly [{
+        readonly internalType: "enum SSVCoreModules";
+        readonly name: "moduleId";
+        readonly type: "uint8";
+    }];
+    readonly name: "getModuleAddress";
+    readonly outputs: readonly [{
         readonly internalType: "address";
-        readonly name: "owner";
+        readonly name: "";
+        readonly type: "address";
+    }];
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "strategyId";
+        readonly type: "uint32";
+    }, {
+        readonly internalType: "address";
+        readonly name: "bApp";
         readonly type: "address";
     }, {
-        readonly internalType: "uint32";
-        readonly name: "_maxFeeIncrement";
-        readonly type: "uint32";
+        readonly internalType: "address";
+        readonly name: "token";
+        readonly type: "address";
+    }];
+    readonly name: "getSlashableBalance";
+    readonly outputs: readonly [{
+        readonly internalType: "uint256";
+        readonly name: "slashableBalance";
+        readonly type: "uint256";
+    }];
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "getVersion";
+    readonly outputs: readonly [{
+        readonly internalType: "string";
+        readonly name: "";
+        readonly type: "string";
+    }];
+    readonly stateMutability: "pure";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "address";
+        readonly name: "owner_";
+        readonly type: "address";
+    }, {
+        readonly internalType: "contract IBasedAppManager";
+        readonly name: "ssvBasedAppManger_";
+        readonly type: "address";
+    }, {
+        readonly internalType: "contract IStrategyManager";
+        readonly name: "ssvStrategyManager_";
+        readonly type: "address";
+    }, {
+        readonly internalType: "contract IProtocolManager";
+        readonly name: "protocolManager_";
+        readonly type: "address";
+    }, {
+        readonly components: readonly [{
+            readonly internalType: "uint256";
+            readonly name: "maxShares";
+            readonly type: "uint256";
+        }, {
+            readonly internalType: "uint32";
+            readonly name: "feeTimelockPeriod";
+            readonly type: "uint32";
+        }, {
+            readonly internalType: "uint32";
+            readonly name: "feeExpireTime";
+            readonly type: "uint32";
+        }, {
+            readonly internalType: "uint32";
+            readonly name: "withdrawalTimelockPeriod";
+            readonly type: "uint32";
+        }, {
+            readonly internalType: "uint32";
+            readonly name: "withdrawalExpireTime";
+            readonly type: "uint32";
+        }, {
+            readonly internalType: "uint32";
+            readonly name: "obligationTimelockPeriod";
+            readonly type: "uint32";
+        }, {
+            readonly internalType: "uint32";
+            readonly name: "obligationExpireTime";
+            readonly type: "uint32";
+        }, {
+            readonly internalType: "uint32";
+            readonly name: "tokenUpdateTimelockPeriod";
+            readonly type: "uint32";
+        }, {
+            readonly internalType: "uint32";
+            readonly name: "maxFeeIncrement";
+            readonly type: "uint32";
+        }, {
+            readonly internalType: "uint32";
+            readonly name: "disabledFeatures";
+            readonly type: "uint32";
+        }];
+        readonly internalType: "struct ProtocolStorageLib.Data";
+        readonly name: "config";
+        readonly type: "tuple";
     }];
     readonly name: "initialize";
     readonly outputs: readonly [];
@@ -1091,6 +1252,36 @@ export declare const BAppABI: readonly [{
 }, {
     readonly inputs: readonly [];
     readonly name: "maxFeeIncrement";
+    readonly outputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "";
+        readonly type: "uint32";
+    }];
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "maxPercentage";
+    readonly outputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "";
+        readonly type: "uint32";
+    }];
+    readonly stateMutability: "pure";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "maxShares";
+    readonly outputs: readonly [{
+        readonly internalType: "uint256";
+        readonly name: "";
+        readonly type: "uint256";
+    }];
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "obligationExpireTime";
     readonly outputs: readonly [{
         readonly internalType: "uint32";
         readonly name: "";
@@ -1120,6 +1311,16 @@ export declare const BAppABI: readonly [{
     }, {
         readonly internalType: "uint32";
         readonly name: "requestTime";
+        readonly type: "uint32";
+    }];
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "obligationTimelockPeriod";
+    readonly outputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "";
         readonly type: "uint32";
     }];
     readonly stateMutability: "view";
@@ -1177,8 +1378,32 @@ export declare const BAppABI: readonly [{
     readonly stateMutability: "nonpayable";
     readonly type: "function";
 }, {
+    readonly inputs: readonly [{
+        readonly internalType: "address";
+        readonly name: "owner";
+        readonly type: "address";
+    }];
+    readonly name: "ownedStrategies";
+    readonly outputs: readonly [{
+        readonly internalType: "uint32[]";
+        readonly name: "strategyIds";
+        readonly type: "uint32[]";
+    }];
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
     readonly inputs: readonly [];
     readonly name: "owner";
+    readonly outputs: readonly [{
+        readonly internalType: "address";
+        readonly name: "";
+        readonly type: "address";
+    }];
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "pendingOwner";
     readonly outputs: readonly [{
         readonly internalType: "address";
         readonly name: "";
@@ -1266,10 +1491,20 @@ export declare const BAppABI: readonly [{
     readonly type: "function";
 }, {
     readonly inputs: readonly [{
-        readonly internalType: "address";
-        readonly name: "bApp";
-        readonly type: "address";
+        readonly internalType: "uint32";
+        readonly name: "strategyId";
+        readonly type: "uint32";
     }, {
+        readonly internalType: "uint32";
+        readonly name: "proposedFee";
+        readonly type: "uint32";
+    }];
+    readonly name: "reduceFee";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
         readonly internalType: "address[]";
         readonly name: "tokens";
         readonly type: "address[]";
@@ -1289,7 +1524,21 @@ export declare const BAppABI: readonly [{
 }, {
     readonly inputs: readonly [{
         readonly internalType: "address";
-        readonly name: "account";
+        readonly name: "bApp";
+        readonly type: "address";
+    }];
+    readonly name: "registeredBApps";
+    readonly outputs: readonly [{
+        readonly internalType: "bool";
+        readonly name: "isRegistered";
+        readonly type: "bool";
+    }];
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "address";
+        readonly name: "receiver";
         readonly type: "address";
     }];
     readonly name: "removeDelegatedBalance";
@@ -1307,23 +1556,59 @@ export declare const BAppABI: readonly [{
         readonly internalType: "uint32";
         readonly name: "strategyId";
         readonly type: "uint32";
+    }, {
+        readonly internalType: "address";
+        readonly name: "bApp";
+        readonly type: "address";
+    }, {
+        readonly internalType: "address";
+        readonly name: "token";
+        readonly type: "address";
+    }, {
+        readonly internalType: "uint32";
+        readonly name: "percentage";
+        readonly type: "uint32";
+    }, {
+        readonly internalType: "bytes";
+        readonly name: "data";
+        readonly type: "bytes";
+    }];
+    readonly name: "slash";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "address";
+        readonly name: "account";
+        readonly type: "address";
+    }, {
+        readonly internalType: "address";
+        readonly name: "token";
+        readonly type: "address";
+    }];
+    readonly name: "slashingFund";
+    readonly outputs: readonly [{
+        readonly internalType: "uint256";
+        readonly name: "";
+        readonly type: "uint256";
+    }];
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "strategyId";
+        readonly type: "uint32";
     }];
     readonly name: "strategies";
     readonly outputs: readonly [{
         readonly internalType: "address";
-        readonly name: "owner";
+        readonly name: "strategyOwner";
         readonly type: "address";
     }, {
         readonly internalType: "uint32";
         readonly name: "fee";
-        readonly type: "uint32";
-    }, {
-        readonly internalType: "uint32";
-        readonly name: "feeProposed";
-        readonly type: "uint32";
-    }, {
-        readonly internalType: "uint32";
-        readonly name: "feeRequestTime";
         readonly type: "uint32";
     }];
     readonly stateMutability: "view";
@@ -1342,11 +1627,75 @@ export declare const BAppABI: readonly [{
         readonly name: "token";
         readonly type: "address";
     }];
-    readonly name: "strategyTokenBalances";
+    readonly name: "strategyAccountShares";
     readonly outputs: readonly [{
         readonly internalType: "uint256";
-        readonly name: "balance";
+        readonly name: "";
         readonly type: "uint256";
+    }];
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "strategyId";
+        readonly type: "uint32";
+    }, {
+        readonly internalType: "address";
+        readonly name: "token";
+        readonly type: "address";
+    }];
+    readonly name: "strategyGeneration";
+    readonly outputs: readonly [{
+        readonly internalType: "uint256";
+        readonly name: "";
+        readonly type: "uint256";
+    }];
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "strategyId";
+        readonly type: "uint32";
+    }, {
+        readonly internalType: "address";
+        readonly name: "token";
+        readonly type: "address";
+    }];
+    readonly name: "strategyTotalBalance";
+    readonly outputs: readonly [{
+        readonly internalType: "uint256";
+        readonly name: "";
+        readonly type: "uint256";
+    }];
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "strategyId";
+        readonly type: "uint32";
+    }, {
+        readonly internalType: "address";
+        readonly name: "token";
+        readonly type: "address";
+    }];
+    readonly name: "strategyTotalShares";
+    readonly outputs: readonly [{
+        readonly internalType: "uint256";
+        readonly name: "";
+        readonly type: "uint256";
+    }];
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "tokenUpdateTimelockPeriod";
+    readonly outputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "";
+        readonly type: "uint32";
     }];
     readonly stateMutability: "view";
     readonly type: "function";
@@ -1359,7 +1708,7 @@ export declare const BAppABI: readonly [{
     readonly name: "totalDelegatedPercentage";
     readonly outputs: readonly [{
         readonly internalType: "uint32";
-        readonly name: "totalPercentage";
+        readonly name: "";
         readonly type: "uint32";
     }];
     readonly stateMutability: "view";
@@ -1386,10 +1735,6 @@ export declare const BAppABI: readonly [{
     readonly type: "function";
 }, {
     readonly inputs: readonly [{
-        readonly internalType: "address";
-        readonly name: "bApp";
-        readonly type: "address";
-    }, {
         readonly internalType: "string";
         readonly name: "metadataURI";
         readonly type: "string";
@@ -1400,26 +1745,27 @@ export declare const BAppABI: readonly [{
     readonly type: "function";
 }, {
     readonly inputs: readonly [{
-        readonly internalType: "address";
-        readonly name: "bApp";
-        readonly type: "address";
-    }, {
-        readonly internalType: "address[]";
-        readonly name: "tokens";
-        readonly type: "address[]";
-    }, {
-        readonly internalType: "uint32[]";
-        readonly name: "sharedRiskLevels";
-        readonly type: "uint32[]";
+        readonly components: readonly [{
+            readonly internalType: "address";
+            readonly name: "token";
+            readonly type: "address";
+        }, {
+            readonly internalType: "uint32";
+            readonly name: "sharedRiskLevel";
+            readonly type: "uint32";
+        }];
+        readonly internalType: "struct ICore.TokenConfig[]";
+        readonly name: "tokenConfigs";
+        readonly type: "tuple[]";
     }];
-    readonly name: "updateBAppTokens";
+    readonly name: "updateBAppsTokens";
     readonly outputs: readonly [];
     readonly stateMutability: "nonpayable";
     readonly type: "function";
 }, {
     readonly inputs: readonly [{
         readonly internalType: "address";
-        readonly name: "account";
+        readonly name: "receiver";
         readonly type: "address";
     }, {
         readonly internalType: "uint32";
@@ -1427,6 +1773,90 @@ export declare const BAppABI: readonly [{
         readonly type: "uint32";
     }];
     readonly name: "updateDelegatedBalance";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "disabledFeatures";
+        readonly type: "uint32";
+    }];
+    readonly name: "updateDisabledFeatures";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "value";
+        readonly type: "uint32";
+    }];
+    readonly name: "updateFeeExpireTime";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "value";
+        readonly type: "uint32";
+    }];
+    readonly name: "updateFeeTimelockPeriod";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "value";
+        readonly type: "uint32";
+    }];
+    readonly name: "updateMaxFeeIncrement";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "uint256";
+        readonly name: "value";
+        readonly type: "uint256";
+    }];
+    readonly name: "updateMaxShares";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "enum SSVCoreModules[]";
+        readonly name: "moduleIds";
+        readonly type: "uint8[]";
+    }, {
+        readonly internalType: "address[]";
+        readonly name: "moduleAddresses";
+        readonly type: "address[]";
+    }];
+    readonly name: "updateModule";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "value";
+        readonly type: "uint32";
+    }];
+    readonly name: "updateObligationExpireTime";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "value";
+        readonly type: "uint32";
+    }];
+    readonly name: "updateObligationTimelockPeriod";
     readonly outputs: readonly [];
     readonly stateMutability: "nonpayable";
     readonly type: "function";
@@ -1446,6 +1876,36 @@ export declare const BAppABI: readonly [{
     readonly type: "function";
 }, {
     readonly inputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "value";
+        readonly type: "uint32";
+    }];
+    readonly name: "updateTokenUpdateTimelockPeriod";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "value";
+        readonly type: "uint32";
+    }];
+    readonly name: "updateWithdrawalExpireTime";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "value";
+        readonly type: "uint32";
+    }];
+    readonly name: "updateWithdrawalTimelockPeriod";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
         readonly internalType: "address";
         readonly name: "newImplementation";
         readonly type: "address";
@@ -1460,18 +1920,34 @@ export declare const BAppABI: readonly [{
     readonly type: "function";
 }, {
     readonly inputs: readonly [{
-        readonly internalType: "uint32";
-        readonly name: "strategyId";
-        readonly type: "uint32";
-    }, {
+        readonly internalType: "uint256";
+        readonly name: "amount";
+        readonly type: "uint256";
+    }];
+    readonly name: "withdrawETHSlashingFund";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [{
         readonly internalType: "address";
         readonly name: "token";
         readonly type: "address";
+    }, {
+        readonly internalType: "uint256";
+        readonly name: "amount";
+        readonly type: "uint256";
     }];
-    readonly name: "usedTokens";
+    readonly name: "withdrawSlashingFund";
+    readonly outputs: readonly [];
+    readonly stateMutability: "nonpayable";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "withdrawalExpireTime";
     readonly outputs: readonly [{
         readonly internalType: "uint32";
-        readonly name: "bAppsCounter";
+        readonly name: "";
         readonly type: "uint32";
     }];
     readonly stateMutability: "view";
@@ -1493,11 +1969,21 @@ export declare const BAppABI: readonly [{
     readonly name: "withdrawalRequests";
     readonly outputs: readonly [{
         readonly internalType: "uint256";
-        readonly name: "amount";
+        readonly name: "shares";
         readonly type: "uint256";
     }, {
         readonly internalType: "uint32";
         readonly name: "requestTime";
+        readonly type: "uint32";
+    }];
+    readonly stateMutability: "view";
+    readonly type: "function";
+}, {
+    readonly inputs: readonly [];
+    readonly name: "withdrawalTimelockPeriod";
+    readonly outputs: readonly [{
+        readonly internalType: "uint32";
+        readonly name: "";
         readonly type: "uint32";
     }];
     readonly stateMutability: "view";

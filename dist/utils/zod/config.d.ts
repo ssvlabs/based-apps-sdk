@@ -5,8 +5,11 @@ export type ConfigArgs = {
     beaconchainUrl: string;
     publicClient: PublicClient;
     walletClient: WalletClient;
-    _?: {
-        subgraphUrl?: string;
-        contractAddress?: Address;
+    extendedConfig?: {
+        subgraph?: {
+            url?: string;
+            apiKey?: string;
+        };
+        contract?: Address;
     };
 };

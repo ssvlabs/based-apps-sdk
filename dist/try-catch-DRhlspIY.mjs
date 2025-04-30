@@ -1,4 +1,4 @@
-import { defineChain as defineChain$1, parseUnits } from "viem";
+import { defineChain, parseUnits } from "viem";
 function getDefaultExportFromCjs$1(x) {
   return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
 }
@@ -27108,47 +27108,7 @@ var cliOptions = function optionMatcher(args) {
     )
   );
 })();
-function defineChain(chain) {
-  return {
-    formatters: void 0,
-    fees: void 0,
-    serializers: void 0,
-    ...chain
-  };
-}
-const holesky = /* @__PURE__ */ defineChain({
-  id: 17e3,
-  name: "Holesky",
-  nativeCurrency: { name: "Holesky Ether", symbol: "ETH", decimals: 18 },
-  rpcUrls: {
-    default: {
-      http: ["https://ethereum-holesky-rpc.publicnode.com"]
-    }
-  },
-  blockExplorers: {
-    default: {
-      name: "Etherscan",
-      url: "https://holesky.etherscan.io",
-      apiUrl: "https://api-holesky.etherscan.io/api"
-    }
-  },
-  contracts: {
-    multicall3: {
-      address: "0xca11bde05977b3631167028862be2a173976ca11",
-      blockCreated: 77
-    },
-    ensRegistry: {
-      address: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
-      blockCreated: 801613
-    },
-    ensUniversalResolver: {
-      address: "0xa6AC935D4971E3CD133b950aE053bECD16fE7f3b",
-      blockCreated: 973484
-    }
-  },
-  testnet: true
-});
-const hoodi = defineChain$1({
+const hoodi = defineChain({
   id: 560048,
   name: "Hoodi",
   rpcUrls: {
@@ -27164,21 +27124,19 @@ const hoodi = defineChain$1({
   testnet: true
 });
 const chains = {
-  holesky,
   hoodi
 };
-const chainIds = [holesky.id, hoodi.id];
-const networks = ["holesky", "hoodi"];
+const chainIds = [hoodi.id];
+const networks = ["hoodi"];
 const bam_graph_endpoints = {
-  [holesky.id]: "https://api.studio.thegraph.com/query/71118/based-applications-ssv-holesky/version/latest/",
-  [hoodi.id]: "https://graph-node-hoodi.stage.ops.ssvlabsinternal.com/subgraphs/name/ssv-bapps-hoodi-stage/graphql"
+  [hoodi.id]: "https://api.studio.thegraph.com/query/71118/ssv-network-hoodi/version/latest/"
+};
+const bam_paid_graph_endpoints = {
+  [hoodi.id]: "https://gateway.thegraph.com/api/subgraphs/id/F4AU5vPCuKfHvnLsusibxJEiTN7ELCoYTvnzg3YHGYbh"
 };
 const contracts = {
-  [holesky.id]: {
-    bapp: "0x9B3345F3B1Ce2d8655FC4B6e2ed39322d52aA317"
-  },
   [hoodi.id]: {
-    bapp: "0x3F2983b813054Eba76Ae137DfA77836CA8b00ACE"
+    bapp: "0xc7fCFeEc5FB9962bDC2234A7a25dCec739e27f9f"
   }
 };
 const global$1 = globalThis || void 0 || self;
@@ -31923,9 +31881,12 @@ const configArgsSchema = z.object({
     }
     return true;
   }),
-  _: z.object({
-    subgraphUrl: z.string().url().optional(),
-    contractAddress: z.string().optional()
+  extendedConfig: z.object({
+    subgraph: z.object({
+      url: z.string().url().optional(),
+      apiKey: z.string().optional()
+    }).optional(),
+    contract: z.string().optional()
   }).optional()
 }).refine(
   (val) => {
@@ -31937,7 +31898,6 @@ const configArgsSchema = z.object({
     message: "Public and wallet client chains must be the same"
   }
 );
-console.log("testing trigger");
 const globals = {
   MAX_WEI_AMOUNT: 115792089237316195423570985008687907853269984665640564039457584007913129639935n,
   CLUSTER_SIZES: {
@@ -32008,46 +31968,47 @@ const tryCatch = (fn) => {
   }
 };
 export {
-  isArray as A,
-  copyArray as B,
-  cloneBuffer as C,
-  cloneTypedArray as D,
-  isArguments as E,
-  isFunction as F,
-  initCloneObject as G,
-  bigintMax as H,
-  bigintMin as I,
-  bigintRound as J,
-  bigintFloor as K,
-  bigintAbs as L,
-  isBigIntChanged as M,
-  roundOperatorFee as N,
-  bigintifyNumbers as O,
+  isTypedArray as A,
+  isArray as B,
+  copyArray as C,
+  cloneBuffer as D,
+  cloneTypedArray as E,
+  isArguments as F,
+  isFunction as G,
+  initCloneObject as H,
+  bigintMax as I,
+  bigintMin as J,
+  bigintRound as K,
+  bigintFloor as L,
+  bigintAbs as M,
+  isBigIntChanged as N,
+  roundOperatorFee as O,
+  bigintifyNumbers as P,
   Stack as S,
   isObject as a,
   baseGetTag as b,
   configArgsSchema as c,
-  bam_graph_endpoints as d,
-  contracts as e,
-  isUndefined as f,
-  chains as g,
+  bam_paid_graph_endpoints as d,
+  bam_graph_endpoints as e,
+  contracts as f,
+  isUndefined as g,
   hoodi as h,
   isObjectLike as i,
-  chainIds as j,
-  globals as k,
-  defineProperty as l,
-  isArrayLike as m,
+  chains as j,
+  chainIds as k,
+  globals as l,
+  defineProperty as m,
   networks as n,
-  isIndex as o,
+  isArrayLike as o,
   process$1 as p,
-  eq as q,
+  isIndex as q,
   registerValidatorsByClusterSizeLimits as r,
   stringifyBigints as s,
   tryCatch as t,
-  getPrototype as u,
-  baseAssignValue as v,
-  copyObject as w,
-  keysIn as x,
-  isBuffer as y,
-  isTypedArray as z
+  eq as u,
+  getPrototype as v,
+  baseAssignValue as w,
+  copyObject as x,
+  keysIn as y,
+  isBuffer as z
 };
