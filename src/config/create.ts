@@ -13,6 +13,7 @@ import {
 import type { ConfigArgs } from '@/utils/zod/config'
 import { configArgsSchema } from '@/utils/zod/config'
 import { GraphQLClient } from 'graphql-request'
+import type { PublicClient, WalletClient } from 'viem'
 
 export type ConfigReturnType = {
   apis: APIs
@@ -26,6 +27,8 @@ export type ConfigReturnType = {
       endpoint: string
     }
   }
+  publicClient: PublicClient
+  walletClient: WalletClient
 }
 
 export const isConfig = (props: unknown): props is ConfigReturnType => {
@@ -91,5 +94,7 @@ export const createConfig = (props: ConfigArgs): ConfigReturnType => {
         endpoint: bapEndpoint,
       },
     },
+    publicClient: publicClient,
+    walletClient: walletClient,
   } satisfies ConfigReturnType
 }

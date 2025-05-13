@@ -1,6 +1,11 @@
 import { getParticipantWeights, getValidatorsBalance } from '@/api/based-apps-api'
 import type { GetValidatorBalancesResponse } from '@/api/beacon-chain-api'
-import { parseEther, type Address } from 'viem'
+import type { ContractInteractions } from '@/contract-interactions/types'
+import { createBasedAppsAPI } from '@/main'
+import { BasedAppsSDK } from '@/sdk'
+import type { GraphQLClient } from 'graphql-request'
+import { parseEther } from 'viem'
+import type { PublicClient, WalletClient, Address } from 'viem'
 import { describe, expect, it } from 'vitest'
 import {
   mockAPIs,
@@ -16,10 +21,6 @@ import {
   mockGetValidatorBalances,
   mockGetValidatorsByAccount,
 } from './mock-api'
-import { BasedAppsSDK } from '@/sdk'
-import { createBasedAppsAPI } from '@/main'
-import type { GraphQLClient } from 'graphql-request'
-import type { ContractInteractions } from '@/contract-interactions/types'
 
 // Mock dependencies
 
@@ -35,6 +36,8 @@ const sdk = new BasedAppsSDK({
       endpoint: '',
     },
   },
+  publicClient: {} as PublicClient,
+  walletClient: {} as WalletClient,
 })
 
 describe('Based Apps API Tests', () => {
