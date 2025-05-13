@@ -23,8 +23,10 @@ export const chains = {
 
 export const chainIds = [hoodi.id] as const
 export type ChainId = (typeof chainIds)[number]
+
 export const networks = ['hoodi'] as const
 export type Network = Lowercase<(typeof networks)[number]>
+
 export const bam_graph_endpoints: Record<ChainId, string> = {
   [hoodi.id]: 'https://api.studio.thegraph.com/query/71118/ssv-network-hoodi/version/latest/',
 }

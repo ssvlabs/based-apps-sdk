@@ -5,6 +5,7 @@ import { describe, test, expect, vi, beforeEach } from 'vitest'
 import { createPublicClient, createWalletClient, http } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { bam_paid_graph_endpoints, chains } from '@/config'
+import { defineChain } from 'viem'
 
 const chain = chains.hoodi
 const transport = http()
@@ -183,5 +184,61 @@ describe('BasedAppsSDK', () => {
           walletClient: differentChainWalletClient,
         }),
     ).toThrow('Public and wallet client chains must be the same')
+  })
+
+  test('should work with a custom chain when necessary config is provided', () => {
+    // Create a custom chain using defineChain
+    const customChain = defineChain({
+      id: 123456789,
+      name: 'Custom Test Chain',
+      nativeCurrency: {
+        name: 'Test Ether',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: {
+        default: {
+          http: ['https://custom-rpc.example.com'],
+        },
+      },
+      testnet: true,
+    })
+
+    // Custom contract address for the chain
+    const customContractAddress = '0xabcdef1234567890abcdef1234567890abcdef12'
+
+    // Custom subgraph URL for the chain
+    const customSubgraphUrl = 'https://custom-subgraph.example.com/graphql'
+
+    // Create clients with the custom chain
+    const customPublicClient = createPublicClient({
+      chain: customChain,
+      transport,
+    })
+
+    const customWalletClient = createWalletClient({
+      account,
+      chain: customChain,
+      transport,
+    })
+
+    // Create the SDK with the custom chain and required config
+    const sdk = new BasedAppsSDK({
+      beaconchainUrl: 'https://example.com/beacon',
+      publicClient: customPublicClient,
+      walletClient: customWalletClient,
+      extendedConfig: {
+        // Provide a contract address since it won't be in the default contracts map
+        contract: customContractAddress,
+        // Provide a subgraph URL since it won't be in the default endpoints map
+        subgraph: {
+          url: customSubgraphUrl,
+        },
+      },
+    })
+
+    expect(sdk).toBeInstanceOf(BasedAppsSDK)
+    expect(sdk.core.publicClient.chain?.id).toBe(customChain.id)
+    expect(sdk.core.walletClient.chain?.id).toBe(customChain.id)
   })
 })

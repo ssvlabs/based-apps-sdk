@@ -1,4 +1,3 @@
-import { chainIds, networks } from '@/config'
 import type { Address, PublicClient, WalletClient } from 'viem'
 import { z } from 'zod'
 
@@ -23,14 +22,6 @@ export const configArgsSchema = z
         return false
       }
 
-      if (!chainIds.includes(client.chain?.id as (typeof chainIds)[number])) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: `Public client chain must be one of [${networks.join(', ')}]`,
-        })
-        return false
-      }
-
       return true
     }),
     walletClient: z.custom().superRefine((val, ctx) => {
@@ -47,14 +38,6 @@ export const configArgsSchema = z
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: 'Wallet client must have a chain property',
-        })
-        return false
-      }
-
-      if (!chainIds.includes(client.chain?.id as (typeof chainIds)[number])) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: `Wallet client chain must be one of [${networks.join(', ')}]`,
         })
         return false
       }
