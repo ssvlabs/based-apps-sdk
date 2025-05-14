@@ -106,7 +106,7 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "ci: update artifacts [skip ci]"
-            git push origin main
+            git push origin
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
