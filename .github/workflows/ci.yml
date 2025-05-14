@@ -3,10 +3,10 @@ name: CI
 on:
   push:
 
+
 jobs:
   pr-checks:
     name: Pull Request Checks
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
 
     steps:
