@@ -2,16 +2,11 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+
 
 jobs:
   pr-checks:
     name: Pull Request Checks
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
 
     steps:
@@ -52,9 +47,9 @@ jobs:
       - name: Build
         run: pnpm build
 
-  build-on-merge:
+  update-artifacts:
     name: Build and Commit Artifacts
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
@@ -110,8 +105,8 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "ci: commit build output [skip ci]"
-            git push origin main
+            git commit -m "ci: update artifacts [skip ci]"
+            git push origin
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
