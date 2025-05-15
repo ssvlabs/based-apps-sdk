@@ -104,7 +104,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: qoomon/actions--create-commit@v1
+      - uses: qoomon/actions--create-commit@dfef4d264de752be6d6195a4d61a2f3d3262d406
         with:
           message: "ci: update artifacts [skip ci]"
           skip-empty: true
