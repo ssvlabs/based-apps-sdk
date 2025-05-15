@@ -101,12 +101,12 @@ jobs:
           # Stage only the build output (adjust if necessary)
           git add dist/
 
-          # Don't commit if nothing changed
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-          else
-            git commit -m "ci: update artifacts [skip ci]"
-            git push origin
-          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: qoomon/actions--create-commit@v1
+        with:
+          message: ci: update artifacts [skip ci]
+          skip-empty: true
+
+      - run: git push origin || echo "nothing to push"
