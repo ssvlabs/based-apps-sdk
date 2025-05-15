@@ -106,7 +106,7 @@ jobs:
 
       - uses: qoomon/actions--create-commit@v1
         with:
-          message: ci: update artifacts [skip ci]
+          message: "ci: update artifacts [skip ci]"
           skip-empty: true
 
       - run: git push origin || echo "nothing to push"
