@@ -1,10 +1,10 @@
 import { defineChain, parseGwei, decodeEventLog } from "viem";
-import { i as isObjectLike$1, b as baseGetTag, a as isObject$1, c as configArgsSchema, s as stringifyBigints, d as isUndefined$1, t as tryCatch$1 } from "./try-catch-CyR7P-FN.mjs";
+import { i as isObjectLike$1, b as baseGetTag, a as isObject$1, c as configArgsSchema, s as stringifyBigints, d as isUndefined$1, t as tryCatch$1 } from "./try-catch-Dnir-_B4.mjs";
 function getDefaultExportFromCjs$1(x) {
   return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
 }
-var browser$e = { exports: {} };
-var process = browser$e.exports = {};
+var browser$d = { exports: {} };
+var process = browser$d.exports = {};
 var cachedSetTimeout;
 var cachedClearTimeout;
 function defaultSetTimout() {
@@ -145,10 +145,10 @@ process.removeAllListeners = noop$2;
 process.emit = noop$2;
 process.prependListener = noop$2;
 process.prependOnceListener = noop$2;
-process.listeners = function(name2) {
+process.listeners = function(name) {
   return [];
 };
-process.binding = function(name2) {
+process.binding = function(name) {
   throw new Error("process.binding is not supported");
 };
 process.cwd = function() {
@@ -160,7 +160,7 @@ process.chdir = function(dir) {
 process.umask = function() {
   return 0;
 };
-var browserExports$1 = browser$e.exports;
+var browserExports$1 = browser$d.exports;
 const process$1 = /* @__PURE__ */ getDefaultExportFromCjs$1(browserExports$1);
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 function getDefaultExportFromCjs(x) {
@@ -1726,9 +1726,9 @@ var dist = {};
     }
     E(
       "ERR_BUFFER_OUT_OF_BOUNDS",
-      function(name2) {
-        if (name2) {
-          return `${name2} is outside of buffer bounds`;
+      function(name) {
+        if (name) {
+          return `${name} is outside of buffer bounds`;
         }
         return "Attempt to access memory outside buffer bounds";
       },
@@ -1736,8 +1736,8 @@ var dist = {};
     );
     E(
       "ERR_INVALID_ARG_TYPE",
-      function(name2, actual) {
-        return `The "${name2}" argument must be of type number. Received type ${typeof actual}`;
+      function(name, actual) {
+        return `The "${name}" argument must be of type number. Received type ${typeof actual}`;
       },
       TypeError
     );
@@ -1790,9 +1790,9 @@ var dist = {};
       }
       checkBounds(buf, offset, byteLength3);
     }
-    function validateNumber(value, name2) {
+    function validateNumber(value, name) {
       if (typeof value !== "number") {
-        throw new errors.ERR_INVALID_ARG_TYPE(name2, "number", value);
+        throw new errors.ERR_INVALID_ARG_TYPE(name, "number", value);
       }
     }
     function boundsError(value, length, type2) {
@@ -1955,7 +1955,7 @@ var dist = {};
   exports2.transcode = buffer2.transcode;
 })(dist);
 const Buffer$C = /* @__PURE__ */ getDefaultExportFromCjs(dist);
-var main$2 = { exports: {} };
+var main = { exports: {} };
 var empty = null;
 var empty_1 = empty;
 function assertPath(path3) {
@@ -2358,57 +2358,57 @@ var posix = {
 };
 posix.posix = posix;
 var pathBrowserify = posix;
-var browser$d = {};
-browser$d.endianness = function() {
+var browser$c = {};
+browser$c.endianness = function() {
   return "LE";
 };
-browser$d.hostname = function() {
+browser$c.hostname = function() {
   if (typeof location !== "undefined") {
     return location.hostname;
   } else return "";
 };
-browser$d.loadavg = function() {
+browser$c.loadavg = function() {
   return [];
 };
-browser$d.uptime = function() {
+browser$c.uptime = function() {
   return 0;
 };
-browser$d.freemem = function() {
+browser$c.freemem = function() {
   return Number.MAX_VALUE;
 };
-browser$d.totalmem = function() {
+browser$c.totalmem = function() {
   return Number.MAX_VALUE;
 };
-browser$d.cpus = function() {
+browser$c.cpus = function() {
   return [];
 };
-browser$d.type = function() {
+browser$c.type = function() {
   return "Browser";
 };
-browser$d.release = function() {
+browser$c.release = function() {
   if (typeof navigator !== "undefined") {
     return navigator.appVersion;
   }
   return "";
 };
-browser$d.networkInterfaces = browser$d.getNetworkInterfaces = function() {
+browser$c.networkInterfaces = browser$c.getNetworkInterfaces = function() {
   return {};
 };
-browser$d.arch = function() {
+browser$c.arch = function() {
   return "javascript";
 };
-browser$d.platform = function() {
+browser$c.platform = function() {
   return "browser";
 };
-browser$d.tmpdir = browser$d.tmpDir = function() {
+browser$c.tmpdir = browser$c.tmpDir = function() {
   return "/tmp";
 };
-browser$d.EOL = "\n";
-browser$d.homedir = function() {
+browser$c.EOL = "\n";
+browser$c.homedir = function() {
   return "/";
 };
 var cryptoBrowserify = {};
-var browser$c = { exports: {} };
+var browser$b = { exports: {} };
 var safeBuffer$2 = { exports: {} };
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 (function(module, exports2) {
@@ -2474,9 +2474,9 @@ function oldBrowser$1() {
 var Buffer$B = safeBufferExports$1.Buffer;
 var crypto$2 = commonjsGlobal.crypto || commonjsGlobal.msCrypto;
 if (crypto$2 && crypto$2.getRandomValues) {
-  browser$c.exports = randomBytes$2;
+  browser$b.exports = randomBytes$2;
 } else {
-  browser$c.exports = oldBrowser$1;
+  browser$b.exports = oldBrowser$1;
 }
 function randomBytes$2(size, cb) {
   if (size > MAX_UINT32) throw new RangeError("requested too many random bytes");
@@ -2497,7 +2497,7 @@ function randomBytes$2(size, cb) {
   }
   return bytes;
 }
-var browserExports = browser$c.exports;
+var browserExports = browser$b.exports;
 var inherits_browser = { exports: {} };
 if (typeof Object.create === "function") {
   inherits_browser.exports = function inherits2(ctor, superCtor) {
@@ -2848,10 +2848,10 @@ function unwrapListeners(arr) {
   }
   return ret;
 }
-function once$2(emitter, name2) {
+function once$2(emitter, name) {
   return new Promise(function(resolve2, reject) {
     function errorListener(err) {
-      emitter.removeListener(name2, resolver);
+      emitter.removeListener(name, resolver);
       reject(err);
     }
     function resolver() {
@@ -2860,8 +2860,8 @@ function once$2(emitter, name2) {
       }
       resolve2([].slice.call(arguments));
     }
-    eventTargetAgnosticAddListener(emitter, name2, resolver, { once: true });
-    if (name2 !== "error") {
+    eventTargetAgnosticAddListener(emitter, name, resolver, { once: true });
+    if (name !== "error") {
       addErrorHandlerIfEventEmitter(emitter, errorListener, { once: true });
     }
   });
@@ -2871,17 +2871,17 @@ function addErrorHandlerIfEventEmitter(emitter, handler, flags) {
     eventTargetAgnosticAddListener(emitter, "error", handler, flags);
   }
 }
-function eventTargetAgnosticAddListener(emitter, name2, listener, flags) {
+function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
   if (typeof emitter.on === "function") {
     if (flags.once) {
-      emitter.once(name2, listener);
+      emitter.once(name, listener);
     } else {
-      emitter.on(name2, listener);
+      emitter.on(name, listener);
     }
   } else if (typeof emitter.addEventListener === "function") {
-    emitter.addEventListener(name2, function wrapListener(arg) {
+    emitter.addEventListener(name, function wrapListener(arg) {
       if (flags.once) {
-        emitter.removeEventListener(name2, wrapListener);
+        emitter.removeEventListener(name, wrapListener);
       }
       listener(arg);
     });
@@ -2892,7 +2892,7 @@ function eventTargetAgnosticAddListener(emitter, name2, listener, flags) {
 var eventsExports = events.exports;
 var streamBrowser$1 = eventsExports.EventEmitter;
 var util$3 = {};
-var types$1 = {};
+var types = {};
 var shams$1 = function hasSymbols2() {
   if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
     return false;
@@ -3172,26 +3172,26 @@ if (getProto$1) {
     INTRINSICS["%Error.prototype%"] = errorProto;
   }
 }
-var doEval = function doEval2(name2) {
+var doEval = function doEval2(name) {
   var value;
-  if (name2 === "%AsyncFunction%") {
+  if (name === "%AsyncFunction%") {
     value = getEvalledConstructor("async function () {}");
-  } else if (name2 === "%GeneratorFunction%") {
+  } else if (name === "%GeneratorFunction%") {
     value = getEvalledConstructor("function* () {}");
-  } else if (name2 === "%AsyncGeneratorFunction%") {
+  } else if (name === "%AsyncGeneratorFunction%") {
     value = getEvalledConstructor("async function* () {}");
-  } else if (name2 === "%AsyncGenerator%") {
+  } else if (name === "%AsyncGenerator%") {
     var fn = doEval2("%AsyncGeneratorFunction%");
     if (fn) {
       value = fn.prototype;
     }
-  } else if (name2 === "%AsyncIteratorPrototype%") {
+  } else if (name === "%AsyncIteratorPrototype%") {
     var gen = doEval2("%AsyncGenerator%");
     if (gen && getProto$1) {
       value = getProto$1(gen.prototype);
     }
   }
-  INTRINSICS[name2] = value;
+  INTRINSICS[name] = value;
   return value;
 };
 var LEGACY_ALIASES = {
@@ -3271,8 +3271,8 @@ var stringToPath = function stringToPath2(string) {
   });
   return result;
 };
-var getBaseIntrinsic = function getBaseIntrinsic2(name2, allowMissing) {
-  var intrinsicName = name2;
+var getBaseIntrinsic = function getBaseIntrinsic2(name, allowMissing) {
+  var intrinsicName = name;
   var alias;
   if (hasOwn(LEGACY_ALIASES, intrinsicName)) {
     alias = LEGACY_ALIASES[intrinsicName];
@@ -3284,7 +3284,7 @@ var getBaseIntrinsic = function getBaseIntrinsic2(name2, allowMissing) {
       value = doEval(intrinsicName);
     }
     if (typeof value === "undefined" && !allowMissing) {
-      throw new $TypeError$2("intrinsic " + name2 + " exists, but is not available. Please file an issue!");
+      throw new $TypeError$2("intrinsic " + name + " exists, but is not available. Please file an issue!");
     }
     return {
       alias,
@@ -3292,19 +3292,19 @@ var getBaseIntrinsic = function getBaseIntrinsic2(name2, allowMissing) {
       value
     };
   }
-  throw new $SyntaxError$1("intrinsic " + name2 + " does not exist!");
+  throw new $SyntaxError$1("intrinsic " + name + " does not exist!");
 };
-var getIntrinsic = function GetIntrinsic2(name2, allowMissing) {
-  if (typeof name2 !== "string" || name2.length === 0) {
+var getIntrinsic = function GetIntrinsic2(name, allowMissing) {
+  if (typeof name !== "string" || name.length === 0) {
     throw new $TypeError$2("intrinsic name must be a non-empty string");
   }
   if (arguments.length > 1 && typeof allowMissing !== "boolean") {
     throw new $TypeError$2('"allowMissing" argument must be a boolean');
   }
-  if ($exec(/^%?[^%]*%?$/, name2) === null) {
+  if ($exec(/^%?[^%]*%?$/, name) === null) {
     throw new $SyntaxError$1("`%` may not be present anywhere but at the beginning and end of the intrinsic name");
   }
-  var parts = stringToPath(name2);
+  var parts = stringToPath(name);
   var intrinsicBaseName = parts.length > 0 ? parts[0] : "";
   var intrinsic = getBaseIntrinsic("%" + intrinsicBaseName + "%", allowMissing);
   var intrinsicRealName = intrinsic.name;
@@ -3332,7 +3332,7 @@ var getIntrinsic = function GetIntrinsic2(name2, allowMissing) {
     } else if (value != null) {
       if (!(part in value)) {
         if (!allowMissing) {
-          throw new $TypeError$2("base intrinsic for " + name2 + " exists, but the property is not available.");
+          throw new $TypeError$2("base intrinsic for " + name + " exists, but the property is not available.");
         }
         return void 0;
       }
@@ -3519,9 +3519,9 @@ var callBindExports = callBind$2.exports;
 var GetIntrinsic = getIntrinsic;
 var callBind$1 = callBindExports;
 var $indexOf$1 = callBind$1(GetIntrinsic("String.prototype.indexOf"));
-var callBound$2 = function callBoundIntrinsic(name2, allowMissing) {
-  var intrinsic = GetIntrinsic(name2, !!allowMissing);
-  if (typeof intrinsic === "function" && $indexOf$1(name2, ".prototype.") > -1) {
+var callBound$2 = function callBoundIntrinsic(name, allowMissing) {
+  var intrinsic = GetIntrinsic(name, !!allowMissing);
+  if (typeof intrinsic === "function" && $indexOf$1(name, ".prototype.") > -1) {
     return callBind$1(intrinsic);
   }
   return intrinsic;
@@ -3837,11 +3837,11 @@ var trySlices = function tryAllSlices(value) {
     /** @type {any} */
     cache,
     /** @type {(getter: typeof cache, name: `\$${import('.').TypedArrayName}`) => void} */
-    function(getter, name2) {
+    function(getter, name) {
       if (!found) {
         try {
           getter(value);
-          found = $slice(name2, 1);
+          found = $slice(name, 1);
         } catch (e) {
         }
       }
@@ -4094,7 +4094,7 @@ var isTypedArray = function isTypedArray2(value) {
       }
     });
   });
-})(types$1);
+})(types);
 var isBufferBrowser = function isBuffer(arg) {
   return arg && typeof arg === "object" && typeof arg.copy === "function" && typeof arg.fill === "function" && typeof arg.readUInt8 === "function";
 };
@@ -4282,8 +4282,8 @@ var isBufferBrowser = function isBuffer(arg) {
     }
     if (keys.length === 0) {
       if (isFunction2(value)) {
-        var name2 = value.name ? ": " + value.name : "";
-        return ctx.stylize("[Function" + name2 + "]", "special");
+        var name = value.name ? ": " + value.name : "";
+        return ctx.stylize("[Function" + name + "]", "special");
       }
       if (isRegExp2(value)) {
         return ctx.stylize(RegExp.prototype.toString.call(value), "regexp");
@@ -4383,7 +4383,7 @@ var isBufferBrowser = function isBuffer(arg) {
     return output;
   }
   function formatProperty(ctx, value, recurseTimes, visibleKeys, key2, array) {
-    var name2, str, desc;
+    var name, str, desc;
     desc = Object.getOwnPropertyDescriptor(value, key2) || { value: value[key2] };
     if (desc.get) {
       if (desc.set) {
@@ -4397,7 +4397,7 @@ var isBufferBrowser = function isBuffer(arg) {
       }
     }
     if (!hasOwnProperty2(visibleKeys, key2)) {
-      name2 = "[" + key2 + "]";
+      name = "[" + key2 + "]";
     }
     if (!str) {
       if (ctx.seen.indexOf(desc.value) < 0) {
@@ -4421,20 +4421,20 @@ var isBufferBrowser = function isBuffer(arg) {
         str = ctx.stylize("[Circular]", "special");
       }
     }
-    if (isUndefined2(name2)) {
+    if (isUndefined2(name)) {
       if (array && key2.match(/^\d+$/)) {
         return str;
       }
-      name2 = JSON.stringify("" + key2);
-      if (name2.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
-        name2 = name2.slice(1, -1);
-        name2 = ctx.stylize(name2, "name");
+      name = JSON.stringify("" + key2);
+      if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+        name = name.slice(1, -1);
+        name = ctx.stylize(name, "name");
       } else {
-        name2 = name2.replace(/'/g, "\\'").replace(/\\"/g, '"').replace(/(^"|"$)/g, "'");
-        name2 = ctx.stylize(name2, "string");
+        name = name.replace(/'/g, "\\'").replace(/\\"/g, '"').replace(/(^"|"$)/g, "'");
+        name = ctx.stylize(name, "string");
       }
     }
-    return name2 + ": " + str;
+    return name + ": " + str;
   }
   function reduceToSingleString(output, base2, braces) {
     var length = output.reduce(function(prev, cur) {
@@ -4446,7 +4446,7 @@ var isBufferBrowser = function isBuffer(arg) {
     }
     return braces[0] + base2 + " " + output.join(", ") + " " + braces[1];
   }
-  exports2.types = types$1;
+  exports2.types = types;
   function isArray2(ar) {
     return Array.isArray(ar);
   }
@@ -4712,11 +4712,11 @@ function requireBuffer_list() {
     if (typeof input !== "object" || input === null) return input;
     var prim = input[Symbol.toPrimitive];
     if (prim !== void 0) {
-      var res = prim.call(input, hint || "default");
+      var res = prim.call(input, hint);
       if (typeof res !== "object") return res;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
-    return (hint === "string" ? String : Number)(input);
+    return String(input);
   }
   var _require = dist, Buffer2 = _require.Buffer;
   var _require2 = util$3, inspect7 = _require2.inspect;
@@ -5036,10 +5036,10 @@ function includes(str, search, start) {
     return str.indexOf(search, start) !== -1;
   }
 }
-createErrorType("ERR_INVALID_OPT_VALUE", function(name2, value) {
-  return 'The value "' + value + '" is invalid for option "' + name2 + '"';
+createErrorType("ERR_INVALID_OPT_VALUE", function(name, value) {
+  return 'The value "' + value + '" is invalid for option "' + name + '"';
 }, TypeError);
-createErrorType("ERR_INVALID_ARG_TYPE", function(name2, expected, actual) {
+createErrorType("ERR_INVALID_ARG_TYPE", function(name, expected, actual) {
   var determiner;
   if (typeof expected === "string" && startsWith(expected, "not ")) {
     determiner = "must not be";
@@ -5048,22 +5048,22 @@ createErrorType("ERR_INVALID_ARG_TYPE", function(name2, expected, actual) {
     determiner = "must be";
   }
   var msg;
-  if (endsWith(name2, " argument")) {
-    msg = "The ".concat(name2, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
+  if (endsWith(name, " argument")) {
+    msg = "The ".concat(name, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
   } else {
-    var type2 = includes(name2, ".") ? "property" : "argument";
-    msg = 'The "'.concat(name2, '" ').concat(type2, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
+    var type2 = includes(name, ".") ? "property" : "argument";
+    msg = 'The "'.concat(name, '" ').concat(type2, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
   }
   msg += ". Received type ".concat(typeof actual);
   return msg;
 }, TypeError);
 createErrorType("ERR_STREAM_PUSH_AFTER_EOF", "stream.push() after EOF");
-createErrorType("ERR_METHOD_NOT_IMPLEMENTED", function(name2) {
-  return "The " + name2 + " method is not implemented";
+createErrorType("ERR_METHOD_NOT_IMPLEMENTED", function(name) {
+  return "The " + name + " method is not implemented";
 });
 createErrorType("ERR_STREAM_PREMATURE_CLOSE", "Premature close");
-createErrorType("ERR_STREAM_DESTROYED", function(name2) {
-  return "Cannot call " + name2 + " after a stream was destroyed";
+createErrorType("ERR_STREAM_DESTROYED", function(name) {
+  return "Cannot call " + name + " after a stream was destroyed";
 });
 createErrorType("ERR_MULTIPLE_CALLBACK", "Callback called multiple times");
 createErrorType("ERR_STREAM_CANNOT_PIPE", "Cannot pipe, not readable");
@@ -5082,8 +5082,8 @@ function getHighWaterMark(state2, options2, duplexKey, isDuplex) {
   var hwm = highWaterMarkFrom(options2, isDuplex, duplexKey);
   if (hwm != null) {
     if (!(isFinite(hwm) && Math.floor(hwm) === hwm) || hwm < 0) {
-      var name2 = isDuplex ? duplexKey : "highWaterMark";
-      throw new ERR_INVALID_OPT_VALUE(name2, hwm);
+      var name = isDuplex ? duplexKey : "highWaterMark";
+      throw new ERR_INVALID_OPT_VALUE(name, hwm);
     }
     return Math.floor(hwm);
   }
@@ -5092,7 +5092,7 @@ function getHighWaterMark(state2, options2, duplexKey, isDuplex) {
 var state = {
   getHighWaterMark
 };
-var browser$b = deprecate;
+var browser$a = deprecate;
 function deprecate(fn, msg) {
   if (config$1("noDeprecation")) {
     return fn;
@@ -5113,13 +5113,13 @@ function deprecate(fn, msg) {
   }
   return deprecated;
 }
-function config$1(name2) {
+function config$1(name) {
   try {
     if (!commonjsGlobal.localStorage) return false;
   } catch (_) {
     return false;
   }
-  var val = commonjsGlobal.localStorage[name2];
+  var val = commonjsGlobal.localStorage[name];
   if (null == val) return false;
   return String(val).toLowerCase() === "true";
 }
@@ -5140,7 +5140,7 @@ function require_stream_writable$1() {
   var Duplex2;
   Writable.WritableState = WritableState;
   var internalUtil = {
-    deprecate: browser$b
+    deprecate: browser$a
   };
   var Stream2 = streamBrowser$1;
   var Buffer2 = dist.Buffer;
@@ -6012,7 +6012,7 @@ function requireAsync_iterator() {
     if (typeof input !== "object" || input === null) return input;
     var prim = input[Symbol.toPrimitive];
     if (prim !== void 0) {
-      var res = prim.call(input, hint || "default");
+      var res = prim.call(input, hint);
       if (typeof res !== "object") return res;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
@@ -8486,18 +8486,18 @@ Sha384.prototype._hash = function() {
   return H;
 };
 var sha384$1 = Sha384;
-var exports$1 = sha_js.exports = function SHA(algorithm) {
+var exports = sha_js.exports = function SHA(algorithm) {
   algorithm = algorithm.toLowerCase();
-  var Algorithm = exports$1[algorithm];
+  var Algorithm = exports[algorithm];
   if (!Algorithm) throw new Error(algorithm + " is not supported (we accept pull requests)");
   return new Algorithm();
 };
-exports$1.sha = sha$4;
-exports$1.sha1 = sha1;
-exports$1.sha224 = sha224$1;
-exports$1.sha256 = sha256$1;
-exports$1.sha384 = sha384$1;
-exports$1.sha512 = sha512$1;
+exports.sha = sha$4;
+exports.sha1 = sha1;
+exports.sha224 = sha224$1;
+exports.sha256 = sha256$1;
+exports.sha384 = sha384$1;
+exports.sha512 = sha512$1;
 var sha_jsExports = sha_js.exports;
 var streamBrowserify = Stream;
 var EE = eventsExports.EventEmitter;
@@ -8671,7 +8671,7 @@ Hash.prototype._update = function(data) {
 Hash.prototype._final = function() {
   return this._hash.digest();
 };
-var browser$a = function createHash2(alg) {
+var browser$9 = function createHash2(alg) {
   alg = alg.toLowerCase();
   if (alg === "md5") return new MD5$2();
   if (alg === "rmd160" || alg === "ripemd160") return new RIPEMD160$3();
@@ -8755,7 +8755,7 @@ Hmac$2.prototype._final = function() {
   var hash3 = this._alg === "rmd160" ? new RIPEMD160$2() : sha$2(this._alg);
   return hash3.update(this._opad).update(h).digest();
 };
-var browser$9 = function createHmac(alg, key2) {
+var browser$8 = function createHmac(alg, key2) {
   alg = alg.toLowerCase();
   if (alg === "rmd160" || alg === "ripemd160") {
     return new Hmac$2("rmd160", key2);
@@ -8929,7 +8929,7 @@ const require$$6 = {
   }
 };
 var algos = require$$6;
-var browser$8 = {};
+var browser$7 = {};
 var MAX_ALLOC = Math.pow(2, 30) - 1;
 var precondition = function(iterations, keylen) {
   if (typeof iterations !== "number") {
@@ -8956,7 +8956,7 @@ if (commonjsGlobal.process && commonjsGlobal.process.browser) {
 }
 var defaultEncoding_1 = defaultEncoding$2;
 var Buffer$m = safeBufferExports$1.Buffer;
-var toBuffer$2 = function(thing, encoding, name2) {
+var toBuffer$2 = function(thing, encoding, name) {
   if (Buffer$m.isBuffer(thing)) {
     return thing;
   } else if (typeof thing === "string") {
@@ -8964,7 +8964,7 @@ var toBuffer$2 = function(thing, encoding, name2) {
   } else if (ArrayBuffer.isView(thing)) {
     return Buffer$m.from(thing.buffer);
   } else {
-    throw new TypeError(name2 + " must be a string, a Buffer, a typed array or a DataView");
+    throw new TypeError(name + " must be a string, a Buffer, a typed array or a DataView");
   }
 };
 var md5 = md5$2;
@@ -9165,9 +9165,9 @@ var async = function(password, salt, iterations, keylen, digest9, callback) {
     return sync(password, salt, iterations, keylen, digest9);
   }), callback);
 };
-browser$8.pbkdf2 = async;
-browser$8.pbkdf2Sync = syncBrowser;
-var browser$7 = {};
+browser$7.pbkdf2 = async;
+browser$7.pbkdf2Sync = syncBrowser;
+var browser$6 = {};
 var des$2 = {};
 var utils$o = {};
 utils$o.readUInt32BE = function readUInt32BE(bytes, off) {
@@ -10303,7 +10303,7 @@ DES$1.prototype._update = function(data) {
 DES$1.prototype._final = function() {
   return Buffer$j.from(this._des.final());
 };
-var browser$6 = {};
+var browser$5 = {};
 var encrypter = {};
 var ecb = {};
 ecb.encrypt = function(self2, block2) {
@@ -11278,11 +11278,11 @@ var modes$1 = require$$2;
 function getCiphers$1() {
   return Object.keys(modes$1);
 }
-browser$6.createCipher = browser$6.Cipher = ciphers$2.createCipher;
-browser$6.createCipheriv = browser$6.Cipheriv = ciphers$2.createCipheriv;
-browser$6.createDecipher = browser$6.Decipher = deciphers.createDecipher;
-browser$6.createDecipheriv = browser$6.Decipheriv = deciphers.createDecipheriv;
-browser$6.listCiphers = browser$6.getCiphers = getCiphers$1;
+browser$5.createCipher = browser$5.Cipher = ciphers$2.createCipher;
+browser$5.createCipheriv = browser$5.Cipheriv = ciphers$2.createCipheriv;
+browser$5.createDecipher = browser$5.Decipher = deciphers.createDecipher;
+browser$5.createDecipheriv = browser$5.Decipheriv = deciphers.createDecipheriv;
+browser$5.listCiphers = browser$5.getCiphers = getCiphers$1;
 var modes = {};
 (function(exports2) {
   exports2["des-ecb"] = {
@@ -11311,7 +11311,7 @@ var modes = {};
   };
 })(modes);
 var DES = browserifyDes;
-var aes = browser$6;
+var aes = browser$5;
 var aesModes = modes_1;
 var desModes = modes;
 var ebtk = evp_bytestokey;
@@ -11360,12 +11360,12 @@ function createDecipheriv(suite, key2, iv) {
 function getCiphers() {
   return Object.keys(desModes).concat(aes.getCiphers());
 }
-browser$7.createCipher = browser$7.Cipher = createCipher;
-browser$7.createCipheriv = browser$7.Cipheriv = createCipheriv;
-browser$7.createDecipher = browser$7.Decipher = createDecipher;
-browser$7.createDecipheriv = browser$7.Decipheriv = createDecipheriv;
-browser$7.listCiphers = browser$7.getCiphers = getCiphers;
-var browser$5 = {};
+browser$6.createCipher = browser$6.Cipher = createCipher;
+browser$6.createCipheriv = browser$6.Cipheriv = createCipheriv;
+browser$6.createDecipher = browser$6.Decipher = createDecipher;
+browser$6.createDecipheriv = browser$6.Decipheriv = createDecipheriv;
+browser$6.listCiphers = browser$6.getCiphers = getCiphers;
+var browser$4 = {};
 var bn$1 = { exports: {} };
 bn$1.exports;
 (function(module) {
@@ -12948,7 +12948,7 @@ bn$1.exports;
         rws[i] = 0;
       }
       assert2(carry === 0);
-      assert2((carry & ~8191) === 0);
+      assert2((carry & -8192) === 0);
     };
     FFTM.prototype.stub = function stub(N) {
       var ph = new Array(N);
@@ -13776,8 +13776,8 @@ bn$1.exports;
       p192: null,
       p25519: null
     };
-    function MPrime(name2, p) {
-      this.name = name2;
+    function MPrime(name, p) {
+      this.name = name;
       this.p = new BN2(p, 16);
       this.n = this.p.bitLength();
       this.k = new BN2(1).iushln(this.n).isub(this.p);
@@ -13910,21 +13910,21 @@ bn$1.exports;
       }
       return num;
     };
-    BN2._prime = function prime(name2) {
-      if (primes[name2]) return primes[name2];
+    BN2._prime = function prime(name) {
+      if (primes[name]) return primes[name];
       var prime2;
-      if (name2 === "k256") {
+      if (name === "k256") {
         prime2 = new K256();
-      } else if (name2 === "p224") {
+      } else if (name === "p224") {
         prime2 = new P224();
-      } else if (name2 === "p192") {
+      } else if (name === "p192") {
         prime2 = new P192();
-      } else if (name2 === "p25519") {
+      } else if (name === "p25519") {
         prime2 = new P25519();
       } else {
-        throw new Error("Unknown prime " + name2);
+        throw new Error("Unknown prime " + name);
       }
-      primes[name2] = prime2;
+      primes[name] = prime2;
       return prime2;
     };
     function Red(m) {
@@ -14607,7 +14607,7 @@ function requireDh() {
 }
 var hasRequiredBrowser$2;
 function requireBrowser$2() {
-  if (hasRequiredBrowser$2) return browser$5;
+  if (hasRequiredBrowser$2) return browser$4;
   hasRequiredBrowser$2 = 1;
   var generatePrime2 = requireGeneratePrime();
   var primes = require$$1$1;
@@ -14640,9 +14640,9 @@ function requireBrowser$2() {
     }
     return new DH(prime, generator, true);
   }
-  browser$5.DiffieHellmanGroup = browser$5.createDiffieHellmanGroup = browser$5.getDiffieHellman = getDiffieHellman;
-  browser$5.createDiffieHellman = browser$5.DiffieHellman = createDiffieHellman;
-  return browser$5;
+  browser$4.DiffieHellmanGroup = browser$4.createDiffieHellmanGroup = browser$4.getDiffieHellman = getDiffieHellman;
+  browser$4.createDiffieHellman = browser$4.DiffieHellman = createDiffieHellman;
+  return browser$4;
 }
 var readableBrowser = { exports: {} };
 var processNextickArgs = { exports: {} };
@@ -14973,7 +14973,7 @@ function require_stream_writable() {
   var util2 = Object.create(util$2);
   util2.inherits = inherits_browserExports;
   var internalUtil = {
-    deprecate: browser$b
+    deprecate: browser$a
   };
   var Stream2 = streamBrowser;
   var Buffer2 = safeBufferExports.Buffer;
@@ -18616,8 +18616,8 @@ bn.exports;
       p192: null,
       p25519: null
     };
-    function MPrime(name2, p) {
-      this.name = name2;
+    function MPrime(name, p) {
+      this.name = name;
       this.p = new BN2(p, 16);
       this.n = this.p.bitLength();
       this.k = new BN2(1).iushln(this.n).isub(this.p);
@@ -18750,21 +18750,21 @@ bn.exports;
       }
       return num;
     };
-    BN2._prime = function prime(name2) {
-      if (primes[name2]) return primes[name2];
+    BN2._prime = function prime(name) {
+      if (primes[name]) return primes[name];
       var prime2;
-      if (name2 === "k256") {
+      if (name === "k256") {
         prime2 = new K256();
-      } else if (name2 === "p224") {
+      } else if (name === "p224") {
         prime2 = new P224();
-      } else if (name2 === "p192") {
+      } else if (name === "p192") {
         prime2 = new P192();
-      } else if (name2 === "p25519") {
+      } else if (name === "p25519") {
         prime2 = new P25519();
       } else {
-        throw new Error("Unknown prime " + name2);
+        throw new Error("Unknown prime " + name);
       }
-      primes[name2] = prime2;
+      primes[name] = prime2;
       return prime2;
     };
     function Red(m) {
@@ -19044,75 +19044,9 @@ function crt$2(msg, priv2) {
 crt$2.getr = getr;
 var browserifyRsa = crt$2;
 var elliptic = {};
-const name$1 = "elliptic";
 const version$2 = "6.5.7";
-const description$1 = "EC cryptography";
-const main$1 = "lib/elliptic.js";
-const files = [
-  "lib"
-];
-const scripts$1 = {
-  lint: "eslint lib test",
-  "lint:fix": "npm run lint -- --fix",
-  unit: "istanbul test _mocha --reporter=spec test/index.js",
-  test: "npm run lint && npm run unit",
-  version: "grunt dist && git add dist/"
-};
-const repository$1 = {
-  type: "git",
-  url: "git@github.com:indutny/elliptic"
-};
-const keywords$1 = [
-  "EC",
-  "Elliptic",
-  "curve",
-  "Cryptography"
-];
-const author = "Fedor Indutny <fedor@indutny.com>";
-const license$1 = "MIT";
-const bugs = {
-  url: "https://github.com/indutny/elliptic/issues"
-};
-const homepage = "https://github.com/indutny/elliptic";
-const devDependencies$1 = {
-  brfs: "^2.0.2",
-  coveralls: "^3.1.0",
-  eslint: "^7.6.0",
-  grunt: "^1.2.1",
-  "grunt-browserify": "^5.3.0",
-  "grunt-cli": "^1.3.2",
-  "grunt-contrib-connect": "^3.0.0",
-  "grunt-contrib-copy": "^1.0.0",
-  "grunt-contrib-uglify": "^5.0.0",
-  "grunt-mocha-istanbul": "^5.0.2",
-  "grunt-saucelabs": "^9.0.1",
-  istanbul: "^0.4.5",
-  mocha: "^8.0.1"
-};
-const dependencies = {
-  "bn.js": "^4.11.9",
-  brorand: "^1.1.0",
-  "hash.js": "^1.0.0",
-  "hmac-drbg": "^1.0.1",
-  inherits: "^2.0.4",
-  "minimalistic-assert": "^1.0.1",
-  "minimalistic-crypto-utils": "^1.0.1"
-};
 const require$$0 = {
-  name: name$1,
-  version: version$2,
-  description: description$1,
-  main: main$1,
-  files,
-  scripts: scripts$1,
-  repository: repository$1,
-  keywords: keywords$1,
-  author,
-  license: license$1,
-  bugs,
-  homepage,
-  devDependencies: devDependencies$1,
-  dependencies
+  version: version$2
 };
 var utils$m = {};
 var utils$l = {};
@@ -19255,9 +19189,9 @@ var utils$l = {};
     return jsf;
   }
   utils2.getJSF = getJSF2;
-  function cachedProperty2(obj, name2, computer) {
-    var key2 = "_" + name2;
-    obj.prototype[name2] = function cachedProperty3() {
+  function cachedProperty2(obj, name, computer) {
+    var key2 = "_" + name;
+    obj.prototype[name] = function cachedProperty3() {
       return this[key2] !== void 0 ? this[key2] : this[key2] = computer.call(this);
     };
   }
@@ -23057,13 +22991,13 @@ function requireSecp256k1() {
     assert2(this.g.mul(this.n).isInfinity(), "Invalid curve, G*N != O");
   }
   curves2.PresetCurve = PresetCurve;
-  function defineCurve(name2, options2) {
-    Object.defineProperty(curves2, name2, {
+  function defineCurve(name, options2) {
+    Object.defineProperty(curves2, name, {
       configurable: true,
       enumerable: true,
       get: function() {
         var curve2 = new PresetCurve(options2);
-        Object.defineProperty(curves2, name2, {
+        Object.defineProperty(curves2, name, {
           configurable: true,
           enumerable: true,
           value: curve2
@@ -23887,7 +23821,7 @@ EDDSA.prototype.encodePoint = function encodePoint(point5) {
 EDDSA.prototype.decodePoint = function decodePoint3(bytes) {
   bytes = utils$1.parseBytes(bytes);
   var lastIx = bytes.length - 1;
-  var normed = bytes.slice(0, lastIx).concat(bytes[lastIx] & ~128);
+  var normed = bytes.slice(0, lastIx).concat(bytes[lastIx] & -129);
   var xIsOdd = (bytes[lastIx] & 128) !== 0;
   var y = utils$1.intFromLE(normed);
   return this.curve.pointFromY(y, xIsOdd);
@@ -23950,8 +23884,8 @@ function requireVmBrowserify() {
     var defineProp = function() {
       try {
         Object.defineProperty({}, "_", {});
-        return function(obj, name2, value) {
-          Object.defineProperty(obj, name2, {
+        return function(obj, name, value) {
+          Object.defineProperty(obj, name, {
             writable: true,
             enumerable: false,
             configurable: true,
@@ -23959,8 +23893,8 @@ function requireVmBrowserify() {
           });
         };
       } catch (e) {
-        return function(obj, name2, value) {
-          obj[name2] = value;
+        return function(obj, name, value) {
+          obj[name] = value;
         };
       }
     }();
@@ -24054,10 +23988,10 @@ function requireVmBrowserify() {
       }
       return res;
     };
-    forEach(Object_keys(Script.prototype), function(name2) {
-      exports[name2] = Script[name2] = function(code) {
+    forEach(Object_keys(Script.prototype), function(name) {
+      exports[name] = Script[name] = function(code) {
         var s2 = Script(code);
-        return s2[name2].apply(s2, [].slice.call(arguments, 1));
+        return s2[name].apply(s2, [].slice.call(arguments, 1));
       };
     });
     exports.isContext = function(context) {
@@ -24086,11 +24020,11 @@ function requireApi() {
     var asn12 = requireAsn1();
     var inherits2 = inherits_browserExports;
     var api2 = exports2;
-    api2.define = function define2(name2, body) {
-      return new Entity(name2, body);
+    api2.define = function define2(name, body) {
+      return new Entity(name, body);
     };
-    function Entity(name2, body) {
-      this.name = name2;
+    function Entity(name, body) {
+      this.name = name;
       this.body = body;
       this.decoders = {};
       this.encoders = {};
@@ -25750,7 +25684,7 @@ var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:2
 var startRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m;
 var fullRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m;
 var evp = evp_bytestokey;
-var ciphers$1 = browser$6;
+var ciphers$1 = browser$5;
 var Buffer$6 = safeBufferExports$1.Buffer;
 var fixProc$1 = function(okey, password) {
   var key2 = okey.toString();
@@ -25779,8 +25713,8 @@ var fixProc$1 = function(okey, password) {
 var asn1 = asn1$3;
 var aesid = require$$1;
 var fixProc = fixProc$1;
-var ciphers = browser$6;
-var compat = browser$8;
+var ciphers = browser$5;
+var compat = browser$7;
 var Buffer$5 = safeBufferExports$1.Buffer;
 function decrypt$1(data, password) {
   var salt = data.algorithm.decrypt.kde.kdeparams.salt;
@@ -25892,7 +25826,7 @@ function requireSign() {
   if (hasRequiredSign) return sign.exports;
   hasRequiredSign = 1;
   var Buffer2 = safeBufferExports$1.Buffer;
-  var createHmac2 = browser$9;
+  var createHmac2 = browser$8;
   var crt2 = browserifyRsa;
   var EC = requireElliptic().ec;
   var BN2 = bnExports;
@@ -26130,13 +26064,13 @@ function requireVerify() {
   verify_1 = verify4;
   return verify_1;
 }
-var browser$4;
+var browser$3;
 var hasRequiredBrowser$1;
 function requireBrowser$1() {
-  if (hasRequiredBrowser$1) return browser$4;
+  if (hasRequiredBrowser$1) return browser$3;
   hasRequiredBrowser$1 = 1;
   var Buffer2 = safeBufferExports$1.Buffer;
-  var createHash3 = browser$a;
+  var createHash3 = browser$9;
   var stream = readableBrowserExports;
   var inherits2 = inherits_browserExports;
   var sign5 = requireSign();
@@ -26203,22 +26137,22 @@ function requireBrowser$1() {
   function createVerify(algorithm) {
     return new Verify(algorithm);
   }
-  browser$4 = {
+  browser$3 = {
     Sign: createSign,
     Verify: createVerify,
     createSign,
     createVerify
   };
-  return browser$4;
+  return browser$3;
 }
-var browser$3;
+var browser$2;
 var hasRequiredBrowser;
 function requireBrowser() {
-  if (hasRequiredBrowser) return browser$3;
+  if (hasRequiredBrowser) return browser$2;
   hasRequiredBrowser = 1;
   var elliptic2 = requireElliptic();
   var BN2 = bnExports$1;
-  browser$3 = function createECDH(curve2) {
+  browser$2 = function createECDH(curve2) {
     return new ECDH(curve2);
   };
   var aliases = {
@@ -26328,10 +26262,10 @@ function requireBrowser() {
       return buf.toString(enc);
     }
   }
-  return browser$3;
+  return browser$2;
 }
-var browser$2 = {};
-var createHash$2 = browser$a;
+var browser$1 = {};
+var createHash$2 = browser$9;
 var Buffer$4 = safeBufferExports$1.Buffer;
 var mgf$2 = function(seed, len) {
   var t = Buffer$4.alloc(0);
@@ -26364,7 +26298,7 @@ function withPublic$2(paddedMsg, key2) {
 var withPublic_1 = withPublic$2;
 var parseKeys$1 = parseAsn1;
 var randomBytes = browserExports;
-var createHash$1 = browser$a;
+var createHash$1 = browser$9;
 var mgf$1 = mgf$2;
 var xor$1 = xor$2;
 var BN$1 = bnExports$1;
@@ -26453,7 +26387,7 @@ var mgf = mgf$2;
 var xor = xor$2;
 var BN = bnExports$1;
 var crt = browserifyRsa;
-var createHash = browser$a;
+var createHash = browser$9;
 var withPublic = withPublic_1;
 var Buffer$1 = safeBufferExports$1.Buffer;
 var privateDecrypt = function privateDecrypt2(privateKey, enc, reverse) {
@@ -26557,8 +26491,8 @@ function compare(a, b) {
   exports2.publicDecrypt = function publicDecrypt(key2, buf) {
     return exports2.privateDecrypt(key2, buf, true);
   };
-})(browser$2);
-var browser$1 = {};
+})(browser$1);
+var browser = {};
 function oldBrowser() {
   throw new Error("secure random number generation not supported by this browser\nuse chrome, FireFox or Internet Explorer 11");
 }
@@ -26591,11 +26525,11 @@ function assertSize(size, offset, length) {
   }
 }
 if (crypto$1 && crypto$1.getRandomValues || !process$1.browser) {
-  browser$1.randomFill = randomFill;
-  browser$1.randomFillSync = randomFillSync;
+  browser.randomFill = randomFill;
+  browser.randomFillSync = randomFillSync;
 } else {
-  browser$1.randomFill = oldBrowser;
-  browser$1.randomFillSync = oldBrowser;
+  browser.randomFill = oldBrowser;
+  browser.randomFillSync = oldBrowser;
 }
 function randomFill(buf, offset, size, cb) {
   if (!Buffer.isBuffer(buf) && !(buf instanceof commonjsGlobal.Uint8Array)) {
@@ -26659,8 +26593,8 @@ function requireCryptoBrowserify() {
   if (hasRequiredCryptoBrowserify) return cryptoBrowserify;
   hasRequiredCryptoBrowserify = 1;
   cryptoBrowserify.randomBytes = cryptoBrowserify.rng = cryptoBrowserify.pseudoRandomBytes = cryptoBrowserify.prng = browserExports;
-  cryptoBrowserify.createHash = cryptoBrowserify.Hash = browser$a;
-  cryptoBrowserify.createHmac = cryptoBrowserify.Hmac = browser$9;
+  cryptoBrowserify.createHash = cryptoBrowserify.Hash = browser$9;
+  cryptoBrowserify.createHmac = cryptoBrowserify.Hmac = browser$8;
   var algos$1 = algos;
   var algoKeys = Object.keys(algos$1);
   var hashes = [
@@ -26675,10 +26609,10 @@ function requireCryptoBrowserify() {
   cryptoBrowserify.getHashes = function() {
     return hashes;
   };
-  var p = browser$8;
+  var p = browser$7;
   cryptoBrowserify.pbkdf2 = p.pbkdf2;
   cryptoBrowserify.pbkdf2Sync = p.pbkdf2Sync;
-  var aes2 = browser$7;
+  var aes2 = browser$6;
   cryptoBrowserify.Cipher = aes2.Cipher;
   cryptoBrowserify.createCipher = aes2.createCipher;
   cryptoBrowserify.Cipheriv = aes2.Cipheriv;
@@ -26701,12 +26635,12 @@ function requireCryptoBrowserify() {
   cryptoBrowserify.createVerify = sign5.createVerify;
   cryptoBrowserify.Verify = sign5.Verify;
   cryptoBrowserify.createECDH = requireBrowser();
-  var publicEncrypt3 = browser$2;
+  var publicEncrypt3 = browser$1;
   cryptoBrowserify.publicEncrypt = publicEncrypt3.publicEncrypt;
   cryptoBrowserify.privateEncrypt = publicEncrypt3.privateEncrypt;
   cryptoBrowserify.publicDecrypt = publicEncrypt3.publicDecrypt;
   cryptoBrowserify.privateDecrypt = publicEncrypt3.privateDecrypt;
-  var rf = browser$1;
+  var rf = browser;
   cryptoBrowserify.randomFill = rf.randomFill;
   cryptoBrowserify.randomFillSync = rf.randomFillSync;
   cryptoBrowserify.createCredentials = function() {
@@ -26731,89 +26665,13 @@ function requireCryptoBrowserify() {
   };
   return cryptoBrowserify;
 }
-const name = "dotenv";
-const version$1 = "16.4.5";
-const description = "Loads environment variables from .env file";
-const main = "lib/main.js";
-const types = "lib/main.d.ts";
-const exports = {
-  ".": {
-    types: "./lib/main.d.ts",
-    require: "./lib/main.js",
-    "default": "./lib/main.js"
-  },
-  "./config": "./config.js",
-  "./config.js": "./config.js",
-  "./lib/env-options": "./lib/env-options.js",
-  "./lib/env-options.js": "./lib/env-options.js",
-  "./lib/cli-options": "./lib/cli-options.js",
-  "./lib/cli-options.js": "./lib/cli-options.js",
-  "./package.json": "./package.json"
-};
-const scripts = {
-  "dts-check": "tsc --project tests/types/tsconfig.json",
-  lint: "standard",
-  "lint-readme": "standard-markdown",
-  pretest: "npm run lint && npm run dts-check",
-  test: "tap tests/*.js --100 -Rspec",
-  "test:coverage": "tap --coverage-report=lcov",
-  prerelease: "npm test",
-  release: "standard-version"
-};
-const repository = {
-  type: "git",
-  url: "git://github.com/motdotla/dotenv.git"
-};
-const funding = "https://dotenvx.com";
-const keywords = [
-  "dotenv",
-  "env",
-  ".env",
-  "environment",
-  "variables",
-  "config",
-  "settings"
-];
-const readmeFilename = "README.md";
-const license = "BSD-2-Clause";
-const devDependencies = {
-  "@definitelytyped/dtslint": "^0.0.133",
-  "@types/node": "^18.11.3",
-  decache: "^4.6.1",
-  sinon: "^14.0.1",
-  standard: "^17.0.0",
-  "standard-markdown": "^7.1.0",
-  "standard-version": "^9.5.0",
-  tap: "^16.3.0",
-  tar: "^6.1.11",
-  typescript: "^4.8.4"
-};
-const engines = {
-  node: ">=12"
-};
-const browser = {
-  fs: false
-};
+const version$1 = "16.5.0";
 const require$$4 = {
-  name,
-  version: version$1,
-  description,
-  main,
-  types,
-  exports,
-  scripts,
-  repository,
-  funding,
-  keywords,
-  readmeFilename,
-  license,
-  devDependencies,
-  engines,
-  browser
+  version: version$1
 };
 const fs = empty_1;
 const path = pathBrowserify;
-const os = browser$d;
+const os = browser$c;
 const crypto = requireCryptoBrowserify();
 const packageJson = require$$4;
 const version = packageJson.version;
@@ -26861,9 +26719,6 @@ function _parseVault(options2) {
     }
   }
   return DotenvModule.parse(decrypted);
-}
-function _log(message) {
-  console.log(`[dotenv@${version}][INFO] ${message}`);
 }
 function _warn(message) {
   console.log(`[dotenv@${version}][WARN] ${message}`);
@@ -26937,7 +26792,10 @@ function _resolveHome(envPath) {
   return envPath[0] === "~" ? path.join(os.homedir(), envPath.slice(1)) : envPath;
 }
 function _configVault(options2) {
-  _log("Loading env from encrypted .env.vault");
+  const debug = Boolean(options2 && options2.debug);
+  if (debug) {
+    _debug("Loading env from encrypted .env.vault");
+  }
   const parsed = DotenvModule._parseVault(options2);
   let processEnv = process$1.env;
   if (options2 && options2.processEnv != null) {
@@ -27064,15 +26922,15 @@ const DotenvModule = {
   parse: parse$1,
   populate
 };
-main$2.exports.configDotenv = DotenvModule.configDotenv;
-main$2.exports._configVault = DotenvModule._configVault;
-main$2.exports._parseVault = DotenvModule._parseVault;
-main$2.exports.config = DotenvModule.config;
-main$2.exports.decrypt = DotenvModule.decrypt;
-main$2.exports.parse = DotenvModule.parse;
-main$2.exports.populate = DotenvModule.populate;
-main$2.exports = DotenvModule;
-var mainExports = main$2.exports;
+main.exports.configDotenv = DotenvModule.configDotenv;
+main.exports._configVault = DotenvModule._configVault;
+main.exports._parseVault = DotenvModule._parseVault;
+main.exports.config = DotenvModule.config;
+main.exports.decrypt = DotenvModule.decrypt;
+main.exports.parse = DotenvModule.parse;
+main.exports.populate = DotenvModule.populate;
+main.exports = DotenvModule;
+var mainExports = main.exports;
 const options = {};
 if (process$1.env.DOTENV_CONFIG_ENCODING != null) {
   options.encoding = process$1.env.DOTENV_CONFIG_ENCODING;
@@ -28850,7 +28708,7 @@ function toFinite(value) {
     return value === 0 ? value : 0;
   }
   value = toNumber(value);
-  if (value === INFINITY || value === -INFINITY) {
+  if (value === INFINITY || value === -Infinity) {
     var sign5 = value < 0 ? -1 : 1;
     return sign5 * MAX_INTEGER;
   }
@@ -30108,9 +29966,9 @@ const HeadersInitToPlainObject = (headers) => {
   if (headers instanceof Headers) {
     oHeaders = HeadersInstanceToPlainObject(headers);
   } else if (Array.isArray(headers)) {
-    headers.forEach(([name2, value]) => {
-      if (name2 && value !== void 0) {
-        oHeaders[name2] = value;
+    headers.forEach(([name, value]) => {
+      if (name && value !== void 0) {
+        oHeaders[name] = value;
       }
     });
   } else if (headers) {
@@ -30393,8 +30251,8 @@ class GraphQLError extends Error {
 function undefinedIfEmpty(array) {
   return array === void 0 || array.length === 0 ? void 0 : array;
 }
-function syntaxError(source, position, description2) {
-  return new GraphQLError(`Syntax Error: ${description2}`, {
+function syntaxError(source, position, description) {
+  return new GraphQLError(`Syntax Error: ${description}`, {
     source,
     positions: [position]
   });
@@ -31303,9 +31161,9 @@ function formatArray(array, seenValues) {
 function getObjectTag(object) {
   const tag = Object.prototype.toString.call(object).replace(/^\[object /, "").replace(/]$/, "");
   if (tag === "Object" && typeof object.constructor === "function") {
-    const name2 = object.constructor.name;
-    if (typeof name2 === "string" && name2 !== "") {
-      return name2;
+    const name = object.constructor.name;
+    if (typeof name === "string" && name !== "") {
+      return name;
     }
   }
   return tag;
@@ -31348,13 +31206,13 @@ spurious results.`);
   }
 );
 class Source {
-  constructor(body, name2 = "GraphQL request", locationOffset = {
+  constructor(body, name = "GraphQL request", locationOffset = {
     line: 1,
     column: 1
   }) {
     typeof body === "string" || devAssert(false, `Body must be a string. Received: ${inspect(body)}.`);
     this.body = body;
-    this.name = name2;
+    this.name = name;
     this.locationOffset = locationOffset;
     this.locationOffset.line > 0 || devAssert(
       false,
@@ -31494,14 +31352,14 @@ class Parser {
       });
     }
     const operation = this.parseOperationType();
-    let name2;
+    let name;
     if (this.peek(TokenKind.NAME)) {
-      name2 = this.parseName();
+      name = this.parseName();
     }
     return this.node(start, {
       kind: Kind.OPERATION_DEFINITION,
       operation,
-      name: name2,
+      name,
       variableDefinitions: this.parseVariableDefinitions(),
       directives: this.parseDirectives(false),
       selectionSet: this.parseSelectionSet()
@@ -31588,17 +31446,17 @@ class Parser {
     const start = this._lexer.token;
     const nameOrAlias = this.parseName();
     let alias;
-    let name2;
+    let name;
     if (this.expectOptionalToken(TokenKind.COLON)) {
       alias = nameOrAlias;
-      name2 = this.parseName();
+      name = this.parseName();
     } else {
-      name2 = nameOrAlias;
+      name = nameOrAlias;
     }
     return this.node(start, {
       kind: Kind.FIELD,
       alias,
-      name: name2,
+      name,
       arguments: this.parseArguments(false),
       directives: this.parseDirectives(false),
       selectionSet: this.peek(TokenKind.BRACE_L) ? this.parseSelectionSet() : void 0
@@ -31616,11 +31474,11 @@ class Parser {
    */
   parseArgument(isConst = false) {
     const start = this._lexer.token;
-    const name2 = this.parseName();
+    const name = this.parseName();
     this.expectToken(TokenKind.COLON);
     return this.node(start, {
       kind: Kind.ARGUMENT,
-      name: name2,
+      name,
       value: this.parseValueLiteral(isConst)
     });
   }
@@ -31815,11 +31673,11 @@ class Parser {
    */
   parseObjectField(isConst) {
     const start = this._lexer.token;
-    const name2 = this.parseName();
+    const name = this.parseName();
     this.expectToken(TokenKind.COLON);
     return this.node(start, {
       kind: Kind.OBJECT_FIELD,
-      name: name2,
+      name,
       value: this.parseValueLiteral(isConst)
     });
   }
@@ -31907,7 +31765,7 @@ class Parser {
    */
   parseSchemaDefinition() {
     const start = this._lexer.token;
-    const description2 = this.parseDescription();
+    const description = this.parseDescription();
     this.expectKeyword("schema");
     const directives = this.parseConstDirectives();
     const operationTypes = this.many(
@@ -31917,7 +31775,7 @@ class Parser {
     );
     return this.node(start, {
       kind: Kind.SCHEMA_DEFINITION,
-      description: description2,
+      description,
       directives,
       operationTypes
     });
@@ -31941,14 +31799,14 @@ class Parser {
    */
   parseScalarTypeDefinition() {
     const start = this._lexer.token;
-    const description2 = this.parseDescription();
+    const description = this.parseDescription();
     this.expectKeyword("scalar");
-    const name2 = this.parseName();
+    const name = this.parseName();
     const directives = this.parseConstDirectives();
     return this.node(start, {
       kind: Kind.SCALAR_TYPE_DEFINITION,
-      description: description2,
-      name: name2,
+      description,
+      name,
       directives
     });
   }
@@ -31959,16 +31817,16 @@ class Parser {
    */
   parseObjectTypeDefinition() {
     const start = this._lexer.token;
-    const description2 = this.parseDescription();
+    const description = this.parseDescription();
     this.expectKeyword("type");
-    const name2 = this.parseName();
+    const name = this.parseName();
     const interfaces = this.parseImplementsInterfaces();
     const directives = this.parseConstDirectives();
     const fields = this.parseFieldsDefinition();
     return this.node(start, {
       kind: Kind.OBJECT_TYPE_DEFINITION,
-      description: description2,
-      name: name2,
+      description,
+      name,
       interfaces,
       directives,
       fields
@@ -32000,16 +31858,16 @@ class Parser {
    */
   parseFieldDefinition() {
     const start = this._lexer.token;
-    const description2 = this.parseDescription();
-    const name2 = this.parseName();
+    const description = this.parseDescription();
+    const name = this.parseName();
     const args = this.parseArgumentDefs();
     this.expectToken(TokenKind.COLON);
     const type2 = this.parseTypeReference();
     const directives = this.parseConstDirectives();
     return this.node(start, {
       kind: Kind.FIELD_DEFINITION,
-      description: description2,
-      name: name2,
+      description,
+      name,
       arguments: args,
       type: type2,
       directives
@@ -32031,8 +31889,8 @@ class Parser {
    */
   parseInputValueDef() {
     const start = this._lexer.token;
-    const description2 = this.parseDescription();
-    const name2 = this.parseName();
+    const description = this.parseDescription();
+    const name = this.parseName();
     this.expectToken(TokenKind.COLON);
     const type2 = this.parseTypeReference();
     let defaultValue;
@@ -32042,8 +31900,8 @@ class Parser {
     const directives = this.parseConstDirectives();
     return this.node(start, {
       kind: Kind.INPUT_VALUE_DEFINITION,
-      description: description2,
-      name: name2,
+      description,
+      name,
       type: type2,
       defaultValue,
       directives
@@ -32055,16 +31913,16 @@ class Parser {
    */
   parseInterfaceTypeDefinition() {
     const start = this._lexer.token;
-    const description2 = this.parseDescription();
+    const description = this.parseDescription();
     this.expectKeyword("interface");
-    const name2 = this.parseName();
+    const name = this.parseName();
     const interfaces = this.parseImplementsInterfaces();
     const directives = this.parseConstDirectives();
     const fields = this.parseFieldsDefinition();
     return this.node(start, {
       kind: Kind.INTERFACE_TYPE_DEFINITION,
-      description: description2,
-      name: name2,
+      description,
+      name,
       interfaces,
       directives,
       fields
@@ -32076,15 +31934,15 @@ class Parser {
    */
   parseUnionTypeDefinition() {
     const start = this._lexer.token;
-    const description2 = this.parseDescription();
+    const description = this.parseDescription();
     this.expectKeyword("union");
-    const name2 = this.parseName();
+    const name = this.parseName();
     const directives = this.parseConstDirectives();
     const types2 = this.parseUnionMemberTypes();
     return this.node(start, {
       kind: Kind.UNION_TYPE_DEFINITION,
-      description: description2,
-      name: name2,
+      description,
+      name,
       directives,
       types: types2
     });
@@ -32103,15 +31961,15 @@ class Parser {
    */
   parseEnumTypeDefinition() {
     const start = this._lexer.token;
-    const description2 = this.parseDescription();
+    const description = this.parseDescription();
     this.expectKeyword("enum");
-    const name2 = this.parseName();
+    const name = this.parseName();
     const directives = this.parseConstDirectives();
     const values = this.parseEnumValuesDefinition();
     return this.node(start, {
       kind: Kind.ENUM_TYPE_DEFINITION,
-      description: description2,
-      name: name2,
+      description,
+      name,
       directives,
       values
     });
@@ -32133,13 +31991,13 @@ class Parser {
    */
   parseEnumValueDefinition() {
     const start = this._lexer.token;
-    const description2 = this.parseDescription();
-    const name2 = this.parseEnumValueName();
+    const description = this.parseDescription();
+    const name = this.parseEnumValueName();
     const directives = this.parseConstDirectives();
     return this.node(start, {
       kind: Kind.ENUM_VALUE_DEFINITION,
-      description: description2,
-      name: name2,
+      description,
+      name,
       directives
     });
   }
@@ -32164,15 +32022,15 @@ class Parser {
    */
   parseInputObjectTypeDefinition() {
     const start = this._lexer.token;
-    const description2 = this.parseDescription();
+    const description = this.parseDescription();
     this.expectKeyword("input");
-    const name2 = this.parseName();
+    const name = this.parseName();
     const directives = this.parseConstDirectives();
     const fields = this.parseInputFieldsDefinition();
     return this.node(start, {
       kind: Kind.INPUT_OBJECT_TYPE_DEFINITION,
-      description: description2,
-      name: name2,
+      description,
+      name,
       directives,
       fields
     });
@@ -32258,14 +32116,14 @@ class Parser {
     const start = this._lexer.token;
     this.expectKeyword("extend");
     this.expectKeyword("scalar");
-    const name2 = this.parseName();
+    const name = this.parseName();
     const directives = this.parseConstDirectives();
     if (directives.length === 0) {
       throw this.unexpected();
     }
     return this.node(start, {
       kind: Kind.SCALAR_TYPE_EXTENSION,
-      name: name2,
+      name,
       directives
     });
   }
@@ -32279,7 +32137,7 @@ class Parser {
     const start = this._lexer.token;
     this.expectKeyword("extend");
     this.expectKeyword("type");
-    const name2 = this.parseName();
+    const name = this.parseName();
     const interfaces = this.parseImplementsInterfaces();
     const directives = this.parseConstDirectives();
     const fields = this.parseFieldsDefinition();
@@ -32288,7 +32146,7 @@ class Parser {
     }
     return this.node(start, {
       kind: Kind.OBJECT_TYPE_EXTENSION,
-      name: name2,
+      name,
       interfaces,
       directives,
       fields
@@ -32304,7 +32162,7 @@ class Parser {
     const start = this._lexer.token;
     this.expectKeyword("extend");
     this.expectKeyword("interface");
-    const name2 = this.parseName();
+    const name = this.parseName();
     const interfaces = this.parseImplementsInterfaces();
     const directives = this.parseConstDirectives();
     const fields = this.parseFieldsDefinition();
@@ -32313,7 +32171,7 @@ class Parser {
     }
     return this.node(start, {
       kind: Kind.INTERFACE_TYPE_EXTENSION,
-      name: name2,
+      name,
       interfaces,
       directives,
       fields
@@ -32328,7 +32186,7 @@ class Parser {
     const start = this._lexer.token;
     this.expectKeyword("extend");
     this.expectKeyword("union");
-    const name2 = this.parseName();
+    const name = this.parseName();
     const directives = this.parseConstDirectives();
     const types2 = this.parseUnionMemberTypes();
     if (directives.length === 0 && types2.length === 0) {
@@ -32336,7 +32194,7 @@ class Parser {
     }
     return this.node(start, {
       kind: Kind.UNION_TYPE_EXTENSION,
-      name: name2,
+      name,
       directives,
       types: types2
     });
@@ -32350,7 +32208,7 @@ class Parser {
     const start = this._lexer.token;
     this.expectKeyword("extend");
     this.expectKeyword("enum");
-    const name2 = this.parseName();
+    const name = this.parseName();
     const directives = this.parseConstDirectives();
     const values = this.parseEnumValuesDefinition();
     if (directives.length === 0 && values.length === 0) {
@@ -32358,7 +32216,7 @@ class Parser {
     }
     return this.node(start, {
       kind: Kind.ENUM_TYPE_EXTENSION,
-      name: name2,
+      name,
       directives,
       values
     });
@@ -32372,7 +32230,7 @@ class Parser {
     const start = this._lexer.token;
     this.expectKeyword("extend");
     this.expectKeyword("input");
-    const name2 = this.parseName();
+    const name = this.parseName();
     const directives = this.parseConstDirectives();
     const fields = this.parseInputFieldsDefinition();
     if (directives.length === 0 && fields.length === 0) {
@@ -32380,7 +32238,7 @@ class Parser {
     }
     return this.node(start, {
       kind: Kind.INPUT_OBJECT_TYPE_EXTENSION,
-      name: name2,
+      name,
       directives,
       fields
     });
@@ -32393,18 +32251,18 @@ class Parser {
    */
   parseDirectiveDefinition() {
     const start = this._lexer.token;
-    const description2 = this.parseDescription();
+    const description = this.parseDescription();
     this.expectKeyword("directive");
     this.expectToken(TokenKind.AT);
-    const name2 = this.parseName();
+    const name = this.parseName();
     const args = this.parseArgumentDefs();
     const repeatable = this.expectOptionalKeyword("repeatable");
     this.expectKeyword("on");
     const locations = this.parseDirectiveLocations();
     return this.node(start, {
       kind: Kind.DIRECTIVE_DEFINITION,
-      description: description2,
-      name: name2,
+      description,
+      name,
       arguments: args,
       repeatable,
       locations
@@ -32447,9 +32305,9 @@ class Parser {
    */
   parseDirectiveLocation() {
     const start = this._lexer.token;
-    const name2 = this.parseName();
-    if (Object.prototype.hasOwnProperty.call(DirectiveLocation, name2.value)) {
-      return name2;
+    const name = this.parseName();
+    if (Object.prototype.hasOwnProperty.call(DirectiveLocation, name.value)) {
+      return name;
     }
     throw this.unexpected(start);
   }
@@ -32959,8 +32817,8 @@ const printDocASTReducer = {
     leave: ({ selections }) => block(selections)
   },
   Field: {
-    leave({ alias, name: name2, arguments: args, directives, selectionSet }) {
-      const prefix = wrap("", alias, ": ") + name2;
+    leave({ alias, name, arguments: args, directives, selectionSet }) {
+      const prefix = wrap("", alias, ": ") + name;
       let argsLine = prefix + wrap("(", join(args, ", "), ")");
       if (argsLine.length > MAX_LINE_LENGTH) {
         argsLine = prefix + wrap("(\n", indent(join(args, "\n")), "\n)");
@@ -32969,11 +32827,11 @@ const printDocASTReducer = {
     }
   },
   Argument: {
-    leave: ({ name: name2, value }) => name2 + ": " + value
+    leave: ({ name, value }) => name + ": " + value
   },
   // Fragments
   FragmentSpread: {
-    leave: ({ name: name2, directives }) => "..." + name2 + wrap(" ", join(directives, " "))
+    leave: ({ name, directives }) => "..." + name + wrap(" ", join(directives, " "))
   },
   InlineFragment: {
     leave: ({ typeCondition, directives, selectionSet }) => join(
@@ -32987,9 +32845,9 @@ const printDocASTReducer = {
     )
   },
   FragmentDefinition: {
-    leave: ({ name: name2, typeCondition, variableDefinitions, directives, selectionSet }) => (
+    leave: ({ name, typeCondition, variableDefinitions, directives, selectionSet }) => (
       // or removed in the future.
-      `fragment ${name2}${wrap("(", join(variableDefinitions, ", "), ")")} on ${typeCondition} ${wrap("", join(directives, " "), " ")}` + selectionSet
+      `fragment ${name}${wrap("(", join(variableDefinitions, ", "), ")")} on ${typeCondition} ${wrap("", join(directives, " "), " ")}` + selectionSet
     )
   },
   // Value
@@ -33018,15 +32876,15 @@ const printDocASTReducer = {
     leave: ({ fields }) => "{" + join(fields, ", ") + "}"
   },
   ObjectField: {
-    leave: ({ name: name2, value }) => name2 + ": " + value
+    leave: ({ name, value }) => name + ": " + value
   },
   // Directive
   Directive: {
-    leave: ({ name: name2, arguments: args }) => "@" + name2 + wrap("(", join(args, ", "), ")")
+    leave: ({ name, arguments: args }) => "@" + name + wrap("(", join(args, ", "), ")")
   },
   // Type
   NamedType: {
-    leave: ({ name: name2 }) => name2
+    leave: ({ name }) => name
   },
   ListType: {
     leave: ({ type: type2 }) => "[" + type2 + "]"
@@ -33036,19 +32894,19 @@ const printDocASTReducer = {
   },
   // Type System Definitions
   SchemaDefinition: {
-    leave: ({ description: description2, directives, operationTypes }) => wrap("", description2, "\n") + join(["schema", join(directives, " "), block(operationTypes)], " ")
+    leave: ({ description, directives, operationTypes }) => wrap("", description, "\n") + join(["schema", join(directives, " "), block(operationTypes)], " ")
   },
   OperationTypeDefinition: {
     leave: ({ operation, type: type2 }) => operation + ": " + type2
   },
   ScalarTypeDefinition: {
-    leave: ({ description: description2, name: name2, directives }) => wrap("", description2, "\n") + join(["scalar", name2, join(directives, " ")], " ")
+    leave: ({ description, name, directives }) => wrap("", description, "\n") + join(["scalar", name, join(directives, " ")], " ")
   },
   ObjectTypeDefinition: {
-    leave: ({ description: description2, name: name2, interfaces, directives, fields }) => wrap("", description2, "\n") + join(
+    leave: ({ description, name, interfaces, directives, fields }) => wrap("", description, "\n") + join(
       [
         "type",
-        name2,
+        name,
         wrap("implements ", join(interfaces, " & ")),
         join(directives, " "),
         block(fields)
@@ -33057,19 +32915,19 @@ const printDocASTReducer = {
     )
   },
   FieldDefinition: {
-    leave: ({ description: description2, name: name2, arguments: args, type: type2, directives }) => wrap("", description2, "\n") + name2 + (hasMultilineItems(args) ? wrap("(\n", indent(join(args, "\n")), "\n)") : wrap("(", join(args, ", "), ")")) + ": " + type2 + wrap(" ", join(directives, " "))
+    leave: ({ description, name, arguments: args, type: type2, directives }) => wrap("", description, "\n") + name + (hasMultilineItems(args) ? wrap("(\n", indent(join(args, "\n")), "\n)") : wrap("(", join(args, ", "), ")")) + ": " + type2 + wrap(" ", join(directives, " "))
   },
   InputValueDefinition: {
-    leave: ({ description: description2, name: name2, type: type2, defaultValue, directives }) => wrap("", description2, "\n") + join(
-      [name2 + ": " + type2, wrap("= ", defaultValue), join(directives, " ")],
+    leave: ({ description, name, type: type2, defaultValue, directives }) => wrap("", description, "\n") + join(
+      [name + ": " + type2, wrap("= ", defaultValue), join(directives, " ")],
       " "
     )
   },
   InterfaceTypeDefinition: {
-    leave: ({ description: description2, name: name2, interfaces, directives, fields }) => wrap("", description2, "\n") + join(
+    leave: ({ description, name, interfaces, directives, fields }) => wrap("", description, "\n") + join(
       [
         "interface",
-        name2,
+        name,
         wrap("implements ", join(interfaces, " & ")),
         join(directives, " "),
         block(fields)
@@ -33078,22 +32936,22 @@ const printDocASTReducer = {
     )
   },
   UnionTypeDefinition: {
-    leave: ({ description: description2, name: name2, directives, types: types2 }) => wrap("", description2, "\n") + join(
-      ["union", name2, join(directives, " "), wrap("= ", join(types2, " | "))],
+    leave: ({ description, name, directives, types: types2 }) => wrap("", description, "\n") + join(
+      ["union", name, join(directives, " "), wrap("= ", join(types2, " | "))],
       " "
     )
   },
   EnumTypeDefinition: {
-    leave: ({ description: description2, name: name2, directives, values }) => wrap("", description2, "\n") + join(["enum", name2, join(directives, " "), block(values)], " ")
+    leave: ({ description, name, directives, values }) => wrap("", description, "\n") + join(["enum", name, join(directives, " "), block(values)], " ")
   },
   EnumValueDefinition: {
-    leave: ({ description: description2, name: name2, directives }) => wrap("", description2, "\n") + join([name2, join(directives, " ")], " ")
+    leave: ({ description, name, directives }) => wrap("", description, "\n") + join([name, join(directives, " ")], " ")
   },
   InputObjectTypeDefinition: {
-    leave: ({ description: description2, name: name2, directives, fields }) => wrap("", description2, "\n") + join(["input", name2, join(directives, " "), block(fields)], " ")
+    leave: ({ description, name, directives, fields }) => wrap("", description, "\n") + join(["input", name, join(directives, " "), block(fields)], " ")
   },
   DirectiveDefinition: {
-    leave: ({ description: description2, name: name2, arguments: args, repeatable, locations }) => wrap("", description2, "\n") + "directive @" + name2 + (hasMultilineItems(args) ? wrap("(\n", indent(join(args, "\n")), "\n)") : wrap("(", join(args, ", "), ")")) + (repeatable ? " repeatable" : "") + " on " + join(locations, " | ")
+    leave: ({ description, name, arguments: args, repeatable, locations }) => wrap("", description, "\n") + "directive @" + name + (hasMultilineItems(args) ? wrap("(\n", indent(join(args, "\n")), "\n)") : wrap("(", join(args, ", "), ")")) + (repeatable ? " repeatable" : "") + " on " + join(locations, " | ")
   },
   SchemaExtension: {
     leave: ({ directives, operationTypes }) => join(
@@ -33102,13 +32960,13 @@ const printDocASTReducer = {
     )
   },
   ScalarTypeExtension: {
-    leave: ({ name: name2, directives }) => join(["extend scalar", name2, join(directives, " ")], " ")
+    leave: ({ name, directives }) => join(["extend scalar", name, join(directives, " ")], " ")
   },
   ObjectTypeExtension: {
-    leave: ({ name: name2, interfaces, directives, fields }) => join(
+    leave: ({ name, interfaces, directives, fields }) => join(
       [
         "extend type",
-        name2,
+        name,
         wrap("implements ", join(interfaces, " & ")),
         join(directives, " "),
         block(fields)
@@ -33117,10 +32975,10 @@ const printDocASTReducer = {
     )
   },
   InterfaceTypeExtension: {
-    leave: ({ name: name2, interfaces, directives, fields }) => join(
+    leave: ({ name, interfaces, directives, fields }) => join(
       [
         "extend interface",
-        name2,
+        name,
         wrap("implements ", join(interfaces, " & ")),
         join(directives, " "),
         block(fields)
@@ -33129,10 +32987,10 @@ const printDocASTReducer = {
     )
   },
   UnionTypeExtension: {
-    leave: ({ name: name2, directives, types: types2 }) => join(
+    leave: ({ name, directives, types: types2 }) => join(
       [
         "extend union",
-        name2,
+        name,
         join(directives, " "),
         wrap("= ", join(types2, " | "))
       ],
@@ -33140,10 +32998,10 @@ const printDocASTReducer = {
     )
   },
   EnumTypeExtension: {
-    leave: ({ name: name2, directives, values }) => join(["extend enum", name2, join(directives, " "), block(values)], " ")
+    leave: ({ name, directives, values }) => join(["extend enum", name, join(directives, " "), block(values)], " ")
   },
   InputObjectTypeExtension: {
-    leave: ({ name: name2, directives, fields }) => join(["extend input", name2, join(directives, " "), block(fields)], " ")
+    leave: ({ name, directives, fields }) => join(["extend input", name, join(directives, " "), block(fields)], " ")
   }
 };
 function join(maybeArray, separator = "") {
@@ -33240,7 +33098,7 @@ const extractIsMutation = (document2) => {
   let isMutation = false;
   const defs = document2.definitions.filter(isOperationDefinitionNode);
   if (defs.length === 1) {
-    isMutation = defs[0].operation === OperationTypeNode.MUTATION;
+    isMutation = defs[0].operation === `mutation`;
   }
   return isMutation;
 };
@@ -33356,8 +33214,8 @@ const createFetcher = (method) => async (params) => {
     initResolved = initNew;
   }
   if (searchParams) {
-    searchParams.forEach((value, name2) => {
-      url.searchParams.append(name2, value);
+    searchParams.forEach((value, name) => {
+      url.searchParams.append(name, value);
     });
   }
   const $fetch = params.fetch ?? fetch;
