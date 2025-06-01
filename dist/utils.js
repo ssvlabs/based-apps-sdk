@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
-const tryCatch = require("./try-catch-DpaVZwZR.js");
+const tryCatch = require("./try-catch-Zcf3HwdJ.js");
 const viem = require("viem");
 function identity(value) {
   return value;
@@ -17,6 +17,14 @@ function apply(func, thisArg, args) {
       return func.call(thisArg, args[0], args[1], args[2]);
   }
   return func.apply(thisArg, args);
+}
+function copyArray(source, array) {
+  var index = -1, length = source.length;
+  array || (array = Array(length));
+  while (++index < length) {
+    array[index] = source[index];
+  }
+  return array;
 }
 var HOT_COUNT = 800, HOT_SPAN = 16;
 var nativeNow = Date.now;
@@ -49,6 +57,24 @@ var baseSetToString = !tryCatch.defineProperty ? identity : function(func, strin
   });
 };
 var setToString = shortOut(baseSetToString);
+function copyObject(source, props, object, customizer) {
+  var isNew = !object;
+  object || (object = {});
+  var index = -1, length = props.length;
+  while (++index < length) {
+    var key = props[index];
+    var newValue = void 0;
+    if (newValue === void 0) {
+      newValue = source[key];
+    }
+    if (isNew) {
+      tryCatch.baseAssignValue(object, key, newValue);
+    } else {
+      tryCatch.assignValue(object, key, newValue);
+    }
+  }
+  return object;
+}
 var nativeMax = Math.max;
 function overRest(func, start, transform) {
   start = nativeMax(start === void 0 ? func.length - 1 : start, 0);
@@ -97,6 +123,32 @@ function createAssigner(assigner) {
     return object;
   });
 }
+function nativeKeysIn(object) {
+  var result = [];
+  if (object != null) {
+    for (var key in Object(object)) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+var objectProto$1 = Object.prototype;
+var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
+function baseKeysIn(object) {
+  if (!tryCatch.isObject(object)) {
+    return nativeKeysIn(object);
+  }
+  var isProto = tryCatch.isPrototype(object), result = [];
+  for (var key in object) {
+    if (!(key == "constructor" && (isProto || !hasOwnProperty$1.call(object, key)))) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+function keysIn(object) {
+  return tryCatch.isArrayLike(object) ? tryCatch.arrayLikeKeys(object, true) : baseKeysIn(object);
+}
 var objectTag = "[object Object]";
 var funcProto = Function.prototype, objectProto = Object.prototype;
 var funcToString = funcProto.toString;
@@ -144,7 +196,7 @@ function safeGet(object, key) {
   return object[key];
 }
 function toPlainObject(value) {
-  return tryCatch.copyObject(value, tryCatch.keysIn(value));
+  return copyObject(value, keysIn(value));
 }
 function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, stack) {
   var objValue = safeGet(object, key), srcValue = safeGet(source, key), stacked = stack.get(srcValue);
@@ -161,7 +213,7 @@ function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, sta
       if (tryCatch.isArray(objValue)) {
         newValue = objValue;
       } else if (isArrayLikeObject(objValue)) {
-        newValue = tryCatch.copyArray(objValue);
+        newValue = copyArray(objValue);
       } else if (isBuff) {
         isCommon = false;
         newValue = tryCatch.cloneBuffer(srcValue, true);
@@ -204,7 +256,7 @@ function baseMerge(object, source, srcIndex, customizer, stack) {
       }
       assignMergeValue(object, key, newValue);
     }
-  }, tryCatch.keysIn);
+  }, keysIn);
 }
 var merge = createAssigner(function(object, source, srcIndex) {
   baseMerge(object, source, srcIndex);
