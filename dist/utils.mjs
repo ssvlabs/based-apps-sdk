@@ -1,5 +1,5 @@
-import { e as defineProperty, a as isObject, f as isArrayLike, g as isIndex, h as eq, i as isObjectLike, b as baseGetTag, j as getPrototype, k as baseAssignValue, l as copyObject, m as keysIn, n as isBuffer, o as isTypedArray, p as isArray, q as copyArray, r as cloneBuffer, u as cloneTypedArray, v as isArguments, w as isFunction, x as initCloneObject, S as Stack } from "./try-catch-CyR7P-FN.mjs";
-import { C, B, y, z, A, F, c, D, E, s, t } from "./try-catch-CyR7P-FN.mjs";
+import { e as defineProperty, f as baseAssignValue, g as assignValue, a as isObject, h as isArrayLike, j as isIndex, k as eq, l as isPrototype, m as arrayLikeKeys, i as isObjectLike, b as baseGetTag, n as getPrototype, o as isBuffer, p as isTypedArray, q as isArray, r as cloneBuffer, u as cloneTypedArray, v as isArguments, w as isFunction, x as initCloneObject, S as Stack } from "./try-catch-Dnir-_B4.mjs";
+import { C, B, y, z, A, F, c, D, E, s, t } from "./try-catch-Dnir-_B4.mjs";
 import { isAddress, formatUnits, decodeAbiParameters } from "viem";
 function identity(value) {
   return value;
@@ -16,6 +16,14 @@ function apply(func, thisArg, args) {
       return func.call(thisArg, args[0], args[1], args[2]);
   }
   return func.apply(thisArg, args);
+}
+function copyArray(source, array) {
+  var index = -1, length = source.length;
+  array || (array = Array(length));
+  while (++index < length) {
+    array[index] = source[index];
+  }
+  return array;
 }
 var HOT_COUNT = 800, HOT_SPAN = 16;
 var nativeNow = Date.now;
@@ -48,6 +56,24 @@ var baseSetToString = !defineProperty ? identity : function(func, string) {
   });
 };
 var setToString = shortOut(baseSetToString);
+function copyObject(source, props, object, customizer) {
+  var isNew = !object;
+  object || (object = {});
+  var index = -1, length = props.length;
+  while (++index < length) {
+    var key = props[index];
+    var newValue = void 0;
+    if (newValue === void 0) {
+      newValue = source[key];
+    }
+    if (isNew) {
+      baseAssignValue(object, key, newValue);
+    } else {
+      assignValue(object, key, newValue);
+    }
+  }
+  return object;
+}
 var nativeMax = Math.max;
 function overRest(func, start, transform) {
   start = nativeMax(start === void 0 ? func.length - 1 : start, 0);
@@ -95,6 +121,32 @@ function createAssigner(assigner) {
     }
     return object;
   });
+}
+function nativeKeysIn(object) {
+  var result = [];
+  if (object != null) {
+    for (var key in Object(object)) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+var objectProto$1 = Object.prototype;
+var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
+function baseKeysIn(object) {
+  if (!isObject(object)) {
+    return nativeKeysIn(object);
+  }
+  var isProto = isPrototype(object), result = [];
+  for (var key in object) {
+    if (!(key == "constructor" && (isProto || !hasOwnProperty$1.call(object, key)))) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+function keysIn(object) {
+  return isArrayLike(object) ? arrayLikeKeys(object, true) : baseKeysIn(object);
 }
 var objectTag = "[object Object]";
 var funcProto = Function.prototype, objectProto = Object.prototype;
