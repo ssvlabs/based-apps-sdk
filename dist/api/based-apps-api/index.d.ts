@@ -1,7 +1,7 @@
 import { APIs } from '..';
 import { StrategyWeight } from '../../types/weights';
 import { Address } from 'viem';
-export declare const getValidatorsBalance: (apis: APIs, args: Parameters<APIs['bam']['getValidatorsByAccount']>[0]) => Promise<{
+export declare const getValidatorsBalance: (apis: APIs, args: Parameters<APIs["bam"]["getValidatorsByAccount"]>[0]) => Promise<{
     account: string;
     validators: never[];
     balance: string;
@@ -26,23 +26,23 @@ export declare const getDelegatedBalances: (apis: APIs, args: {
 export declare const getObligatedBalances: (apis: APIs, args: {
     bAppId: Address;
 }) => Promise<{
-    bAppTokens: {
+    bAppTokens: Array<{
         totalObligatedBalance: string;
-        token: `0x${string}`;
-    }[];
-    strategies: {
+        token: Address;
+    }>;
+    strategies: Array<{
         strategy: {
             id: string;
         };
-        obligations: {
-            token: `0x${string}`;
+        obligations: Array<{
+            token: Address;
             obligatedBalance: string;
-        }[];
-    }[];
+        }>;
+    }>;
 } | never[]>;
 export declare const getBasedAppsAPI: (apis: APIs) => {
     getValidatorsBalance: (args: import('../../graphql/bam/graphql').Exact<{
-        account: string;
+        account: import('../../graphql/bam/graphql').Scalars["String"]["input"];
     }>) => Promise<{
         account: string;
         validators: never[];
@@ -61,19 +61,19 @@ export declare const getBasedAppsAPI: (apis: APIs) => {
     getObligatedBalances: (args: {
         bAppId: Address;
     }) => Promise<{
-        bAppTokens: {
+        bAppTokens: Array<{
             totalObligatedBalance: string;
-            token: `0x${string}`;
-        }[];
-        strategies: {
+            token: Address;
+        }>;
+        strategies: Array<{
             strategy: {
                 id: string;
             };
-            obligations: {
-                token: `0x${string}`;
+            obligations: Array<{
+                token: Address;
                 obligatedBalance: string;
-            }[];
-        }[];
+            }>;
+        }>;
     } | never[]>;
 };
 export {};

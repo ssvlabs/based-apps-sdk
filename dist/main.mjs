@@ -1,5 +1,5 @@
 import { defineChain, parseGwei, decodeEventLog } from "viem";
-import { i as isObjectLike$1, b as baseGetTag, a as isObject$1, c as configArgsSchema, s as stringifyBigints, d as isUndefined$1, t as tryCatch$1 } from "./try-catch-CyR7P-FN.mjs";
+import { i as isObjectLike$1, b as baseGetTag, a as isObject$1, c as configArgsSchema, s as stringifyBigints, d as isUndefined$1, t as tryCatch$1 } from "./try-catch-CpOO9DYU.mjs";
 function getDefaultExportFromCjs$1(x) {
   return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
 }
@@ -19073,7 +19073,7 @@ const license$1 = "MIT";
 const bugs = {
   url: "https://github.com/indutny/elliptic/issues"
 };
-const homepage = "https://github.com/indutny/elliptic";
+const homepage$1 = "https://github.com/indutny/elliptic";
 const devDependencies$1 = {
   brfs: "^2.0.2",
   coveralls: "^3.1.0",
@@ -19110,7 +19110,7 @@ const require$$0 = {
   author,
   license: license$1,
   bugs,
-  homepage,
+  homepage: homepage$1,
   devDependencies: devDependencies$1,
   dependencies
 };
@@ -26732,7 +26732,7 @@ function requireCryptoBrowserify() {
   return cryptoBrowserify;
 }
 const name = "dotenv";
-const version$1 = "16.4.5";
+const version$1 = "16.5.0";
 const description = "Loads environment variables from .env file";
 const main = "lib/main.js";
 const types = "lib/main.d.ts";
@@ -26753,10 +26753,9 @@ const exports = {
 const scripts = {
   "dts-check": "tsc --project tests/types/tsconfig.json",
   lint: "standard",
-  "lint-readme": "standard-markdown",
   pretest: "npm run lint && npm run dts-check",
-  test: "tap tests/*.js --100 -Rspec",
-  "test:coverage": "tap --coverage-report=lcov",
+  test: "tap run --allow-empty-coverage --disable-coverage --timeout=60000",
+  "test:coverage": "tap run --show-full-coverage --timeout=60000 --coverage-report=lcov",
   prerelease: "npm test",
   release: "standard-version"
 };
@@ -26764,6 +26763,7 @@ const repository = {
   type: "git",
   url: "git://github.com/motdotla/dotenv.git"
 };
+const homepage = "https://github.com/motdotla/dotenv#readme";
 const funding = "https://dotenvx.com";
 const keywords = [
   "dotenv",
@@ -26777,15 +26777,12 @@ const keywords = [
 const readmeFilename = "README.md";
 const license = "BSD-2-Clause";
 const devDependencies = {
-  "@definitelytyped/dtslint": "^0.0.133",
   "@types/node": "^18.11.3",
-  decache: "^4.6.1",
+  decache: "^4.6.2",
   sinon: "^14.0.1",
   standard: "^17.0.0",
-  "standard-markdown": "^7.1.0",
   "standard-version": "^9.5.0",
-  tap: "^16.3.0",
-  tar: "^6.1.11",
+  tap: "^19.2.0",
   typescript: "^4.8.4"
 };
 const engines = {
@@ -26803,6 +26800,7 @@ const require$$4 = {
   exports,
   scripts,
   repository,
+  homepage,
   funding,
   keywords,
   readmeFilename,
@@ -26861,9 +26859,6 @@ function _parseVault(options2) {
     }
   }
   return DotenvModule.parse(decrypted);
-}
-function _log(message) {
-  console.log(`[dotenv@${version}][INFO] ${message}`);
 }
 function _warn(message) {
   console.log(`[dotenv@${version}][WARN] ${message}`);
@@ -26937,7 +26932,10 @@ function _resolveHome(envPath) {
   return envPath[0] === "~" ? path.join(os.homedir(), envPath.slice(1)) : envPath;
 }
 function _configVault(options2) {
-  _log("Loading env from encrypted .env.vault");
+  const debug = Boolean(options2 && options2.debug);
+  if (debug) {
+    _debug("Loading env from encrypted .env.vault");
+  }
   const parsed = DotenvModule._parseVault(options2);
   let processEnv = process$1.env;
   if (options2 && options2.processEnv != null) {
@@ -33240,7 +33238,7 @@ const extractIsMutation = (document2) => {
   let isMutation = false;
   const defs = document2.definitions.filter(isOperationDefinitionNode);
   if (defs.length === 1) {
-    isMutation = defs[0].operation === OperationTypeNode.MUTATION;
+    isMutation = defs[0].operation === `mutation`;
   }
   return isMutation;
 };
