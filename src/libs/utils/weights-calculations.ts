@@ -50,14 +50,14 @@ const calculateWeightTotals = (
     (strategy.validatorBalanceWeight || 0) * validatorCoefficient,
   )
 
-  /**
-   * 
+/**
+ *
  * calculates the denominator of a weighted harmonic mean: the sum of the ratios between the weight (coefficient) of a value, and the value itself
  * @param {StrategyWeight} strategy - strategy weights
  * @param {CoefficientDefinition[]} coefficients - coefficients for various tokens
  * @param {number} validatorCoefficient - coefficient for the validator balance of a strategy
  * @returns {number} - the denominator of a weighted harmonic mean
-   */
+ */
 const calculateWeightedRatioSum = (
   strategy: StrategyWeight,
   coefficients: CoefficientDefinition[],
@@ -68,7 +68,7 @@ const calculateWeightedRatioSum = (
 
   // if the validator coefficient is non-zero (meaning it should be considered),
   // and the validator balance weight is zero, the ratio would be infinite, so we return zero
-  if (validatorCoefficient || !strategy.validatorBalanceWeight) return weightCoeffRatioSum
+  if (validatorCoefficient && !strategy.validatorBalanceWeight) return weightCoeffRatioSum
 
   const tokenWeightsMap: Map<string, number> = fillTokenWeightsMap(strategy, coefficients)
 
@@ -80,7 +80,7 @@ const calculateWeightedRatioSum = (
     (sum, coeff) => sum + coeff.coefficient / (tokenWeightsMap.get(coeff.token) || 1),
     // if the validator coefficient is non-zero (meaning it should be considered),
     // start with the ratio between the coefficient and the validator balance weight
-    validatorCoefficient != 0 ? validatorCoefficient / strategy.validatorBalanceWeight : 0,
+    validatorCoefficient != 0 ? validatorCoefficient / (strategy.validatorBalanceWeight || 0) : 0,
   )
 
   return weightCoeffRatioSum
@@ -103,7 +103,7 @@ const calculateWeightedLogSum = (
 
   // if the validator coefficient is non-zero (meaning it should be considered),
   // and the validator balance weight is zero, THE ENTIRE LOG SUM is zero
-  if (validatorCoefficient || !strategy.validatorBalanceWeight) return weightedLogSum
+  if (validatorCoefficient && !strategy.validatorBalanceWeight) return weightedLogSum
 
   const tokenWeightsMap: Map<string, number> = fillTokenWeightsMap(strategy, coefficients)
 
@@ -116,7 +116,9 @@ const calculateWeightedLogSum = (
     (acc, coeff) => acc + coeff.coefficient * Math.log(tokenWeightsMap.get(coeff.token) || 0),
     // if the validator coefficient is non-zero (meaning it should be considered),
     // start with the ratio between the coefficient and the validator balance weight
-    validatorCoefficient != 0 ? validatorCoefficient * Math.log(strategy.validatorBalanceWeight) : 0,
+    validatorCoefficient != 0
+      ? validatorCoefficient * Math.log(strategy.validatorBalanceWeight || 0)
+      : 0,
   )
 
   return weightedLogSum
@@ -152,7 +154,7 @@ export const calcHarmonicStrategyWeights = (
   { coefficients, validatorCoefficient = 0 }: WeightCalculationOptions,
 ): Map<string, number> => {
   // the numerator of weighted harmonic is the sum of all weights (coefficients)
-  const coeffSum = calculateCoefficientsSum(coefficients)  + validatorCoefficient
+  const coeffSum = calculateCoefficientsSum(coefficients) + validatorCoefficient
 
   const unnormalizedWeights = strategyTokenWeights.reduce((weightMap, strategy) => {
     // the denominator of weighted harmonic is the sum of all ratios between the value and its related weight (coefficient)
