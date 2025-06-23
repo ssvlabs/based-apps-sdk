@@ -1,6 +1,10 @@
 import type { WeightCalculationOptions } from '@/libs/utils/weights-calculations'
 import type { StrategyWeight } from '@/types/weights'
-import { calcArithmeticStrategyWeights, calcHarmonicStrategyWeights, calcGeometricStrategyWeights } from '@/libs/utils/weights-calculations'
+import {
+  calcArithmeticStrategyWeights,
+  calcHarmonicStrategyWeights,
+  calcGeometricStrategyWeights,
+} from '@/libs/utils/weights-calculations'
 import { describe, test, expect } from 'vitest'
 import type { Address } from 'abitype'
 
@@ -25,6 +29,25 @@ describe('Weights Calculations', () => {
         { token: TOKEN2, weight: 0.7 },
       ],
       validatorBalanceWeight: 0.7,
+    },
+  ]
+
+  const noValidatorBalanceStrategies: StrategyWeight[] = [
+    {
+      id: 'strategy1',
+      tokenWeights: [
+        { token: TOKEN1, weight: 0.6 },
+        { token: TOKEN2, weight: 0.4 },
+      ],
+      validatorBalanceWeight: 0.0,
+    },
+    {
+      id: 'strategy2',
+      tokenWeights: [
+        { token: TOKEN1, weight: 0.3 },
+        { token: TOKEN2, weight: 0.7 },
+      ],
+      validatorBalanceWeight: 0.0,
     },
   ]
 
@@ -140,6 +163,22 @@ describe('Weights Calculations', () => {
       expect(weights.get('strategy1')).toBe(0)
       expect(weights.get('strategy2')!).toBeCloseTo(1)
     })
+
+    test('should exclude validator balance in calculation if coefficient is zero', () => {
+      const params: WeightCalculationOptions = {
+        coefficients: [
+          { token: TOKEN1, coefficient: 1 },
+          { token: TOKEN2, coefficient: 1 },
+        ],
+        validatorCoefficient: 0,
+      }
+
+      const weights = calcHarmonicStrategyWeights(noValidatorBalanceStrategies, params)
+      expect(weights.get('strategy1')).toBeDefined()
+      expect(weights.get('strategy2')).toBeDefined()
+      expect(weights.get('strategy1')).toBeGreaterThan(0)
+      expect(weights.get('strategy2')).toBeGreaterThan(0)
+    })
   })
 
   describe('Geometric Average', () => {
@@ -211,6 +250,22 @@ describe('Weights Calculations', () => {
       const weights = calcGeometricStrategyWeights(strategiesWithZero, params)
       expect(weights.get('strategy1')).toBe(0)
       expect(weights.get('strategy2')!).toBeCloseTo(1)
+    })
+
+    test('should exclude validator balance in calculation if coefficient is zero', () => {
+      const params: WeightCalculationOptions = {
+        coefficients: [
+          { token: TOKEN1, coefficient: 1 },
+          { token: TOKEN2, coefficient: 1 },
+        ],
+        validatorCoefficient: 0,
+      }
+
+      const weights = calcGeometricStrategyWeights(noValidatorBalanceStrategies, params)
+      expect(weights.get('strategy1')).toBeDefined()
+      expect(weights.get('strategy2')).toBeDefined()
+      expect(weights.get('strategy1')).toBeGreaterThan(0)
+      expect(weights.get('strategy2')).toBeGreaterThan(0)
     })
   })
 })
