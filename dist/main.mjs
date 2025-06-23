@@ -37356,23 +37356,27 @@ const calculateWeightTotals = (strategy, coefficients, validatorCoefficient = 0)
 );
 const calculateWeightedRatioSum = (strategy, coefficients, validatorCoefficient) => {
   let weightCoeffRatioSum = 0;
-  if (!strategy.validatorBalanceWeight) return weightCoeffRatioSum;
+  if (validatorCoefficient && !strategy.validatorBalanceWeight) return weightCoeffRatioSum;
   const tokenWeightsMap = fillTokenWeightsMap(strategy, coefficients);
   if (Array.from(tokenWeightsMap.values()).some((item) => item == 0)) return weightCoeffRatioSum;
   weightCoeffRatioSum = coefficients.reduce(
     (sum, coeff) => sum + coeff.coefficient / (tokenWeightsMap.get(coeff.token) || 1),
-    validatorCoefficient / strategy.validatorBalanceWeight
+    // if the validator coefficient is non-zero (meaning it should be considered),
+    // start with the ratio between the coefficient and the validator balance weight
+    validatorCoefficient != 0 ? validatorCoefficient / (strategy.validatorBalanceWeight || 0) : 0
   );
   return weightCoeffRatioSum;
 };
 const calculateWeightedLogSum = (strategy, coefficients, validatorCoefficient) => {
   let weightedLogSum = 0;
-  if (!strategy.validatorBalanceWeight) return weightedLogSum;
+  if (validatorCoefficient && !strategy.validatorBalanceWeight) return weightedLogSum;
   const tokenWeightsMap = fillTokenWeightsMap(strategy, coefficients);
   if (Array.from(tokenWeightsMap.values()).some((item) => item == 0)) return weightedLogSum;
   weightedLogSum = coefficients.reduce(
     (acc, coeff) => acc + coeff.coefficient * Math.log(tokenWeightsMap.get(coeff.token) || 0),
-    validatorCoefficient * Math.log(strategy.validatorBalanceWeight)
+    // if the validator coefficient is non-zero (meaning it should be considered),
+    // start with the ratio between the coefficient and the validator balance weight
+    validatorCoefficient != 0 ? validatorCoefficient * Math.log(strategy.validatorBalanceWeight || 0) : 0
   );
   return weightedLogSum;
 };
@@ -37385,7 +37389,7 @@ const calcArithmeticStrategyWeights = (strategyTokenWeights, { coefficients, val
   return strategyWeights;
 };
 const calcHarmonicStrategyWeights = (strategyTokenWeights, { coefficients, validatorCoefficient = 0 }) => {
-  const coeffSum = calculateCoefficientsSum(coefficients);
+  const coeffSum = calculateCoefficientsSum(coefficients) + validatorCoefficient;
   const unnormalizedWeights = strategyTokenWeights.reduce((weightMap, strategy) => {
     const denom = calculateWeightedRatioSum(strategy, coefficients, validatorCoefficient);
     const finalWeight = denom != 0 ? coeffSum / denom : 0;
@@ -37403,7 +37407,7 @@ const calcHarmonicStrategyWeights = (strategyTokenWeights, { coefficients, valid
 };
 const calcGeometricStrategyWeights = (strategyTokenWeights, { coefficients, validatorCoefficient = 0 }) => {
   const unnormalizedWeights = strategyTokenWeights.reduce((weightMap, strategy) => {
-    const totalCoefficient = calculateCoefficientsSum(coefficients);
+    const totalCoefficient = calculateCoefficientsSum(coefficients) + validatorCoefficient;
     const logSum = calculateWeightedLogSum(strategy, coefficients, validatorCoefficient);
     const finalWeight = logSum != 0 ? Math.exp(logSum / totalCoefficient) : 0;
     return weightMap.set(strategy.id, finalWeight);
