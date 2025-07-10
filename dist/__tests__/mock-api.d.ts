@@ -1,0 +1,16 @@
+import { APIs } from '../api';
+export declare const mockGetValidatorsByAccount: import('vitest').Mock<(...args: any[]) => any>;
+export declare const mockGetValidatorBalances: import('vitest').Mock<(...args: any[]) => any>;
+export declare const mockGetStrategyBAppOptIns: import('vitest').Mock<(...args: any[]) => any>;
+export declare const mockGetParticipantWeightInput: import('vitest').Mock<(...args: any[]) => any>;
+export declare const mockGetObligatedBalances: import('vitest').Mock<(...args: any[]) => any>;
+export declare const mockGetBAppDelegators: import('vitest').Mock<(...args: any[]) => any>;
+export declare const mockGetBappMetadataURI: import('vitest').Mock<(...args: any[]) => any>;
+export declare const mockGetAllBappsMetadataURIs: import('vitest').Mock<(...args: any[]) => any>;
+export declare const mockGetAllStrategyObligatedBalancesForBapp: import('vitest').Mock<(...args: any[]) => any>;
+export declare const mockGetDepositedBalancesForStrategy: import('vitest').Mock<(...args: any[]) => any>;
+export declare const mockGetAllStrategiesDepositedTo: import('vitest').Mock<(...args: any[]) => any>;
+export declare const mockGetTotalDelegatedPercentageForAccount: import('vitest').Mock<(...args: any[]) => any>;
+export declare const mockGetAllStrategiesForBapp: import('vitest').Mock<(...args: any[]) => any>;
+export declare const mockGetAllStrategiesForAccount: import('vitest').Mock<(...args: any[]) => any>;
+export declare const mockAPIs: APIs;
