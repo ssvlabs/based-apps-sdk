@@ -1,6 +1,6 @@
 {
   "name": "@ssv-labs/bapps-sdk",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "author": "SSV.Labs",
   "description": "ssv labs based apps sdk",
   "keywords": [
@@ -85,18 +85,18 @@
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
     "release-it": "^17.2.0",
-    "rollup": "^4.14.3",
+    "rollup": "^4.44.2",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-tsconfig-paths": "^1.5.2",
     "rollup-plugin-typescript2": "^0.36.0",
     "semantic-release": "^23.0.8",
     "typescript": "^5.4.5",
-    "vite": "^5.4.10",
+    "vite": "^6.3.5",
     "vite-plugin-dts": "^4.3.0",
     "vite-plugin-glob": "^0.3.2",
     "vite-plugin-node-polyfills": "^0.22.0",
-    "vitest": "^1.5.0"
+    "vitest": "^3.2.4"
   },
   "config": {
     "commitizen": {
