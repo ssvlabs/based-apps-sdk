@@ -1,8 +1,35 @@
-"use strict";
-Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
-const viem = require("viem");
-const tryCatch$1 = require("./try-catch-CMUiphxo.js");
+import { defineChain, parseGwei, decodeEventLog } from "viem";
+import { i as isObjectLike$1, b as baseGetTag, a as isObject, c as configArgsSchema, s as stringifyBigints, d as isUndefined, t as tryCatch$1 } from "./try-catch-Cen4ib23.js";
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
+function getAugmentedNamespace(n) {
+  if (Object.prototype.hasOwnProperty.call(n, "__esModule")) return n;
+  var f = n.default;
+  if (typeof f == "function") {
+    var a = function a2() {
+      var isInstance = false;
+      try {
+        isInstance = this instanceof a2;
+      } catch {
+      }
+      if (isInstance) {
+        return Reflect.construct(f, arguments, this.constructor);
+      }
+      return f.apply(this, arguments);
+    };
+    a.prototype = f.prototype;
+  } else a = {};
+  Object.defineProperty(a, "__esModule", { value: true });
+  Object.keys(n).forEach(function(k) {
+    var d = Object.getOwnPropertyDescriptor(n, k);
+    Object.defineProperty(a, k, d.get ? d : {
+      enumerable: true,
+      get: function() {
+        return n[k];
+      }
+    });
+  });
+  return a;
+}
 function getDefaultExportFromCjs(x) {
   return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
 }
@@ -1933,15 +1960,12 @@ ieee754.write = function(buffer2, value, offset, isLE, mLen, nBytes) {
 })(buffer$1);
 const Buffer = buffer$1.Buffer;
 var main = { exports: {} };
-var empty_1;
-var hasRequiredEmpty;
-function requireEmpty() {
-  if (hasRequiredEmpty) return empty_1;
-  hasRequiredEmpty = 1;
-  var empty = null;
-  empty_1 = empty;
-  return empty_1;
-}
+var empty = null;
+const empty$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: empty
+}, Symbol.toStringTag, { value: "Module" }));
+const require$$0$1 = /* @__PURE__ */ getAugmentedNamespace(empty$1);
 var pathBrowserify;
 var hasRequiredPathBrowserify;
 function requirePathBrowserify() {
@@ -4206,7 +4230,7 @@ var hasRequiredSafeBuffer$1;
 function requireSafeBuffer$1() {
   if (hasRequiredSafeBuffer$1) return safeBuffer$1.exports;
   hasRequiredSafeBuffer$1 = 1;
-  (function(module2, exports2) {
+  (function(module, exports2) {
     var buffer2 = requireDist();
     var Buffer2 = buffer2.Buffer;
     function copyProps(src, dst) {
@@ -4215,7 +4239,7 @@ function requireSafeBuffer$1() {
       }
     }
     if (Buffer2.from && Buffer2.alloc && Buffer2.allocUnsafe && Buffer2.allocUnsafeSlow) {
-      module2.exports = buffer2;
+      module.exports = buffer2;
     } else {
       copyProps(buffer2, exports2);
       exports2.Buffer = SafeBuffer;
@@ -5440,7 +5464,7 @@ var hasRequiredCallBind;
 function requireCallBind() {
   if (hasRequiredCallBind) return callBind.exports;
   hasRequiredCallBind = 1;
-  (function(module2) {
+  (function(module) {
     var bind = requireFunctionBind();
     var GetIntrinsic = /* @__PURE__ */ requireGetIntrinsic();
     var setFunctionLength2 = /* @__PURE__ */ requireSetFunctionLength();
@@ -5450,7 +5474,7 @@ function requireCallBind() {
     var $reflectApply = GetIntrinsic("%Reflect.apply%", true) || bind.call($call, $apply);
     var $defineProperty = /* @__PURE__ */ requireEsDefineProperty();
     var $max = GetIntrinsic("%Math.max%");
-    module2.exports = function callBind2(originalFunction) {
+    module.exports = function callBind2(originalFunction) {
       if (typeof originalFunction !== "function") {
         throw new $TypeError("a function is required");
       }
@@ -5465,9 +5489,9 @@ function requireCallBind() {
       return $reflectApply(bind, $apply, arguments);
     };
     if ($defineProperty) {
-      $defineProperty(module2.exports, "apply", { value: applyBind });
+      $defineProperty(module.exports, "apply", { value: applyBind });
     } else {
-      module2.exports.apply = applyBind;
+      module.exports.apply = applyBind;
     }
   })(callBind);
   return callBind.exports;
@@ -6174,7 +6198,7 @@ function requireUtil$1() {
         }
       });
       for (var x = args[i2]; i2 < len2; x = args[++i2]) {
-        if (isNull(x) || !isObject(x)) {
+        if (isNull(x) || !isObject2(x)) {
           str += " " + x;
         } else {
           str += " " + inspect2(x);
@@ -6242,10 +6266,10 @@ function requireUtil$1() {
       } else if (opts) {
         exports2._extend(ctx, opts);
       }
-      if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
-      if (isUndefined(ctx.depth)) ctx.depth = 2;
-      if (isUndefined(ctx.colors)) ctx.colors = false;
-      if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
+      if (isUndefined2(ctx.showHidden)) ctx.showHidden = false;
+      if (isUndefined2(ctx.depth)) ctx.depth = 2;
+      if (isUndefined2(ctx.colors)) ctx.colors = false;
+      if (isUndefined2(ctx.customInspect)) ctx.customInspect = true;
       if (ctx.colors) ctx.stylize = stylizeWithColor;
       return formatValue2(ctx, obj, ctx.depth);
     }
@@ -6372,7 +6396,7 @@ function requireUtil$1() {
       return reduceToSingleString(output, base2, braces);
     }
     function formatPrimitive(ctx, value) {
-      if (isUndefined(value))
+      if (isUndefined2(value))
         return ctx.stylize("undefined", "undefined");
       if (isString(value)) {
         var simple = "'" + JSON.stringify(value).replace(/^"|"$/g, "").replace(/'/g, "\\'").replace(/\\"/g, '"') + "'";
@@ -6457,7 +6481,7 @@ function requireUtil$1() {
           str = ctx.stylize("[Circular]", "special");
         }
       }
-      if (isUndefined(name)) {
+      if (isUndefined2(name)) {
         if (array && key2.match(/^\d+$/)) {
           return str;
         }
@@ -6511,26 +6535,26 @@ function requireUtil$1() {
       return typeof arg === "symbol";
     }
     exports2.isSymbol = isSymbol2;
-    function isUndefined(arg) {
+    function isUndefined2(arg) {
       return arg === void 0;
     }
-    exports2.isUndefined = isUndefined;
+    exports2.isUndefined = isUndefined2;
     function isRegExp(re) {
-      return isObject(re) && objectToString(re) === "[object RegExp]";
+      return isObject2(re) && objectToString(re) === "[object RegExp]";
     }
     exports2.isRegExp = isRegExp;
     exports2.types.isRegExp = isRegExp;
-    function isObject(arg) {
+    function isObject2(arg) {
       return typeof arg === "object" && arg !== null;
     }
-    exports2.isObject = isObject;
+    exports2.isObject = isObject2;
     function isDate(d) {
-      return isObject(d) && objectToString(d) === "[object Date]";
+      return isObject2(d) && objectToString(d) === "[object Date]";
     }
     exports2.isDate = isDate;
     exports2.types.isDate = isDate;
     function isError(e) {
-      return isObject(e) && (objectToString(e) === "[object Error]" || e instanceof Error);
+      return isObject2(e) && (objectToString(e) === "[object Error]" || e instanceof Error);
     }
     exports2.isError = isError;
     exports2.types.isNativeError = isError;
@@ -6578,7 +6602,7 @@ function requireUtil$1() {
     };
     exports2.inherits = requireInherits_browser();
     exports2._extend = function(origin, add) {
-      if (!add || !isObject(add)) return origin;
+      if (!add || !isObject2(add)) return origin;
       var keys = Object.keys(add);
       var i2 = keys.length;
       while (i2--) {
@@ -9189,8 +9213,8 @@ var hasRequiredReadableBrowser$1;
 function requireReadableBrowser$1() {
   if (hasRequiredReadableBrowser$1) return readableBrowser$1.exports;
   hasRequiredReadableBrowser$1 = 1;
-  (function(module2, exports2) {
-    exports2 = module2.exports = require_stream_readable$1();
+  (function(module, exports2) {
+    exports2 = module.exports = require_stream_readable$1();
     exports2.Stream = exports2;
     exports2.Readable = exports2;
     exports2.Writable = require_stream_writable$1();
@@ -13539,8 +13563,8 @@ var hasRequiredBn$1;
 function requireBn$1() {
   if (hasRequiredBn$1) return bn$3.exports;
   hasRequiredBn$1 = 1;
-  (function(module2) {
-    (function(module3, exports2) {
+  (function(module) {
+    (function(module2, exports2) {
       function assert(val, msg) {
         if (!val) throw new Error(msg || "Assertion failed");
       }
@@ -13568,8 +13592,8 @@ function requireBn$1() {
           this._init(number || 0, base2 || 10, endian || "be");
         }
       }
-      if (typeof module3 === "object") {
-        module3.exports = BN;
+      if (typeof module2 === "object") {
+        module2.exports = BN;
       } else {
         exports2.BN = BN;
       }
@@ -16338,7 +16362,7 @@ function requireBn$1() {
         var res = this.imod(a._invmp(this.m).mul(this.r2));
         return res._forceRed(this);
       };
-    })(module2, bn$2);
+    })(module, bn$2);
   })(bn$3);
   return bn$3.exports;
 }
@@ -16862,7 +16886,7 @@ var hasRequiredSafeBuffer;
 function requireSafeBuffer() {
   if (hasRequiredSafeBuffer) return safeBuffer.exports;
   hasRequiredSafeBuffer = 1;
-  (function(module2, exports2) {
+  (function(module, exports2) {
     var buffer2 = requireDist();
     var Buffer2 = buffer2.Buffer;
     function copyProps(src, dst) {
@@ -16871,7 +16895,7 @@ function requireSafeBuffer() {
       }
     }
     if (Buffer2.from && Buffer2.alloc && Buffer2.allocUnsafe && Buffer2.allocUnsafeSlow) {
-      module2.exports = buffer2;
+      module.exports = buffer2;
     } else {
       copyProps(buffer2, exports2);
       exports2.Buffer = SafeBuffer;
@@ -16953,18 +16977,18 @@ function requireUtil() {
     return typeof arg === "symbol";
   }
   util.isSymbol = isSymbol2;
-  function isUndefined(arg) {
+  function isUndefined2(arg) {
     return arg === void 0;
   }
-  util.isUndefined = isUndefined;
+  util.isUndefined = isUndefined2;
   function isRegExp(re) {
     return objectToString(re) === "[object RegExp]";
   }
   util.isRegExp = isRegExp;
-  function isObject(arg) {
+  function isObject2(arg) {
     return typeof arg === "object" && arg !== null;
   }
-  util.isObject = isObject;
+  util.isObject = isObject2;
   function isDate(d) {
     return objectToString(d) === "[object Date]";
   }
@@ -16993,7 +17017,7 @@ var hasRequiredBufferList;
 function requireBufferList() {
   if (hasRequiredBufferList) return BufferList.exports;
   hasRequiredBufferList = 1;
-  (function(module2) {
+  (function(module) {
     function _classCallCheck(instance, Constructor) {
       if (!(instance instanceof Constructor)) {
         throw new TypeError("Cannot call a class as a function");
@@ -17004,7 +17028,7 @@ function requireBufferList() {
     function copyBuffer(src, target, offset) {
       src.copy(target, offset);
     }
-    module2.exports = function() {
+    module.exports = function() {
       function BufferList2() {
         _classCallCheck(this, BufferList2);
         this.head = null;
@@ -17060,7 +17084,7 @@ function requireBufferList() {
       return BufferList2;
     }();
     if (util2 && util2.inspect && util2.inspect.custom) {
-      module2.exports.prototype[util2.inspect.custom] = function() {
+      module.exports.prototype[util2.inspect.custom] = function() {
         var obj = util2.inspect({ length: this.length });
         return this.constructor.name + " " + obj;
       };
@@ -18460,8 +18484,8 @@ var hasRequiredReadableBrowser;
 function requireReadableBrowser() {
   if (hasRequiredReadableBrowser) return readableBrowser.exports;
   hasRequiredReadableBrowser = 1;
-  (function(module2, exports2) {
-    exports2 = module2.exports = require_stream_readable();
+  (function(module, exports2) {
+    exports2 = module.exports = require_stream_readable();
     exports2.Stream = exports2;
     exports2.Readable = exports2;
     exports2.Writable = require_stream_writable();
@@ -18478,8 +18502,8 @@ var hasRequiredBn;
 function requireBn() {
   if (hasRequiredBn) return bn$1.exports;
   hasRequiredBn = 1;
-  (function(module2) {
-    (function(module3, exports2) {
+  (function(module) {
+    (function(module2, exports2) {
       function assert(val, msg) {
         if (!val) throw new Error(msg || "Assertion failed");
       }
@@ -18507,8 +18531,8 @@ function requireBn() {
           this._init(number || 0, base2 || 10, endian || "be");
         }
       }
-      if (typeof module3 === "object") {
-        module3.exports = BN;
+      if (typeof module2 === "object") {
+        module2.exports = BN;
       } else {
         exports2.BN = BN;
       }
@@ -21216,7 +21240,7 @@ function requireBn() {
         var res = this.imod(a._invmp(this.m).mul(this.r2));
         return res._forceRed(this);
       };
-    })(module2, bn);
+    })(module, bn);
   })(bn$1);
   return bn$1.exports;
 }
@@ -29137,7 +29161,7 @@ function requireCryptoBrowserify() {
   };
   return cryptoBrowserify;
 }
-const version = "16.4.5";
+const version = "17.2.0";
 const require$$4 = {
   version
 };
@@ -29145,12 +29169,39 @@ var hasRequiredMain;
 function requireMain() {
   if (hasRequiredMain) return main.exports;
   hasRequiredMain = 1;
-  const fs = requireEmpty();
+  const fs = require$$0$1;
   const path = requirePathBrowserify();
   const os = requireBrowser$c();
   const crypto = requireCryptoBrowserify();
   const packageJson = require$$4;
   const version2 = packageJson.version;
+  const TIPS = [
+    "🔐 encrypt with dotenvx: https://dotenvx.com",
+    "🔐 prevent committing .env to code: https://dotenvx.com/precommit",
+    "🔐 prevent building .env in docker: https://dotenvx.com/prebuild",
+    "🛠️  run anywhere with `dotenvx run -- yourcommand`",
+    "⚙️  specify custom .env file path with { path: '/custom/path/.env' }",
+    "⚙️  enable debug logging with { debug: true }",
+    "⚙️  override existing env vars with { override: true }",
+    "⚙️  suppress all logs with { quiet: true }",
+    "⚙️  write to custom object with { processEnv: myObject }",
+    "⚙️  load multiple .env files with { path: ['.env.local', '.env'] }"
+  ];
+  function _getRandomTip() {
+    return TIPS[Math.floor(Math.random() * TIPS.length)];
+  }
+  function parseBoolean(value) {
+    if (typeof value === "string") {
+      return !["false", "0", "no", "off", ""].includes(value.toLowerCase());
+    }
+    return Boolean(value);
+  }
+  function supportsAnsi() {
+    return process$1.stdout.isTTY;
+  }
+  function dim(text) {
+    return supportsAnsi() ? `\x1B[2m${text}\x1B[0m` : text;
+  }
   const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg;
   function parse2(src) {
     const obj = {};
@@ -29172,8 +29223,10 @@ function requireMain() {
     return obj;
   }
   function _parseVault(options) {
+    options = options || {};
     const vaultPath = _vaultPath(options);
-    const result = DotenvModule.configDotenv({ path: vaultPath });
+    options.path = vaultPath;
+    const result = DotenvModule.configDotenv(options);
     if (!result.parsed) {
       const err = new Error(`MISSING_DATA: Cannot parse ${vaultPath} for an unknown reason`);
       err.code = "MISSING_DATA";
@@ -29196,14 +29249,14 @@ function requireMain() {
     }
     return DotenvModule.parse(decrypted);
   }
-  function _log(message) {
-    console.log(`[dotenv@${version2}][INFO] ${message}`);
-  }
   function _warn(message) {
-    console.log(`[dotenv@${version2}][WARN] ${message}`);
+    console.error(`[dotenv@${version2}][WARN] ${message}`);
   }
   function _debug(message) {
     console.log(`[dotenv@${version2}][DEBUG] ${message}`);
+  }
+  function _log(message) {
+    console.log(`[dotenv@${version2}] ${message}`);
   }
   function _dotenvKey(options) {
     if (options && options.DOTENV_KEY && options.DOTENV_KEY.length > 0) {
@@ -29271,7 +29324,11 @@ function requireMain() {
     return envPath[0] === "~" ? path.join(os.homedir(), envPath.slice(1)) : envPath;
   }
   function _configVault(options) {
-    _log("Loading env from encrypted .env.vault");
+    const debug = parseBoolean(process$1.env.DOTENV_CONFIG_DEBUG || options && options.debug);
+    const quiet = parseBoolean(process$1.env.DOTENV_CONFIG_QUIET || options && options.quiet);
+    if (debug || !quiet) {
+      _log("Loading env from encrypted .env.vault");
+    }
     const parsed = DotenvModule._parseVault(options);
     let processEnv = process$1.env;
     if (options && options.processEnv != null) {
@@ -29283,7 +29340,12 @@ function requireMain() {
   function configDotenv(options) {
     const dotenvPath = path.resolve(process$1.cwd(), ".env");
     let encoding = "utf8";
-    const debug = Boolean(options && options.debug);
+    let processEnv = process$1.env;
+    if (options && options.processEnv != null) {
+      processEnv = options.processEnv;
+    }
+    let debug = parseBoolean(processEnv.DOTENV_CONFIG_DEBUG || options && options.debug);
+    let quiet = parseBoolean(processEnv.DOTENV_CONFIG_QUIET || options && options.quiet);
     if (options && options.encoding) {
       encoding = options.encoding;
     } else {
@@ -29315,11 +29377,25 @@ function requireMain() {
         lastError = e;
       }
     }
-    let processEnv = process$1.env;
-    if (options && options.processEnv != null) {
-      processEnv = options.processEnv;
+    const populated = DotenvModule.populate(processEnv, parsedAll, options);
+    debug = parseBoolean(processEnv.DOTENV_CONFIG_DEBUG || debug);
+    quiet = parseBoolean(processEnv.DOTENV_CONFIG_QUIET || quiet);
+    if (debug || !quiet) {
+      const keysCount = Object.keys(populated).length;
+      const shortPaths = [];
+      for (const filePath of optionPaths) {
+        try {
+          const relative = path.relative(process$1.cwd(), filePath);
+          shortPaths.push(relative);
+        } catch (e) {
+          if (debug) {
+            _debug(`Failed to load ${filePath} ${e.message}`);
+          }
+          lastError = e;
+        }
+      }
+      _log(`injecting env (${keysCount}) from ${shortPaths.join(",")} ${dim(`(tip: ${_getRandomTip()})`)}`);
     }
-    DotenvModule.populate(processEnv, parsedAll, options);
     if (lastError) {
       return { parsed: parsedAll, error: lastError };
     } else {
@@ -29367,6 +29443,7 @@ function requireMain() {
   function populate(processEnv, parsed, options = {}) {
     const debug = Boolean(options && options.debug);
     const override = Boolean(options && options.override);
+    const populated = {};
     if (typeof parsed !== "object") {
       const err = new Error("OBJECT_REQUIRED: Please check the processEnv argument being passed to populate");
       err.code = "OBJECT_REQUIRED";
@@ -29376,6 +29453,7 @@ function requireMain() {
       if (Object.prototype.hasOwnProperty.call(processEnv, key2)) {
         if (override === true) {
           processEnv[key2] = parsed[key2];
+          populated[key2] = parsed[key2];
         }
         if (debug) {
           if (override === true) {
@@ -29386,8 +29464,10 @@ function requireMain() {
         }
       } else {
         processEnv[key2] = parsed[key2];
+        populated[key2] = parsed[key2];
       }
     }
+    return populated;
   }
   const DotenvModule = {
     configDotenv,
@@ -29420,6 +29500,9 @@ function requireEnvOptions() {
   if (process$1.env.DOTENV_CONFIG_PATH != null) {
     options.path = process$1.env.DOTENV_CONFIG_PATH;
   }
+  if (process$1.env.DOTENV_CONFIG_QUIET != null) {
+    options.quiet = process$1.env.DOTENV_CONFIG_QUIET;
+  }
   if (process$1.env.DOTENV_CONFIG_DEBUG != null) {
     options.debug = process$1.env.DOTENV_CONFIG_DEBUG;
   }
@@ -29437,15 +29520,19 @@ var hasRequiredCliOptions;
 function requireCliOptions() {
   if (hasRequiredCliOptions) return cliOptions;
   hasRequiredCliOptions = 1;
-  const re = /^dotenv_config_(encoding|path|debug|override|DOTENV_KEY)=(.+)$/;
+  const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/;
   cliOptions = function optionMatcher(args) {
-    return args.reduce(function(acc, cur) {
+    const options = args.reduce(function(acc, cur) {
       const matches = cur.match(re);
       if (matches) {
         acc[matches[1]] = matches[2];
       }
       return acc;
     }, {});
+    if (!("quiet" in options)) {
+      options.quiet = "true";
+    }
+    return options;
   };
   return cliOptions;
 }
@@ -29465,7 +29552,7 @@ function requireConfig() {
   return config;
 }
 requireConfig();
-const hoodi = viem.defineChain({
+const hoodi = defineChain({
   id: 560048,
   name: "Hoodi",
   rpcUrls: {
@@ -31164,7 +31251,7 @@ const BAppABI = [
 ];
 var symbolTag = "[object Symbol]";
 function isSymbol(value) {
-  return typeof value == "symbol" || tryCatch$1.isObjectLike(value) && tryCatch$1.baseGetTag(value) == symbolTag;
+  return typeof value == "symbol" || isObjectLike$1(value) && baseGetTag(value) == symbolTag;
 }
 var reWhitespace = /\s/;
 function trimmedEndIndex(string) {
@@ -31189,9 +31276,9 @@ function toNumber(value) {
   if (isSymbol(value)) {
     return NAN;
   }
-  if (tryCatch$1.isObject(value)) {
+  if (isObject(value)) {
     var other = typeof value.valueOf == "function" ? value.valueOf() : value;
-    value = tryCatch$1.isObject(other) ? other + "" : other;
+    value = isObject(other) ? other + "" : other;
   }
   if (typeof value != "string") {
     return value === 0 ? value : +value;
@@ -31268,7 +31355,7 @@ const getValidatorsBalance = async (apis, args) => {
     )
   );
   const data = results.flatMap((v) => v.data);
-  const totalBalance = viem.parseGwei(
+  const totalBalance = parseGwei(
     data.reduce((acc, v) => {
       return acc + BigInt(v.balance);
     }, 0n).toString()
@@ -35627,7 +35714,7 @@ const extractIsMutation = (document2) => {
   let isMutation = false;
   const defs = document2.definitions.filter(isOperationDefinitionNode);
   if (defs.length === 1) {
-    isMutation = defs[0].operation === OperationTypeNode.MUTATION;
+    isMutation = defs[0].operation === `mutation`;
   }
   return isMutation;
 };
@@ -35955,7 +36042,7 @@ const isConfig = (props) => {
   return typeof props === "object" && props !== null && "apis" in props && "basedAppsAPI" in props && "graphs" in props;
 };
 const createConfig = (props) => {
-  const { publicClient, walletClient, beaconchainUrl, extendedConfig } = tryCatch$1.configArgsSchema.parse(props);
+  const { publicClient, walletClient, beaconchainUrl, extendedConfig } = configArgsSchema.parse(props);
   const chain = publicClient.chain.id;
   const hasAPIKey = Boolean(extendedConfig?.subgraph?.apiKey);
   const defaultBamGraphEndpoint = hasAPIKey ? bam_paid_graph_endpoints[chain] : bam_graph_endpoints[chain];
@@ -39631,10 +39718,10 @@ const paramsToArray = ({
   params,
   abiFunction
 }) => {
-  return tryCatch$1.stringifyBigints(
+  return stringifyBigints(
     abiFunction.inputs.reduce(
       (acc, param) => {
-        if (param.name && !tryCatch$1.isUndefined(params[param.name])) {
+        if (param.name && !isUndefined(params[param.name])) {
           return [...acc, params[param.name]];
         } else {
           console.error(`Missing argument for ${param}`);
@@ -39675,7 +39762,7 @@ const createWriter = ({
             events: receipt.logs.reduce(
               (acc, log) => {
                 try {
-                  const event = viem.decodeEventLog({
+                  const event = decodeEventLog({
                     abi,
                     data: log.data,
                     topics: log.topics
@@ -39683,8 +39770,8 @@ const createWriter = ({
                   acc.push(event);
                 } catch {
                   for (const eventAbi of ABIS) {
-                    tryCatch$1.tryCatch(() => {
-                      const event = viem.decodeEventLog({
+                    tryCatch$1(() => {
+                      const event = decodeEventLog({
                         abi: eventAbi,
                         data: log.data,
                         topics: log.topics
@@ -39829,21 +39916,23 @@ class BasedAppsSDK {
     this.contracts = this.core.contracts;
   }
 }
-exports.BasedAppsSDK = BasedAppsSDK;
-exports.bam_graph_endpoints = bam_graph_endpoints;
-exports.bam_paid_graph_endpoints = bam_paid_graph_endpoints;
-exports.chainIds = chainIds;
-exports.chains = chains;
-exports.contracts = contracts;
-exports.createBAMQueries = createBAMQueries;
-exports.createBasedAppsAPI = createBasedAppsAPI;
-exports.createBeaconChainAPI = createBeaconChainAPI;
-exports.createConfig = createConfig;
-exports.createReader = createReader;
-exports.createSSVAPI = createSSVAPI;
-exports.createWriter = createWriter;
-exports.globals = globals;
-exports.hoodi = hoodi;
-exports.isConfig = isConfig;
-exports.networks = networks;
-exports.registerValidatorsByClusterSizeLimits = registerValidatorsByClusterSizeLimits;
+export {
+  BasedAppsSDK,
+  bam_graph_endpoints,
+  bam_paid_graph_endpoints,
+  chainIds,
+  chains,
+  contracts,
+  createBAMQueries,
+  createBasedAppsAPI,
+  createBeaconChainAPI,
+  createConfig,
+  createReader,
+  createSSVAPI,
+  createWriter,
+  globals,
+  hoodi,
+  isConfig,
+  networks,
+  registerValidatorsByClusterSizeLimits
+};

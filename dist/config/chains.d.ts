@@ -11,7 +11,8 @@ export declare const hoodi: {
             url: string;
             apiUrl?: string | undefined;
         };
-    } | undefined;
+    } | undefined | undefined;
+    blockTime?: number | undefined | undefined;
     contracts?: {
         [x: string]: import('viem').ChainContract | {
             [sourceId: number]: import('viem').ChainContract | undefined;
@@ -21,6 +22,7 @@ export declare const hoodi: {
         multicall3?: import('viem').ChainContract | undefined;
         universalSignatureVerifier?: import('viem').ChainContract | undefined;
     } | undefined;
+    ensTlds?: readonly string[] | undefined;
     id: 560048;
     name: "Hoodi";
     nativeCurrency: {
@@ -33,7 +35,7 @@ export declare const hoodi: {
             readonly http: readonly ["https://rpc.hoodi.ethpandaops.io"];
         };
     };
-    sourceId?: number | undefined;
+    sourceId?: number | undefined | undefined;
     testnet: true;
     custom?: Record<string, unknown> | undefined;
     fees?: import('viem').ChainFees<undefined> | undefined;
@@ -53,7 +55,8 @@ export declare const chains: {
                 url: string;
                 apiUrl?: string | undefined;
             };
-        } | undefined;
+        } | undefined | undefined;
+        blockTime?: number | undefined | undefined;
         contracts?: {
             [x: string]: import('viem').ChainContract | {
                 [sourceId: number]: import('viem').ChainContract | undefined;
@@ -63,6 +66,7 @@ export declare const chains: {
             multicall3?: import('viem').ChainContract | undefined;
             universalSignatureVerifier?: import('viem').ChainContract | undefined;
         } | undefined;
+        ensTlds?: readonly string[] | undefined;
         id: 560048;
         name: "Hoodi";
         nativeCurrency: {
@@ -75,7 +79,7 @@ export declare const chains: {
                 readonly http: readonly ["https://rpc.hoodi.ethpandaops.io"];
             };
         };
-        sourceId?: number | undefined;
+        sourceId?: number | undefined | undefined;
         testnet: true;
         custom?: Record<string, unknown> | undefined;
         fees?: import('viem').ChainFees<undefined> | undefined;
