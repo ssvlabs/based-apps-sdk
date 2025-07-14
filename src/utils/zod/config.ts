@@ -3,52 +3,25 @@ import { z } from 'zod'
 
 export const configArgsSchema = z
   .object({
-    beaconchainUrl: z.string().url(),
-    publicClient: z.custom().superRefine((val, ctx) => {
-      const client = val as PublicClient | undefined
-      if (!client) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Public client must be provided',
-        })
-        return false
-      }
+    beaconchainUrl: z.url(),
+    publicClient: z
+      .any()
+      .refine((val) => !!val, { message: 'Public client must be provided' })
+      .refine((val) => typeof val === 'object' && val !== null && 'chain' in val, {
+        message: 'Public client must have a chain property',
+      }),
+    walletClient: z
+      .any()
+      .refine((val) => !!val, { message: 'Wallet client must be provided' })
+      .refine((val) => typeof val === 'object' && val !== null && 'chain' in val, {
+        message: 'Wallet client must have a chain property',
+      }),
 
-      if (client.chain === undefined) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Public client must have a chain property',
-        })
-        return false
-      }
-
-      return true
-    }),
-    walletClient: z.custom().superRefine((val, ctx) => {
-      const client = val as WalletClient | undefined
-      if (!client) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Wallet client must be provided',
-        })
-        return false
-      }
-
-      if (client.chain === undefined) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Wallet client must have a chain property',
-        })
-        return false
-      }
-
-      return true
-    }),
     extendedConfig: z
       .object({
         subgraph: z
           .object({
-            url: z.string().url().optional(),
+            url: z.url().optional(),
             apiKey: z.string().optional(),
           })
           .optional(),

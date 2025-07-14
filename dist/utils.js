@@ -1,7 +1,6 @@
-"use strict";
-Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
-const tryCatch = require("./try-catch-CMUiphxo.js");
-const viem = require("viem");
+import { e as defineProperty, f as baseAssignValue, g as assignValue, a as isObject, h as isArrayLike, j as isIndex, k as eq, l as isPrototype, m as arrayLikeKeys, i as isObjectLike, b as baseGetTag, n as getPrototype, o as isBuffer, p as isTypedArray, q as isArray, r as cloneBuffer, u as cloneTypedArray, v as isArguments, w as isFunction, x as initCloneObject, S as Stack } from "./try-catch-Cen4ib23.js";
+import { C, B, y, z, A, F, c, D, E, s, t } from "./try-catch-Cen4ib23.js";
+import { isAddress, formatUnits, decodeAbiParameters } from "viem";
 function identity(value) {
   return value;
 }
@@ -48,8 +47,8 @@ function constant(value) {
     return value;
   };
 }
-var baseSetToString = !tryCatch.defineProperty ? identity : function(func, string) {
-  return tryCatch.defineProperty(func, "toString", {
+var baseSetToString = !defineProperty ? identity : function(func, string) {
+  return defineProperty(func, "toString", {
     "configurable": true,
     "enumerable": false,
     "value": constant(string),
@@ -68,9 +67,9 @@ function copyObject(source, props, object, customizer) {
       newValue = source[key];
     }
     if (isNew) {
-      tryCatch.baseAssignValue(object, key, newValue);
+      baseAssignValue(object, key, newValue);
     } else {
-      tryCatch.assignValue(object, key, newValue);
+      assignValue(object, key, newValue);
     }
   }
   return object;
@@ -96,12 +95,12 @@ function baseRest(func, start) {
   return setToString(overRest(func, start, identity), func + "");
 }
 function isIterateeCall(value, index, object) {
-  if (!tryCatch.isObject(object)) {
+  if (!isObject(object)) {
     return false;
   }
   var type = typeof index;
-  if (type == "number" ? tryCatch.isArrayLike(object) && tryCatch.isIndex(index, object.length) : type == "string" && index in object) {
-    return tryCatch.eq(object[index], value);
+  if (type == "number" ? isArrayLike(object) && isIndex(index, object.length) : type == "string" && index in object) {
+    return eq(object[index], value);
   }
   return false;
 }
@@ -135,10 +134,10 @@ function nativeKeysIn(object) {
 var objectProto$1 = Object.prototype;
 var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
 function baseKeysIn(object) {
-  if (!tryCatch.isObject(object)) {
+  if (!isObject(object)) {
     return nativeKeysIn(object);
   }
-  var isProto = tryCatch.isPrototype(object), result = [];
+  var isProto = isPrototype(object), result = [];
   for (var key in object) {
     if (!(key == "constructor" && (isProto || !hasOwnProperty$1.call(object, key)))) {
       result.push(key);
@@ -147,7 +146,7 @@ function baseKeysIn(object) {
   return result;
 }
 function keysIn(object) {
-  return tryCatch.isArrayLike(object) ? tryCatch.arrayLikeKeys(object, true) : baseKeysIn(object);
+  return isArrayLike(object) ? arrayLikeKeys(object, true) : baseKeysIn(object);
 }
 var objectTag = "[object Object]";
 var funcProto = Function.prototype, objectProto = Object.prototype;
@@ -155,10 +154,10 @@ var funcToString = funcProto.toString;
 var hasOwnProperty = objectProto.hasOwnProperty;
 var objectCtorString = funcToString.call(Object);
 function isPlainObject(value) {
-  if (!tryCatch.isObjectLike(value) || tryCatch.baseGetTag(value) != objectTag) {
+  if (!isObjectLike(value) || baseGetTag(value) != objectTag) {
     return false;
   }
-  var proto = tryCatch.getPrototype(value);
+  var proto = getPrototype(value);
   if (proto === null) {
     return true;
   }
@@ -179,12 +178,12 @@ function createBaseFor(fromRight) {
 }
 var baseFor = createBaseFor();
 function assignMergeValue(object, key, value) {
-  if (value !== void 0 && !tryCatch.eq(object[key], value) || value === void 0 && !(key in object)) {
-    tryCatch.baseAssignValue(object, key, value);
+  if (value !== void 0 && !eq(object[key], value) || value === void 0 && !(key in object)) {
+    baseAssignValue(object, key, value);
   }
 }
 function isArrayLikeObject(value) {
-  return tryCatch.isObjectLike(value) && tryCatch.isArrayLike(value);
+  return isObjectLike(value) && isArrayLike(value);
 }
 function safeGet(object, key) {
   if (key === "constructor" && typeof object[key] === "function") {
@@ -207,28 +206,28 @@ function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, sta
   var newValue = customizer ? customizer(objValue, srcValue, key + "", object, source, stack) : void 0;
   var isCommon = newValue === void 0;
   if (isCommon) {
-    var isArr = tryCatch.isArray(srcValue), isBuff = !isArr && tryCatch.isBuffer(srcValue), isTyped = !isArr && !isBuff && tryCatch.isTypedArray(srcValue);
+    var isArr = isArray(srcValue), isBuff = !isArr && isBuffer(srcValue), isTyped = !isArr && !isBuff && isTypedArray(srcValue);
     newValue = srcValue;
     if (isArr || isBuff || isTyped) {
-      if (tryCatch.isArray(objValue)) {
+      if (isArray(objValue)) {
         newValue = objValue;
       } else if (isArrayLikeObject(objValue)) {
         newValue = copyArray(objValue);
       } else if (isBuff) {
         isCommon = false;
-        newValue = tryCatch.cloneBuffer(srcValue, true);
+        newValue = cloneBuffer(srcValue, true);
       } else if (isTyped) {
         isCommon = false;
-        newValue = tryCatch.cloneTypedArray(srcValue, true);
+        newValue = cloneTypedArray(srcValue, true);
       } else {
         newValue = [];
       }
-    } else if (isPlainObject(srcValue) || tryCatch.isArguments(srcValue)) {
+    } else if (isPlainObject(srcValue) || isArguments(srcValue)) {
       newValue = objValue;
-      if (tryCatch.isArguments(objValue)) {
+      if (isArguments(objValue)) {
         newValue = toPlainObject(objValue);
-      } else if (!tryCatch.isObject(objValue) || tryCatch.isFunction(objValue)) {
-        newValue = tryCatch.initCloneObject(srcValue);
+      } else if (!isObject(objValue) || isFunction(objValue)) {
+        newValue = initCloneObject(srcValue);
       }
     } else {
       isCommon = false;
@@ -246,8 +245,8 @@ function baseMerge(object, source, srcIndex, customizer, stack) {
     return;
   }
   baseFor(source, function(srcValue, key) {
-    stack || (stack = new tryCatch.Stack());
-    if (tryCatch.isObject(srcValue)) {
+    stack || (stack = new Stack());
+    if (isObject(srcValue)) {
       baseMergeDeep(object, source, key, srcIndex, baseMerge, customizer, stack);
     } else {
       var newValue = customizer ? customizer(safeGet(object, key), srcValue, key + "", object, source, stack) : void 0;
@@ -262,14 +261,14 @@ var merge = createAssigner(function(object, source, srcIndex) {
   baseMerge(object, source, srcIndex);
 });
 const createClusterId = (ownerAddress, operatorIds) => {
-  if (!viem.isAddress(ownerAddress)) {
+  if (!isAddress(ownerAddress)) {
     throw new Error("Invalid owner address");
   }
   return `${ownerAddress.toLowerCase()}-${operatorIds.join("-")}`;
 };
 const isClusterId = (clusterId) => {
   const [ownerAddress, ...operatorIds] = clusterId.split("-");
-  return viem.isAddress(ownerAddress) && operatorIds.length >= 4 && operatorIds.every((id) => !isNaN(Number(id)));
+  return isAddress(ownerAddress) && operatorIds.length >= 4 && operatorIds.every((id) => !isNaN(Number(id)));
 };
 const createEmptyCluster = (cluster = {}) => merge(
   {
@@ -304,8 +303,8 @@ const ethFormatter = new Intl.NumberFormat("en-US", {
   useGrouping: true,
   maximumFractionDigits: 4
 });
-const formatSSV = (num, decimals = 18) => ethFormatter.format(+viem.formatUnits(num, decimals));
-const formatBigintInput = (num, decimals = 18) => bigintFormatter.format(+viem.formatUnits(num, decimals));
+const formatSSV = (num, decimals = 18) => ethFormatter.format(+formatUnits(num, decimals));
+const formatBigintInput = (num, decimals = 18) => bigintFormatter.format(+formatUnits(num, decimals));
 const units = {
   seconds: 1e3,
   minutes: 6e4,
@@ -325,7 +324,7 @@ const getOperatorIds = (operators) => {
   return sortNumbers(operators.map((operator) => operator.id));
 };
 const decodeOperatorPublicKey = (publicKey) => {
-  return viem.decodeAbiParameters([{ type: "string" }], publicKey)[0];
+  return decodeAbiParameters([{ type: "string" }], publicKey)[0];
 };
 const isKeySharesItem = (item) => {
   return !!item && typeof item === "object" && "data" in item && "payload" in item && "error" in item;
@@ -425,37 +424,39 @@ const ensureNoKeysharesErrors = (keyshares) => {
   });
   return true;
 };
-exports.bigintAbs = tryCatch.bigintAbs;
-exports.bigintFloor = tryCatch.bigintFloor;
-exports.bigintMax = tryCatch.bigintMax;
-exports.bigintMin = tryCatch.bigintMin;
-exports.bigintRound = tryCatch.bigintRound;
-exports.bigintifyNumbers = tryCatch.bigintifyNumbers;
-exports.configArgsSchema = tryCatch.configArgsSchema;
-exports.isBigIntChanged = tryCatch.isBigIntChanged;
-exports.roundOperatorFee = tryCatch.roundOperatorFee;
-exports.stringifyBigints = tryCatch.stringifyBigints;
-exports.tryCatch = tryCatch.tryCatch;
-exports.KeysharesValidationError = KeysharesValidationError;
-exports.KeysharesValidationErrors = KeysharesValidationErrors;
-exports.KeysharesValidationErrorsMessages = KeysharesValidationErrorsMessages;
-exports._percentageFormatter = _percentageFormatter;
-exports.add0x = add0x;
-exports.bigintFormatter = bigintFormatter;
-exports.createClusterId = createClusterId;
-exports.createEmptyCluster = createEmptyCluster;
-exports.decodeOperatorPublicKey = decodeOperatorPublicKey;
-exports.ensureNoKeysharesErrors = ensureNoKeysharesErrors;
-exports.ensureValidatorsUniqueness = ensureValidatorsUniqueness;
-exports.ethFormatter = ethFormatter;
-exports.formatBigintInput = formatBigintInput;
-exports.formatSSV = formatSSV;
-exports.getOperatorIds = getOperatorIds;
-exports.isClusterId = isClusterId;
-exports.isKeySharesItem = isKeySharesItem;
-exports.ms = ms;
-exports.numberFormatter = numberFormatter;
-exports.percentageFormatter = percentageFormatter;
-exports.sortNumbers = sortNumbers;
-exports.validateConsistentOperatorIds = validateConsistentOperatorIds;
-exports.validateConsistentOperatorPublicKeys = validateConsistentOperatorPublicKeys;
+export {
+  KeysharesValidationError,
+  KeysharesValidationErrors,
+  KeysharesValidationErrorsMessages,
+  _percentageFormatter,
+  add0x,
+  C as bigintAbs,
+  B as bigintFloor,
+  bigintFormatter,
+  y as bigintMax,
+  z as bigintMin,
+  A as bigintRound,
+  F as bigintifyNumbers,
+  c as configArgsSchema,
+  createClusterId,
+  createEmptyCluster,
+  decodeOperatorPublicKey,
+  ensureNoKeysharesErrors,
+  ensureValidatorsUniqueness,
+  ethFormatter,
+  formatBigintInput,
+  formatSSV,
+  getOperatorIds,
+  D as isBigIntChanged,
+  isClusterId,
+  isKeySharesItem,
+  ms,
+  numberFormatter,
+  percentageFormatter,
+  E as roundOperatorFee,
+  sortNumbers,
+  s as stringifyBigints,
+  t as tryCatch,
+  validateConsistentOperatorIds,
+  validateConsistentOperatorPublicKeys
+};

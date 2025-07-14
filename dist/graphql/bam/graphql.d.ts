@@ -6002,42 +6002,16 @@ export type GetAllStrategiesForAccountQuery = {
         }>;
     } | null;
 };
-export declare const GetStrategyBAppOptInsDocument: DocumentNode<GetStrategyBAppOptInsQuery, Exact<{
-    bAppId: Scalars['Bytes']['input'];
-}>>;
-export declare const GetParticipantWeightInputDocument: DocumentNode<GetParticipantWeightInputQuery, Exact<{
-    bAppId: Scalars['ID']['input'];
-}>>;
-export declare const GetObligatedBalancesDocument: DocumentNode<GetObligatedBalancesQuery, Exact<{
-    bAppId: Scalars['ID']['input'];
-}>>;
-export declare const GetBAppDelegatorsDocument: DocumentNode<GetBAppDelegatorsQuery, Exact<{
-    bAppId: Scalars['ID']['input'];
-}>>;
-export declare const GetValidatorsByAccountDocument: DocumentNode<GetValidatorsByAccountQuery, Exact<{
-    account: Scalars['String']['input'];
-}>>;
-export declare const GetBappMetadataUriDocument: DocumentNode<GetBappMetadataUriQuery, Exact<{
-    bAppId: Scalars['ID']['input'];
-}>>;
-export declare const GetAllBappsMetadataUrIsDocument: DocumentNode<GetAllBappsMetadataUrIsQuery, Exact<{
-    [key: string]: never;
-}>>;
-export declare const GetAllStrategyObligatedBalancesForBappDocument: DocumentNode<GetAllStrategyObligatedBalancesForBappQuery, Exact<{
-    bAppId: Scalars['ID']['input'];
-}>>;
-export declare const GetDepositedBalancesForStrategyDocument: DocumentNode<GetDepositedBalancesForStrategyQuery, Exact<{
-    strategyId: Scalars['ID']['input'];
-}>>;
-export declare const GetAllStrategiesDepositedToDocument: DocumentNode<GetAllStrategiesDepositedToQuery, Exact<{
-    accountId: Scalars['ID']['input'];
-}>>;
-export declare const GetTotalDelegatedPercentageForAccountDocument: DocumentNode<GetTotalDelegatedPercentageForAccountQuery, Exact<{
-    accountId: Scalars['ID']['input'];
-}>>;
-export declare const GetAllStrategiesForBappDocument: DocumentNode<GetAllStrategiesForBappQuery, Exact<{
-    bAppId: Scalars['ID']['input'];
-}>>;
-export declare const GetAllStrategiesForAccountDocument: DocumentNode<GetAllStrategiesForAccountQuery, Exact<{
-    accountId: Scalars['ID']['input'];
-}>>;
+export declare const GetStrategyBAppOptInsDocument: DocumentNode<GetStrategyBAppOptInsQuery, GetStrategyBAppOptInsQueryVariables>;
+export declare const GetParticipantWeightInputDocument: DocumentNode<GetParticipantWeightInputQuery, GetParticipantWeightInputQueryVariables>;
+export declare const GetObligatedBalancesDocument: DocumentNode<GetObligatedBalancesQuery, GetObligatedBalancesQueryVariables>;
+export declare const GetBAppDelegatorsDocument: DocumentNode<GetBAppDelegatorsQuery, GetBAppDelegatorsQueryVariables>;
+export declare const GetValidatorsByAccountDocument: DocumentNode<GetValidatorsByAccountQuery, GetValidatorsByAccountQueryVariables>;
+export declare const GetBappMetadataUriDocument: DocumentNode<GetBappMetadataUriQuery, GetBappMetadataUriQueryVariables>;
+export declare const GetAllBappsMetadataUrIsDocument: DocumentNode<GetAllBappsMetadataUrIsQuery, GetAllBappsMetadataUrIsQueryVariables>;
+export declare const GetAllStrategyObligatedBalancesForBappDocument: DocumentNode<GetAllStrategyObligatedBalancesForBappQuery, GetAllStrategyObligatedBalancesForBappQueryVariables>;
+export declare const GetDepositedBalancesForStrategyDocument: DocumentNode<GetDepositedBalancesForStrategyQuery, GetDepositedBalancesForStrategyQueryVariables>;
+export declare const GetAllStrategiesDepositedToDocument: DocumentNode<GetAllStrategiesDepositedToQuery, GetAllStrategiesDepositedToQueryVariables>;
+export declare const GetTotalDelegatedPercentageForAccountDocument: DocumentNode<GetTotalDelegatedPercentageForAccountQuery, GetTotalDelegatedPercentageForAccountQueryVariables>;
+export declare const GetAllStrategiesForBappDocument: DocumentNode<GetAllStrategiesForBappQuery, GetAllStrategiesForBappQueryVariables>;
+export declare const GetAllStrategiesForAccountDocument: DocumentNode<GetAllStrategiesForAccountQuery, GetAllStrategiesForAccountQueryVariables>;
