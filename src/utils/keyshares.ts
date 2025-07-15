@@ -1,7 +1,20 @@
 import type { Operator } from '@/types/operator'
 import { sortNumbers } from '@/utils/number'
 import { getOperatorIds } from '@/utils/operator'
-import type { KeySharesItem } from 'ssv-keys'
+
+export interface KeySharesItem {
+  data: {
+    publicKey: string
+    operators: Array<{
+      id: number
+      operatorKey: string
+    }>
+  }
+  payload: {
+    operatorIds: number[]
+  }
+  error: Error | null
+}
 
 export const isKeySharesItem = (item: unknown): item is KeySharesItem => {
   return (

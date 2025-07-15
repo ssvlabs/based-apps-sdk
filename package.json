@@ -115,7 +115,6 @@
     "dotenv": "17.2.0",
     "graphql-request": "7.2.0",
     "lodash-es": "4.17.21",
-    "ssv-keys": "2.0.0",
     "viem": "2.31.7",
     "zod": "4.0.5"
   },
