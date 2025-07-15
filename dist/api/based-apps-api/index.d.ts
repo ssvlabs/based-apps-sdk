@@ -3,10 +3,6 @@ import { StrategyWeight } from '../../types/weights';
 import { Address } from 'viem';
 export declare const getValidatorsBalance: (apis: APIs, args: Parameters<APIs["bam"]["getValidatorsByAccount"]>[0]) => Promise<{
     account: string;
-    validators: never[];
-    balance: string;
-} | {
-    account: string;
     validators: `0x${string}`[];
     balance: bigint;
 }>;
@@ -44,10 +40,6 @@ export declare const getBasedAppsAPI: (apis: APIs) => {
     getValidatorsBalance: (args: import('../../graphql/bam/graphql').Exact<{
         account: import('../../graphql/bam/graphql').Scalars["String"]["input"];
     }>) => Promise<{
-        account: string;
-        validators: never[];
-        balance: string;
-    } | {
         account: string;
         validators: `0x${string}`[];
         balance: bigint;
