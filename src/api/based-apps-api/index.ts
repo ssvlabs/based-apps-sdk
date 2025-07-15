@@ -14,7 +14,7 @@ export const getValidatorsBalance = async (
     return {
       account: args.account,
       validators: [],
-      balance: '0',
+      balance: 0n,
     }
 
   const chunks = chunk(validators, 500)
@@ -195,13 +195,14 @@ export const getDelegatedBalances = async (
     bAppDelegators.strategies.map(async (strategy) => {
       const delegation = (
         await Promise.all(
-          strategy.strategy.owner.delegators.map((d) =>
-            getValidatorsBalance(apis, {
+          strategy.strategy.owner.delegators.map(async (d) => {
+            const data = await getValidatorsBalance(apis, {
               account: d.delegator.id,
-            }),
-          ),
+            })
+            return (data.balance * BigInt(d.percentage)) / 10000n
+          }),
         )
-      ).reduce((acc, balance) => acc + BigInt(balance.balance), 0n)
+      ).reduce((acc, balance) => acc + balance, 0n)
 
       return {
         strategyId: strategy.strategy.id,
