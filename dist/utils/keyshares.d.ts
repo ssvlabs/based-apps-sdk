@@ -1,5 +1,17 @@
 import { Operator } from '../types/operator';
-import { KeySharesItem } from 'ssv-keys';
+export interface KeySharesItem {
+    data: {
+        publicKey: string;
+        operators: Array<{
+            id: number;
+            operatorKey: string;
+        }>;
+    };
+    payload: {
+        operatorIds: number[];
+    };
+    error: Error | null;
+}
 export declare const isKeySharesItem: (item: unknown) => item is KeySharesItem;
 export declare enum KeysharesValidationErrors {
     OperatorDoesNotExist = 0,
