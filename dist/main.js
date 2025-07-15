@@ -31343,7 +31343,7 @@ const getValidatorsBalance = async (apis, args) => {
     return {
       account: args.account,
       validators: [],
-      balance: "0"
+      balance: 0n
     };
   const chunks = chunk(validators, 500);
   const results = await Promise.all(
@@ -31467,12 +31467,13 @@ const getDelegatedBalances = async (apis, args) => {
   const bAppTotalDelegatedBalances = await Promise.all(
     bAppDelegators.strategies.map(async (strategy) => {
       const delegation = (await Promise.all(
-        strategy.strategy.owner.delegators.map(
-          (d) => getValidatorsBalance(apis, {
+        strategy.strategy.owner.delegators.map(async (d) => {
+          const data = await getValidatorsBalance(apis, {
             account: d.delegator.id
-          })
-        )
-      )).reduce((acc, balance) => acc + BigInt(balance.balance), 0n);
+          });
+          return data.balance * BigInt(d.percentage) / 10000n;
+        })
+      )).reduce((acc, balance) => acc + balance, 0n);
       return {
         strategyId: strategy.strategy.id,
         delegation

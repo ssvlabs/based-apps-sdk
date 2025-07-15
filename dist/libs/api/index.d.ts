@@ -32,10 +32,6 @@ export declare const createBasedAppsAPI: (apis: APIs) => {
         account: import('../../graphql/bam/graphql').Scalars["String"]["input"];
     }>) => Promise<{
         account: string;
-        validators: never[];
-        balance: string;
-    } | {
-        account: string;
         validators: `0x${string}`[];
         balance: bigint;
     }>;
