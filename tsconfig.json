@@ -25,11 +25,10 @@
     "declaration": true,
     "declarationDir": "./dist/types",
     "forceConsistentCasingInFileNames": true,
-    // "emitDeclarationOnly": true,
+    "emitDeclarationOnly": false,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "ssv-sdk": ["./dist/*"]
+      "@/*": ["src/*"]
     }
   },
   "include": ["src/**/*", "examples/**/*", "hardhat.types.d.ts"],
