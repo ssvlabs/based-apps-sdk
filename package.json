@@ -1,6 +1,6 @@
 {
   "name": "@ssv-labs/bapps-sdk",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "author": "SSV.Labs",
   "description": "ssv labs based apps sdk",
   "keywords": [
@@ -19,12 +19,10 @@
   "exports": {
     ".": {
       "import": "./dist/main.mjs",
-      "require": "./dist/main.js",
       "types": "./dist/main.d.ts"
     },
     "./utils": {
       "import": "./dist/utils.mjs",
-      "require": "./dist/utils.js",
       "types": "./dist/utils/index.d.ts"
     }
   },

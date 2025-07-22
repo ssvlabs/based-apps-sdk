@@ -22,17 +22,11 @@ export default defineConfig({
         main: resolve(__dirname, 'src/main.ts'),
         utils: resolve(__dirname, 'src/utils/index.ts'),
       },
-      formats: ['es', 'cjs'],
+      formats: ['es'],
     },
     rollupOptions: {
-      output: {
-        globals: {
-          'ssv-keys': 'ssv-keys',
-        },
-      },
       external: [
-        'viem',
-        'ssv-keys',
+        'viem'
       ],
     },
   },

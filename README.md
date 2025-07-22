@@ -5,8 +5,8 @@
 <h1 align="center">Based Apps SDK</h1>
 
 <p align="center">
-  <a href="https://codecov.io/gh/ssvlabs/ssv-sdk">
-    <img src="https://codecov.io/gh/ssvlabs/ssv-sdk/graph/badge.svg?token=2j2HCF1fSb" alt="codecov"/>
+  <a href="https://codecov.io/gh/ssvlabs/based-apps-sdk">
+    <img src="https://codecov.io/gh/ssvlabs/based-apps-sdk/graph/badge.svg?token=2j2HCF1fSb" alt="codecov"/>
   </a>
 </p>
 
@@ -42,7 +42,7 @@ pnpm install @ssv-labs/bapps-sdk
 ### Initialize the SDK
 
 ```typescript
-import { BasedAppsSDK } from "@ssv-labs/bapps-sdk";
+import { BasedAppsSDK } from '@ssv-labs/bapps-sdk'
 import { createPublicClient, createWalletClient, http } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 
@@ -63,21 +63,23 @@ const walletClient = createWalletClient({
 })
 
 const sdk = new BasedAppsSDK({
-   beaconchainUrl: 'https://example.com/beacon',
-   publicClient,
-   walletClient,
- })
+  beaconchainUrl: 'https://example.com/beacon',
+  publicClient,
+  walletClient,
+})
 ```
 
 ### Based App Manager Contract Call example
 
 ```typescript
-const receipt = await sdk.core.contracts.bapp.write.delegateBalance({
+const receipt = await sdk.core.contracts.bapp.write
+  .delegateBalance({
     args: {
-      account: "0xA4831B989972605A62141a667578d742927Cbef9",
+      account: '0xA4831B989972605A62141a667578d742927Cbef9',
       percentage: 10,
     },
-  }).then((tx) => tx.wait())
+  })
+  .then((tx) => tx.wait())
 ```
 
 ### API Example
@@ -85,8 +87,8 @@ const receipt = await sdk.core.contracts.bapp.write.delegateBalance({
 ```typescript
 // get validator balance of a given account
 const validatorBalance = await sdk.api.getValidatorsBalance({
-    account: '0x77fc6e8b24a623725d935bc88057098d0bca6eb3',
-});
+  account: '0x77fc6e8b24a623725d935bc88057098d0bca6eb3',
+})
 
 console.log('response:', validatorBalance)
 ```
