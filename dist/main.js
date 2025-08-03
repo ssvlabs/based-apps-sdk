@@ -29161,7 +29161,7 @@ function requireCryptoBrowserify() {
   };
   return cryptoBrowserify;
 }
-const version = "17.2.0";
+const version = "17.2.1";
 const require$$4 = {
   version
 };
@@ -29176,9 +29176,12 @@ function requireMain() {
   const packageJson = require$$4;
   const version2 = packageJson.version;
   const TIPS = [
-    "🔐 encrypt with dotenvx: https://dotenvx.com",
+    "🔐 encrypt with Dotenvx: https://dotenvx.com",
     "🔐 prevent committing .env to code: https://dotenvx.com/precommit",
     "🔐 prevent building .env in docker: https://dotenvx.com/prebuild",
+    "📡 observe env with Radar: https://dotenvx.com/radar",
+    "📡 auto-backup env with Radar: https://dotenvx.com/radar",
+    "📡 version env with Radar: https://dotenvx.com/radar",
     "🛠️  run anywhere with `dotenvx run -- yourcommand`",
     "⚙️  specify custom .env file path with { path: '/custom/path/.env' }",
     "⚙️  enable debug logging with { debug: true }",
@@ -29394,7 +29397,7 @@ function requireMain() {
           lastError = e;
         }
       }
-      _log(`injecting env (${keysCount}) from ${shortPaths.join(",")} ${dim(`(tip: ${_getRandomTip()})`)}`);
+      _log(`injecting env (${keysCount}) from ${shortPaths.join(",")} ${dim(`-- tip: ${_getRandomTip()}`)}`);
     }
     if (lastError) {
       return { parsed: parsedAll, error: lastError };
