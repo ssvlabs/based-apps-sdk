@@ -13,10 +13,10 @@ importers:
         version: 3.2.0(graphql@16.9.0)
       '@safe-global/protocol-kit':
         specifier: 6.1.0
-        version: 6.1.0(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.5)
+        version: 6.1.0(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.14)
       abitype:
         specifier: 1.0.8
-        version: 1.0.8(typescript@5.8.3)(zod@4.0.5)
+        version: 1.0.8(typescript@5.8.3)(zod@4.0.14)
       dotenv:
         specifier: 17.2.0
         version: 17.2.0
@@ -28,10 +28,10 @@ importers:
         version: 4.17.21
       viem:
         specifier: 2.31.7
-        version: 2.31.7(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.5)
+        version: 2.31.7(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.14)
       zod:
-        specifier: 4.0.5
-        version: 4.0.5
+        specifier: 4.0.14
+        version: 4.0.14
     devDependencies:
       '@0no-co/graphqlsp':
         specifier: 1.14.0
@@ -68,7 +68,7 @@ importers:
         version: 6.0.0(ab2a9b3cea7ce1b2ff70b4ded1b2785c)
       '@nomicfoundation/hardhat-viem':
         specifier: 2.0.6
-        version: 2.0.6(hardhat@2.25.0(bufferutil@4.0.8)(ts-node@10.9.2(@types/node@24.0.14)(typescript@5.8.3))(typescript@5.8.3)(utf-8-validate@5.0.10))(typescript@5.8.3)(viem@2.31.7(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.5))(zod@4.0.5)
+        version: 2.0.6(hardhat@2.25.0(bufferutil@4.0.8)(ts-node@10.9.2(@types/node@24.0.14)(typescript@5.8.3))(typescript@5.8.3)(utf-8-validate@5.0.10))(typescript@5.8.3)(viem@2.31.7(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.14))(zod@4.0.14)
       '@openzeppelin/contracts':
         specifier: 5.4.0
         version: 5.4.0
@@ -2394,6 +2394,7 @@ packages:
   '@smithy/middleware-endpoint@4.1.14':
     resolution: {integrity: sha512-+BGLpK5D93gCcSEceaaYhUD/+OCGXM1IDaq/jKUQ+ujB0PTWlWN85noodKw/IPFZhIKFCNEe19PGd/reUMeLSQ==}
     engines: {node: '>=18.0.0'}
+    deprecated: Please upgrade to @smithy/middleware-endpoint@4.1.15 or higher to fix a bug preventing the resolution of ENV and config file custom endpoints https://github.com/smithy-lang/smithy-typescript/issues/1645
 
   '@smithy/middleware-retry@4.1.15':
     resolution: {integrity: sha512-iKYUJpiyTQ33U2KlOZeUb0GwtzWR3C0soYcKuCnTmJrvt6XwTPQZhMfsjJZNw7PpQ3TU4Ati1qLSrkSJxnnSMQ==}
@@ -7525,8 +7526,8 @@ packages:
     resolution: {integrity: sha512-GQHQqAopRhwU8Kt1DDM8NjibDXHC8eoh1erhGAJPEyveY9qqVeXvVikNKrDz69sHowPMorbPUrH/mx8c50eiBQ==}
     engines: {node: '>=18'}
 
-  zod@4.0.5:
-    resolution: {integrity: sha512-/5UuuRPStvHXu7RS+gmvRf4NXrNxpSllGwDnCBcJZtQsKrviYXm54yDGV2KYNLT5kq0lHGcl7lqWJLgSaG+tgA==}
+  zod@4.0.14:
+    resolution: {integrity: sha512-nGFJTnJN6cM2v9kXL+SOBq3AtjQby3Mv5ySGFof5UGRHrRioSJ5iG680cYNjE/yWk671nROcpPj4hAS8nyLhSw==}
 
 snapshots:
 
@@ -9788,12 +9789,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@nomicfoundation/hardhat-viem@2.0.6(hardhat@2.25.0(bufferutil@4.0.8)(ts-node@10.9.2(@types/node@24.0.14)(typescript@5.8.3))(typescript@5.8.3)(utf-8-validate@5.0.10))(typescript@5.8.3)(viem@2.31.7(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.5))(zod@4.0.5)':
+  '@nomicfoundation/hardhat-viem@2.0.6(hardhat@2.25.0(bufferutil@4.0.8)(ts-node@10.9.2(@types/node@24.0.14)(typescript@5.8.3))(typescript@5.8.3)(utf-8-validate@5.0.10))(typescript@5.8.3)(viem@2.31.7(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.14))(zod@4.0.14)':
     dependencies:
-      abitype: 0.9.10(typescript@5.8.3)(zod@4.0.5)
+      abitype: 0.9.10(typescript@5.8.3)(zod@4.0.14)
       hardhat: 2.25.0(bufferutil@4.0.8)(ts-node@10.9.2(@types/node@24.0.14)(typescript@5.8.3))(typescript@5.8.3)(utf-8-validate@5.0.10)
       lodash.memoize: 4.1.2
-      viem: 2.31.7(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.5)
+      viem: 2.31.7(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.14)
     transitivePeerDependencies:
       - typescript
       - zod
@@ -10316,14 +10317,14 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@safe-global/protocol-kit@6.1.0(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.5)':
+  '@safe-global/protocol-kit@6.1.0(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.14)':
     dependencies:
       '@safe-global/safe-deployments': 1.37.37
       '@safe-global/safe-modules-deployments': 2.2.11
-      '@safe-global/types-kit': 3.0.0(typescript@5.8.3)(zod@4.0.5)
-      abitype: 1.0.8(typescript@5.8.3)(zod@4.0.5)
+      '@safe-global/types-kit': 3.0.0(typescript@5.8.3)(zod@4.0.14)
+      abitype: 1.0.8(typescript@5.8.3)(zod@4.0.14)
       semver: 7.7.2
-      viem: 2.31.7(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.5)
+      viem: 2.31.7(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.14)
     optionalDependencies:
       '@noble/curves': 1.6.0
       '@peculiar/asn1-schema': 2.3.15
@@ -10339,9 +10340,9 @@ snapshots:
 
   '@safe-global/safe-modules-deployments@2.2.11': {}
 
-  '@safe-global/types-kit@3.0.0(typescript@5.8.3)(zod@4.0.5)':
+  '@safe-global/types-kit@3.0.0(typescript@5.8.3)(zod@4.0.14)':
     dependencies:
-      abitype: 1.0.8(typescript@5.8.3)(zod@4.0.5)
+      abitype: 1.0.8(typescript@5.8.3)(zod@4.0.14)
     transitivePeerDependencies:
       - typescript
       - zod
@@ -11200,15 +11201,15 @@ snapshots:
 
   abbrev@1.0.9: {}
 
-  abitype@0.9.10(typescript@5.8.3)(zod@4.0.5):
+  abitype@0.9.10(typescript@5.8.3)(zod@4.0.14):
     optionalDependencies:
       typescript: 5.8.3
-      zod: 4.0.5
+      zod: 4.0.14
 
-  abitype@1.0.8(typescript@5.8.3)(zod@4.0.5):
+  abitype@1.0.8(typescript@5.8.3)(zod@4.0.14):
     optionalDependencies:
       typescript: 5.8.3
-      zod: 4.0.5
+      zod: 4.0.14
 
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:
@@ -14556,7 +14557,7 @@ snapshots:
 
   os-tmpdir@1.0.2: {}
 
-  ox@0.8.1(typescript@5.8.3)(zod@4.0.5):
+  ox@0.8.1(typescript@5.8.3)(zod@4.0.14):
     dependencies:
       '@adraffy/ens-normalize': 1.11.0
       '@noble/ciphers': 1.3.0
@@ -14564,7 +14565,7 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
-      abitype: 1.0.8(typescript@5.8.3)(zod@4.0.5)
+      abitype: 1.0.8(typescript@5.8.3)(zod@4.0.14)
       eventemitter3: 5.0.1
     optionalDependencies:
       typescript: 5.8.3
@@ -16049,15 +16050,15 @@ snapshots:
 
   value-or-promise@1.0.12: {}
 
-  viem@2.31.7(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.5):
+  viem@2.31.7(bufferutil@4.0.8)(typescript@5.8.3)(utf-8-validate@5.0.10)(zod@4.0.14):
     dependencies:
       '@noble/curves': 1.9.2
       '@noble/hashes': 1.8.0
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
-      abitype: 1.0.8(typescript@5.8.3)(zod@4.0.5)
+      abitype: 1.0.8(typescript@5.8.3)(zod@4.0.14)
       isows: 1.0.7(ws@8.18.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))
-      ox: 0.8.1(typescript@5.8.3)(zod@4.0.5)
+      ox: 0.8.1(typescript@5.8.3)(zod@4.0.14)
       ws: 8.18.2(bufferutil@4.0.8)(utf-8-validate@5.0.10)
     optionalDependencies:
       typescript: 5.8.3
@@ -16384,4 +16385,4 @@ snapshots:
 
   yoctocolors@2.1.1: {}
 
-  zod@4.0.5: {}
+  zod@4.0.14: {}
