@@ -92,7 +92,7 @@
     "rollup-plugin-typescript2": "0.36.0",
     "semantic-release": "24.2.7",
     "typescript": "5.8.3",
-    "vite": "7.0.4",
+    "vite": "7.3.2",
     "vite-plugin-dts": "4.5.4",
     "vite-plugin-glob": "0.3.2",
     "vite-plugin-node-polyfills": "0.24.0",
