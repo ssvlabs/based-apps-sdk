@@ -1,5 +1,5 @@
 import { defineChain, parseGwei, decodeEventLog } from "viem";
-import { i as isObjectLike$1, b as baseGetTag, a as isObject, c as configArgsSchema, s as stringifyBigints, d as isUndefined, t as tryCatch$1 } from "./try-catch-Cen4ib23.js";
+import { i as isObjectLike$1, b as baseGetTag, a as isObject, c as configArgsSchema, s as stringifyBigints, d as isUndefined, t as tryCatch$1 } from "./try-catch-DGs45pp3.js";
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 function getAugmentedNamespace(n) {
   if (Object.prototype.hasOwnProperty.call(n, "__esModule")) return n;
@@ -288,7 +288,6 @@ function fromByteArray(uint8) {
   return parts.join("");
 }
 var ieee754 = {};
-/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 ieee754.read = function(buffer2, offset, isLE, mLen, nBytes) {
   var e, m;
   var eLen = nBytes * 8 - mLen - 1;
@@ -366,12 +365,6 @@ ieee754.write = function(buffer2, value, offset, isLE, mLen, nBytes) {
   }
   buffer2[offset + i2 - d] |= s * 128;
 };
-/*!
- * The buffer module from node.js, for the browser.
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
 (function(exports2) {
   const base64 = base64Js;
   const ieee754$1 = ieee754;
@@ -1940,7 +1933,7 @@ ieee754.write = function(buffer2, value, offset, isLE, mLen, nBytes) {
   function numberIsNaN(obj) {
     return obj !== obj;
   }
-  const hexSliceLookupTable = function() {
+  const hexSliceLookupTable = (function() {
     const alphabet = "0123456789abcdef";
     const table = new Array(256);
     for (let i2 = 0; i2 < 16; ++i2) {
@@ -1950,7 +1943,7 @@ ieee754.write = function(buffer2, value, offset, isLE, mLen, nBytes) {
       }
     }
     return table;
-  }();
+  })();
   function defineBigIntMethod(fn) {
     return typeof BigInt === "undefined" ? BufferBigIntNotDefined : fn;
   }
@@ -2533,7 +2526,6 @@ function requireDist() {
       return parts.join("");
     }
     var ieee7542 = {};
-    /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
     ieee7542.read = function(buffer3, offset, isLE, mLen, nBytes) {
       var e, m;
       var eLen = nBytes * 8 - mLen - 1;
@@ -2611,12 +2603,6 @@ function requireDist() {
       }
       buffer3[offset + i3 - d] |= s * 128;
     };
-    /*!
-     * The buffer module from node.js, for the browser.
-     *
-     * @author   Feross Aboukhadijeh <https://feross.org>
-     * @license  MIT
-     */
     (function(exports3) {
       const base64 = base64Js2;
       const ieee754$1 = ieee7542;
@@ -4185,7 +4171,7 @@ function requireDist() {
       function numberIsNaN(obj) {
         return obj !== obj;
       }
-      const hexSliceLookupTable = function() {
+      const hexSliceLookupTable = (function() {
         const alphabet = "0123456789abcdef";
         const table = new Array(256);
         for (let i3 = 0; i3 < 16; ++i3) {
@@ -4195,7 +4181,7 @@ function requireDist() {
           }
         }
         return table;
-      }();
+      })();
       function defineBigIntMethod(fn) {
         return typeof BigInt === "undefined" ? BufferBigIntNotDefined : fn;
       }
@@ -4225,7 +4211,6 @@ function requireDist() {
   })(dist);
   return dist;
 }
-/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 var hasRequiredSafeBuffer$1;
 function requireSafeBuffer$1() {
   if (hasRequiredSafeBuffer$1) return safeBuffer$1.exports;
@@ -4748,7 +4733,7 @@ function requireShams$1() {
       return true;
     }
     var obj = {};
-    var sym = Symbol("test");
+    var sym = /* @__PURE__ */ Symbol("test");
     var symObj = Object(sym);
     if (typeof sym === "string") {
       return false;
@@ -4871,7 +4856,7 @@ function requireHasSymbols() {
     if (typeof origSymbol("foo") !== "symbol") {
       return false;
     }
-    if (typeof Symbol("bar") !== "symbol") {
+    if (typeof /* @__PURE__ */ Symbol("bar") !== "symbol") {
       return false;
     }
     return hasSymbolSham();
@@ -5020,7 +5005,7 @@ function requireGetIntrinsic() {
   var throwTypeError = function() {
     throw new $TypeError();
   };
-  var ThrowTypeError = $gOPD ? function() {
+  var ThrowTypeError = $gOPD ? (function() {
     try {
       arguments.callee;
       return throwTypeError;
@@ -5031,7 +5016,7 @@ function requireGetIntrinsic() {
         return throwTypeError;
       }
     }
-  }() : throwTypeError;
+  })() : throwTypeError;
   var hasSymbols2 = requireHasSymbols()();
   var hasProto2 = /* @__PURE__ */ requireHasProto()();
   var getProto = Object.getPrototypeOf || (hasProto2 ? function(x) {
@@ -5533,9 +5518,9 @@ function requireIsArguments() {
     }
     return value !== null && typeof value === "object" && typeof value.length === "number" && value.length >= 0 && $toString(value) !== "[object Array]" && $toString(value.callee) === "[object Function]";
   };
-  var supportsStandardArguments = function() {
+  var supportsStandardArguments = (function() {
     return isStandardArguments(arguments);
-  }();
+  })();
   isStandardArguments.isLegacyArguments = isLegacyArguments;
   isArguments = supportsStandardArguments ? isStandardArguments : isLegacyArguments;
   return isArguments;
@@ -6613,7 +6598,7 @@ function requireUtil$1() {
     function hasOwnProperty(obj, prop) {
       return Object.prototype.hasOwnProperty.call(obj, prop);
     }
-    var kCustomPromisifiedSymbol = typeof Symbol !== "undefined" ? Symbol("util.promisify.custom") : void 0;
+    var kCustomPromisifiedSymbol = typeof Symbol !== "undefined" ? /* @__PURE__ */ Symbol("util.promisify.custom") : void 0;
     exports2.promisify = function promisify(original) {
       if (typeof original !== "function")
         throw new TypeError('The "original" argument must be of type Function');
@@ -6786,7 +6771,7 @@ function requireBuffer_list() {
   function copyBuffer(src, target, offset) {
     Buffer2.prototype.copy.call(src, target, offset);
   }
-  buffer_list = /* @__PURE__ */ function() {
+  buffer_list = /* @__PURE__ */ (function() {
     function BufferList2() {
       _classCallCheck(this, BufferList2);
       this.head = null;
@@ -6948,7 +6933,7 @@ function requireBuffer_list() {
       }
     }]);
     return BufferList2;
-  }();
+  })();
   return buffer_list;
 }
 var destroy_1$1;
@@ -7062,13 +7047,13 @@ function requireErrorsBrowser() {
         return message(arg1, arg2, arg3);
       }
     }
-    var NodeError = /* @__PURE__ */ function(_Base) {
+    var NodeError = /* @__PURE__ */ (function(_Base) {
       _inheritsLoose(NodeError2, _Base);
       function NodeError2(arg1, arg2, arg3) {
         return _Base.call(this, getMessage(arg1, arg2, arg3)) || this;
       }
       return NodeError2;
-    }(Base);
+    })(Base);
     NodeError.prototype.name = Base.name;
     NodeError.prototype.code = code2;
     codes[code2] = NodeError;
@@ -8121,13 +8106,13 @@ function requireAsync_iterator() {
     return (hint === "string" ? String : Number)(input);
   }
   var finished = requireEndOfStream();
-  var kLastResolve = Symbol("lastResolve");
-  var kLastReject = Symbol("lastReject");
-  var kError = Symbol("error");
-  var kEnded = Symbol("ended");
-  var kLastPromise = Symbol("lastPromise");
-  var kHandlePromise = Symbol("handlePromise");
-  var kStream = Symbol("stream");
+  var kLastResolve = /* @__PURE__ */ Symbol("lastResolve");
+  var kLastReject = /* @__PURE__ */ Symbol("lastReject");
+  var kError = /* @__PURE__ */ Symbol("error");
+  var kEnded = /* @__PURE__ */ Symbol("ended");
+  var kLastPromise = /* @__PURE__ */ Symbol("lastPromise");
+  var kHandlePromise = /* @__PURE__ */ Symbol("handlePromise");
+  var kStream = /* @__PURE__ */ Symbol("stream");
   function createIterResult(value, done) {
     return {
       value,
@@ -8891,11 +8876,11 @@ function require_stream_readable$1() {
     });
     for (var i2 in stream) {
       if (this[i2] === void 0 && typeof stream[i2] === "function") {
-        this[i2] = /* @__PURE__ */ function methodWrap(method) {
+        this[i2] = /* @__PURE__ */ (function methodWrap(method) {
           return function methodWrapReturnFunction() {
             return stream[method].apply(stream, arguments);
           };
-        }(i2);
+        })(i2);
       }
     }
     for (var n = 0; n < kProxyEvents.length; n++) {
@@ -12864,7 +12849,7 @@ function requireAes() {
     return [t0, t1, t2, t3];
   }
   var RCON = [0, 1, 2, 4, 8, 16, 32, 64, 128, 27, 54];
-  var G = function() {
+  var G = (function() {
     var d = new Array(256);
     for (var j = 0; j < 256; j++) {
       if (j < 128) {
@@ -12910,7 +12895,7 @@ function requireAes() {
       SUB_MIX,
       INV_SUB_MIX
     };
-  }();
+  })();
   function AES(key2) {
     this._key = asUInt32Array(key2);
     this._reset();
@@ -17028,7 +17013,7 @@ function requireBufferList() {
     function copyBuffer(src, target, offset) {
       src.copy(target, offset);
     }
-    module.exports = function() {
+    module.exports = (function() {
       function BufferList2() {
         _classCallCheck(this, BufferList2);
         this.head = null;
@@ -17082,7 +17067,7 @@ function requireBufferList() {
         return ret;
       };
       return BufferList2;
-    }();
+    })();
     if (util2 && util2.inspect && util2.inspect.custom) {
       module.exports.prototype[util2.inspect.custom] = function() {
         var obj = util2.inspect({ length: this.length });
@@ -18229,11 +18214,11 @@ function require_stream_readable() {
     });
     for (var i2 in stream) {
       if (this[i2] === void 0 && typeof stream[i2] === "function") {
-        this[i2] = /* @__PURE__ */ function(method) {
+        this[i2] = /* @__PURE__ */ (function(method) {
           return function() {
             return stream[method].apply(stream, arguments);
           };
-        }(i2);
+        })(i2);
       }
     }
     for (var n = 0; n < kProxyEvents.length; n++) {
@@ -18808,7 +18793,7 @@ function requireBn() {
       };
       if (typeof Symbol !== "undefined" && typeof Symbol.for === "function") {
         try {
-          BN.prototype[Symbol.for("nodejs.util.inspect.custom")] = inspect2;
+          BN.prototype[/* @__PURE__ */ Symbol.for("nodejs.util.inspect.custom")] = inspect2;
         } catch (e) {
           BN.prototype.inspect = inspect2;
         }
@@ -26293,7 +26278,7 @@ function requireVmBrowserify() {
         fn(xs[i2], i2, xs);
       }
     };
-    var defineProp = function() {
+    var defineProp = (function() {
       try {
         Object.defineProperty({}, "_", {});
         return function(obj, name, value) {
@@ -26309,7 +26294,7 @@ function requireVmBrowserify() {
           obj[name] = value;
         };
       }
-    }();
+    })();
     var globals = [
       "Array",
       "Boolean",
