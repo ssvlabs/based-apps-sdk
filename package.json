@@ -112,7 +112,7 @@
     "abitype": "1.0.8",
     "dotenv": "17.2.0",
     "graphql-request": "7.2.0",
-    "lodash-es": "4.17.21",
+    "lodash-es": "4.18.1",
     "viem": "2.31.7",
     "zod": "4.0.5"
   },
